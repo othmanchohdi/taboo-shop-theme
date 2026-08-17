@@ -295,17 +295,26 @@
     .taboo-demo-{{ section.id }}__panel-copy { font-size: 14.5px; margin-bottom: 18px; }
     .taboo-demo-{{ section.id }}__card { padding: 0 22px 18px; }
     .taboo-demo-{{ section.id }}__word-plate { padding: 22px; border-radius: 16px; font-size: 40px; }
+    /* Desktop taboo list: 9px gap (mobile is 7px) */
+    .taboo-demo-{{ section.id }}__taboo-list { gap: 9px; }
+    /* Desktop taboo X: 18×18px, 12px font */
+    .taboo-demo-{{ section.id }}__taboo-x { width: 18px; height: 18px; font-size: 12px; }
+    /* Desktop taboo word: 17px */
+    .taboo-demo-{{ section.id }}__taboo-item span:last-child { font-size: 17px; }
     .taboo-demo-{{ section.id }}__timer { width: 64px; }
     .taboo-demo-{{ section.id }}__timer-num { font-size: 26px; }
-    .taboo-demo-{{ section.id }}__timer-btn { padding: 15px; }
+    /* Desktop timer label: 9px (mobile 8.5px) */
+    .taboo-demo-{{ section.id }}__timer-label { font-size: 9px; }
+    .taboo-demo-{{ section.id }}__timer-btn { padding: 15px; font-size: 15px; }
     .taboo-demo-{{ section.id }}__next-btn { display: block; }
     .taboo-demo-{{ section.id }}__buzz-btn { width: 78px; height: 50px; font-size: 13px; }
     .taboo-demo-{{ section.id }}__deal-btn { display: none; }
-    .taboo-demo-{{ section.id }}__footer-bar { padding: 14px; }
+    .taboo-demo-{{ section.id }}__footer-bar { padding: 14px; gap: 10px; }
 
     .taboo-demo-{{ section.id }}__packs { order: 1; }
     .taboo-demo-{{ section.id }}__packs-title { font-size: 42px; margin-bottom: 8px; }
-    .taboo-demo-{{ section.id }}__packs-sub { color: #5A4F49; margin-bottom: 26px; padding: 0; }
+    /* Desktop packs-sub: 16px, cream color removed (now #5A4F49 on white bg) */
+    .taboo-demo-{{ section.id }}__packs-sub { color: #5A4F49; font-size: 16px; margin-bottom: 26px; padding: 0; }
     .taboo-demo-{{ section.id }}__packs-head { padding: 0; margin-bottom: 8px; }
     .taboo-demo-{{ section.id }}__packs-see-all--mobile { display: none; }
     .taboo-demo-{{ section.id }}__packs-see-all--desktop { display: inline; }
@@ -315,8 +324,10 @@
     }
     .taboo-demo-{{ section.id }}__pack-card { transition: box-shadow .2s ease; }
     .taboo-demo-{{ section.id }}__pack-card:hover { box-shadow: 0 16px 34px rgba(20,16,15,.14); }
+    /* Desktop pack media: 4/3 aspect (mobile is 5/4) */
+    .taboo-demo-{{ section.id }}__pack-media { aspect-ratio: 4/3; }
     .taboo-demo-{{ section.id }}__pack-body { padding: 18px 20px 20px; }
-    .taboo-demo-{{ section.id }}__pack-name { font-size: 18px; }
+    .taboo-demo-{{ section.id }}__pack-name { font-size: 18px; margin-bottom: 4px; }
     .taboo-demo-{{ section.id }}__pack-meta { font-size: 13px; margin-bottom: 12px; }
     .taboo-demo-{{ section.id }}__pack-price { font-size: 19px; }
     .taboo-demo-{{ section.id }}__pack-view { border-radius: 11px; padding: 10px 16px; font-size: 13.5px; }

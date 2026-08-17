@@ -177,7 +177,7 @@
 
   @media screen and (min-width: 1024px) {
     .taboo-catalog-{{ section.id }}__header-inner { max-width: 1200px; margin: 0 auto; padding: 52px 24px; }
-    .taboo-catalog-{{ section.id }}__title { font-size: 64px; line-height: .92; }
+    .taboo-catalog-{{ section.id }}__title { font-size: 64px; line-height: .92; letter-spacing: -.05em; }
     .taboo-catalog-{{ section.id }}__count { font-size: 17px; }
 
     .taboo-catalog-{{ section.id }}__body {
@@ -191,13 +191,21 @@
     .taboo-catalog-{{ section.id }}__amazon-card--mobile { display: none; }
 
     .taboo-catalog-{{ section.id }}__toolbar { margin-bottom: 20px; }
+    .taboo-catalog-{{ section.id }}__result-count { font: 500 14.5px 'DM Sans', system-ui, sans-serif; }
     .taboo-catalog-{{ section.id }}__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
     .taboo-catalog-{{ section.id }}__card { border-radius: 20px; overflow: hidden; transition: box-shadow .2s ease; }
     .taboo-catalog-{{ section.id }}__card:hover { box-shadow: 0 14px 30px rgba(20,16,15,.13); }
     .taboo-catalog-{{ section.id }}__card-media { aspect-ratio: 1; padding: 16px; }
     .taboo-catalog-{{ section.id }}__card-body { padding: 16px 18px 18px; }
-    .taboo-catalog-{{ section.id }}__card-tags { margin-bottom: 6px; }
-    .taboo-catalog-{{ section.id }}__card-name { margin-bottom: 6px; }
+    .taboo-catalog-{{ section.id }}__card-tags { margin-bottom: 0; }
+    .taboo-catalog-{{ section.id }}__pill {
+      background: none; border-radius: 0; padding: 0;
+      font: 700 10px 'DM Sans', system-ui, sans-serif; letter-spacing: .14em; color: #8A7C73; margin-bottom: 7px; display: block;
+    }
+    .taboo-catalog-{{ section.id }}__card-name { font-size: 16.5px; line-height: 1.25; margin-bottom: 4px; }
+    .taboo-catalog-{{ section.id }}__card-meta { font-size: 12.5px; margin-bottom: 12px; }
+    .taboo-catalog-{{ section.id }}__card-price { font-size: 17px; }
+    .taboo-catalog-{{ section.id }}__card-view { padding: 8px 14px; }
   }
 </style>
 

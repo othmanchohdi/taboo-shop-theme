@@ -62,7 +62,8 @@
 
   @media screen and (max-width: 1023px) {
     .taboo-benefits-{{ section.id }} { padding: 26px 18px; }
-    .taboo-benefits-{{ section.id }}__eyebrow { margin: 0 0 14px; }
+    /* Mobile eyebrow: 10.5px, .16em tracking (base has desktop values of 11px/.18em) */
+    .taboo-benefits-{{ section.id }}__eyebrow { margin: 0 0 14px; font-size: 10.5px; letter-spacing: .16em; }
     .taboo-benefits-{{ section.id }}__list { display: flex; flex-direction: column; gap: 11px; }
     .taboo-benefits-{{ section.id }}__item {
       display: flex; gap: 11px; align-items: flex-start; font-size: 15px; line-height: 1.4;

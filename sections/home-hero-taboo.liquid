@@ -160,12 +160,11 @@
 
     .taboo-hero-{{ section.id }}__cta-card {
       margin-top: -48px;
-      padding: 0 18px;
       position: relative;
       z-index: 2;
       background: #14100F;
       border-radius: 20px;
-      padding: 6px 18px;
+      padding: 6px;
       margin-inline: 18px;
       display: flex;
       gap: 6px;
@@ -248,6 +247,13 @@
       display: flex;
       gap: 12px;
       margin-top: 32px;
+    }
+
+    /* Desktop primary button: 14px radius, 18px 26px padding, 16px font */
+    .taboo-hero-{{ section.id }}__desktop-actions .taboo-hero-{{ section.id }}__btn-primary {
+      border-radius: 14px;
+      padding: 18px 26px;
+      font-size: 16px;
     }
   }
 </style>
