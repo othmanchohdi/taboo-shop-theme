@@ -1,0 +1,239 @@
+{%- doc -%}
+  Catalog / collection listing. Mobile: black header band, sticky horizontal filter
+  pills, full-width list rows. Desktop: black header band, sticky left rail of
+  collection links + Amazon side card, 3-col product grid on the right.
+  Pulls real products from `collection.products`; filters are links to other
+  collections (Shopify collections, not client-side filtering).
+{%- enddoc -%}
+
+{% liquid
+  assign filters = section.blocks | where: 'type', 'filter'
+%}
+
+<section class="taboo-catalog-{{ section.id }}">
+  <div class="taboo-catalog-{{ section.id }}__header">
+    <div class="taboo-catalog-{{ section.id }}__header-inner">
+      <h1 class="taboo-catalog-{{ section.id }}__title">{{ collection.title | default: 'Catalog' }}</h1>
+      <p class="taboo-catalog-{{ section.id }}__count">{{ collection.products_count | default: collection.all_products_count }} products {% if section.settings.subtitle != blank %}· {{ section.settings.subtitle }}{% endif %}</p>
+    </div>
+  </div>
+
+  <div class="taboo-catalog-{{ section.id }}__body">
+    <div class="taboo-catalog-{{ section.id }}__rail">
+      <p class="taboo-catalog-{{ section.id }}__rail-label">Collections</p>
+      <div class="taboo-catalog-{{ section.id }}__filters">
+        {% for block in filters %}
+          <a
+            href="{{ block.settings.url }}"
+            class="taboo-catalog-{{ section.id }}__filter{% if block.settings.url == request.path %} is-active{% endif %}"
+            {{ block.shopify_attributes }}
+          >{{ block.settings.label }}</a>
+        {% endfor %}
+      </div>
+      {% if section.settings.show_amazon_card %}
+        <div class="taboo-catalog-{{ section.id }}__amazon-card">
+          <div class="taboo-catalog-{{ section.id }}__amazon-title">{{ section.settings.amazon_title | default: 'Need the box itself?' }}</div>
+          <p class="taboo-catalog-{{ section.id }}__amazon-copy">{{ section.settings.amazon_copy | default: '450 cards, buzzer and timer — $29.99, exclusive on Amazon.' }}</p>
+          {% if section.settings.amazon_url %}
+            <a href="{{ section.settings.amazon_url }}" target="_blank" rel="noopener" class="taboo-catalog-{{ section.id }}__amazon-btn">Buy on Amazon ↗</a>
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="taboo-catalog-{{ section.id }}__main">
+      <div class="taboo-catalog-{{ section.id }}__toolbar">
+        <p class="taboo-catalog-{{ section.id }}__result-count">{{ collection.products.size }} items</p>
+        <span class="taboo-catalog-{{ section.id }}__sort">Sort: Featured</span>
+      </div>
+
+      <div class="taboo-catalog-{{ section.id }}__grid">
+        {% for product in collection.products %}
+          <a href="{{ product.url }}" class="taboo-catalog-{{ section.id }}__card">
+            <div class="taboo-catalog-{{ section.id }}__card-media">
+              {% if product.tags contains 'best-seller' %}
+                <span class="taboo-catalog-{{ section.id }}__badge">Best seller</span>
+              {% endif %}
+              {% if product.featured_image %}
+                <img src="{{ product.featured_image | image_url: width: 500 }}" alt="{{ product.featured_image.alt | default: product.title }}" loading="lazy" width="500" height="500">
+              {% else %}
+                <span class="taboo-catalog-{{ section.id }}__card-fallback">{{ product.title }}</span>
+              {% endif %}
+            </div>
+            <div class="taboo-catalog-{{ section.id }}__card-body">
+              <div class="taboo-catalog-{{ section.id }}__card-tags">
+                <span class="taboo-catalog-{{ section.id }}__pill">{{ product.type }}</span>
+              </div>
+              <div class="taboo-catalog-{{ section.id }}__card-name">{{ product.title }}</div>
+              <div class="taboo-catalog-{{ section.id }}__card-meta">{{ product.metafields.custom.card_line }}</div>
+              <div class="taboo-catalog-{{ section.id }}__card-bottom">
+                <span class="taboo-catalog-{{ section.id }}__card-price">{{ product.price | money }}</span>
+                <span class="taboo-catalog-{{ section.id }}__card-view">View</span>
+              </div>
+            </div>
+          </a>
+        {% else %}
+          <p class="taboo-catalog-{{ section.id }}__empty">No products in this collection yet.</p>
+        {% endfor %}
+      </div>
+
+      {% if paginate %}
+        {{ paginate | default_pagination }}
+      {% endif %}
+    </div>
+  </div>
+
+  {% if section.settings.show_amazon_card %}
+    <div class="taboo-catalog-{{ section.id }}__amazon-card taboo-catalog-{{ section.id }}__amazon-card--mobile">
+      <div class="taboo-catalog-{{ section.id }}__amazon-title">{{ section.settings.amazon_title | default: 'Need the box itself?' }}</div>
+      <p class="taboo-catalog-{{ section.id }}__amazon-copy">{{ section.settings.amazon_copy_mobile | default: '450 game cards, the electronic buzzer and the timer — $29.99, exclusive on Amazon. Taboosters stay in this bag.' }}</p>
+      {% if section.settings.amazon_url %}
+        <a href="{{ section.settings.amazon_url }}" target="_blank" rel="noopener" class="taboo-catalog-{{ section.id }}__amazon-btn taboo-catalog-{{ section.id }}__amazon-btn--full">
+          Buy on Amazon
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 5h11v11"></path><path d="M19 5 6 18"></path></svg>
+        </a>
+      {% endif %}
+    </div>
+  {% endif %}
+</section>
+
+<style>
+  .taboo-catalog-{{ section.id }} { font-family: 'DM Sans', system-ui, sans-serif; color: #14100F; }
+
+  .taboo-catalog-{{ section.id }}__header { background: #14100F; color: #FFF6E9; }
+  .taboo-catalog-{{ section.id }}__title { margin: 0 0 6px; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; letter-spacing: -.045em; }
+  .taboo-catalog-{{ section.id }}__count { margin: 0; color: rgba(255,246,233,.65); }
+
+  .taboo-catalog-{{ section.id }}__filter {
+    text-decoration: none; border-radius: 999px; font: 700 13px 'DM Sans', system-ui, sans-serif; cursor: pointer;
+    border: 1.5px solid #DCCEBB; background: transparent; color: #14100F; white-space: nowrap;
+  }
+  .taboo-catalog-{{ section.id }}__filter.is-active { background: #14100F; color: #FFF6E9; border-color: #14100F; }
+
+  .taboo-catalog-{{ section.id }}__amazon-card {
+    border: 2px solid #14100F; border-radius: 16px; padding: 16px; background: #EFE4D4;
+  }
+  .taboo-catalog-{{ section.id }}__amazon-title { font: 700 14.5px 'DM Sans', system-ui, sans-serif; margin-bottom: 6px; }
+  .taboo-catalog-{{ section.id }}__amazon-copy { margin: 0 0 12px; font-size: 13.5px; line-height: 1.5; color: #5A4F49; }
+  .taboo-catalog-{{ section.id }}__amazon-btn {
+    display: block; text-align: center; text-decoration: none; background: #F2B233; border: 1.5px solid #14100F;
+    border-radius: 11px; padding: 12px; font: 700 13.5px 'DM Sans', system-ui, sans-serif; color: #14100F; cursor: pointer;
+  }
+  .taboo-catalog-{{ section.id }}__amazon-btn--full { display: flex; align-items: center; justify-content: center; gap: 8px; border-radius: 0; border: 0; border-top: 2px solid #14100F; }
+  .taboo-catalog-{{ section.id }}__amazon-card--mobile { border-radius: 20px; overflow: hidden; padding: 0; }
+  .taboo-catalog-{{ section.id }}__amazon-card--mobile .taboo-catalog-{{ section.id }}__amazon-title,
+  .taboo-catalog-{{ section.id }}__amazon-card--mobile .taboo-catalog-{{ section.id }}__amazon-copy { padding: 0 16px; }
+  .taboo-catalog-{{ section.id }}__amazon-card--mobile .taboo-catalog-{{ section.id }}__amazon-title { padding-top: 16px; }
+
+  .taboo-catalog-{{ section.id }}__toolbar { display: flex; align-items: center; justify-content: space-between; }
+  .taboo-catalog-{{ section.id }}__result-count { margin: 0; color: #5A4F49; }
+  .taboo-catalog-{{ section.id }}__sort { font: 700 13.5px 'DM Sans', system-ui, sans-serif; color: #8A7C73; }
+
+  .taboo-catalog-{{ section.id }}__card { text-decoration: none; color: #14100F; display: block; background: #FFFFFF; }
+  .taboo-catalog-{{ section.id }}__card-media { background: #F2B233; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+  .taboo-catalog-{{ section.id }}__card-media img { max-width: 100%; max-height: 100%; object-fit: contain; display: block; }
+  .taboo-catalog-{{ section.id }}__card-fallback { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; text-align: center; }
+  .taboo-catalog-{{ section.id }}__badge {
+    position: absolute; top: 12px; left: 12px; background: #E8402A; color: #FFF6E9; border-radius: 999px;
+    padding: 4px 10px; font: 700 10px 'DM Sans', system-ui, sans-serif; letter-spacing: .12em; text-transform: uppercase; z-index: 1;
+  }
+  .taboo-catalog-{{ section.id }}__pill {
+    background: #EFE4D4; border-radius: 999px; padding: 3px 8px; font: 700 9.5px 'DM Sans', system-ui, sans-serif;
+    letter-spacing: .12em; text-transform: uppercase; color: #8A7C73;
+  }
+  .taboo-catalog-{{ section.id }}__card-name { font: 700 16px 'DM Sans', system-ui, sans-serif; line-height: 1.2; }
+  .taboo-catalog-{{ section.id }}__card-meta { font: 500 11.5px 'DM Sans', system-ui, sans-serif; color: #8A7C73; }
+  .taboo-catalog-{{ section.id }}__card-bottom { display: flex; align-items: center; justify-content: space-between; }
+  .taboo-catalog-{{ section.id }}__card-price { font: 700 16px 'DM Sans', system-ui, sans-serif; color: #E8402A; }
+  .taboo-catalog-{{ section.id }}__card-view {
+    font: 700 12.5px 'DM Sans', system-ui, sans-serif; color: #14100F; border: 1.5px solid #DCCEBB; border-radius: 10px; padding: 7px 12px;
+  }
+  .taboo-catalog-{{ section.id }}__empty { color: #5A4F49; }
+
+  @media screen and (max-width: 1023px) {
+    .taboo-catalog-{{ section.id }}__header-inner { padding: 24px 18px 22px; }
+    .taboo-catalog-{{ section.id }}__title { font-size: 42px; line-height: .95; }
+    .taboo-catalog-{{ section.id }}__count { font-size: 14px; }
+
+    .taboo-catalog-{{ section.id }}__rail { position: sticky; top: 0; z-index: 10; background: #FFF6E9; padding: 12px 0 10px; border-bottom: 1.5px solid #E7DCCC; }
+    .taboo-catalog-{{ section.id }}__rail-label { display: none; }
+    .taboo-catalog-{{ section.id }}__filters { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; padding: 0 18px; }
+    .taboo-catalog-{{ section.id }}__filter { padding: 9px 15px; flex: 0 0 auto; }
+    .taboo-catalog-{{ section.id }}__amazon-card { display: none; }
+
+    .taboo-catalog-{{ section.id }}__toolbar { display: none; }
+    .taboo-catalog-{{ section.id }}__grid { display: block; }
+    .taboo-catalog-{{ section.id }}__card {
+      display: flex; gap: 14px; align-items: center; padding: 16px 18px; border-bottom: 1.5px solid #E7DCCC;
+    }
+    .taboo-catalog-{{ section.id }}__card-media { flex: 0 0 94px; width: 94px; height: 94px; border-radius: 16px; padding: 7px; }
+    .taboo-catalog-{{ section.id }}__card-body { flex: 1; min-width: 0; }
+    .taboo-catalog-{{ section.id }}__card-tags { display: flex; gap: 6px; margin-bottom: 5px; }
+    .taboo-catalog-{{ section.id }}__card-name { margin-bottom: 3px; }
+    .taboo-catalog-{{ section.id }}__card-meta { margin-bottom: 7px; }
+
+    .taboo-catalog-{{ section.id }}__amazon-card--mobile { margin: 22px 18px 34px; }
+  }
+
+  @media screen and (min-width: 1024px) {
+    .taboo-catalog-{{ section.id }}__header-inner { max-width: 1200px; margin: 0 auto; padding: 52px 24px; }
+    .taboo-catalog-{{ section.id }}__title { font-size: 64px; line-height: .92; }
+    .taboo-catalog-{{ section.id }}__count { font-size: 17px; }
+
+    .taboo-catalog-{{ section.id }}__body {
+      max-width: 1200px; margin: 0 auto; padding: 40px 24px 80px;
+      display: grid; grid-template-columns: 230px 1fr; gap: 44px; align-items: start;
+    }
+    .taboo-catalog-{{ section.id }}__rail { position: sticky; top: 110px; }
+    .taboo-catalog-{{ section.id }}__rail-label { margin: 0 0 14px; font: 700 11px 'DM Sans', system-ui, sans-serif; letter-spacing: .16em; text-transform: uppercase; color: #8A7C73; }
+    .taboo-catalog-{{ section.id }}__filters { display: flex; flex-direction: column; gap: 8px; margin-bottom: 28px; }
+    .taboo-catalog-{{ section.id }}__filter { text-align: left; border-radius: 12px; padding: 12px 15px; }
+    .taboo-catalog-{{ section.id }}__amazon-card--mobile { display: none; }
+
+    .taboo-catalog-{{ section.id }}__toolbar { margin-bottom: 20px; }
+    .taboo-catalog-{{ section.id }}__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+    .taboo-catalog-{{ section.id }}__card { border-radius: 20px; overflow: hidden; transition: box-shadow .2s ease; }
+    .taboo-catalog-{{ section.id }}__card:hover { box-shadow: 0 14px 30px rgba(20,16,15,.13); }
+    .taboo-catalog-{{ section.id }}__card-media { aspect-ratio: 1; padding: 16px; }
+    .taboo-catalog-{{ section.id }}__card-body { padding: 16px 18px 18px; }
+    .taboo-catalog-{{ section.id }}__card-tags { margin-bottom: 6px; }
+    .taboo-catalog-{{ section.id }}__card-name { margin-bottom: 6px; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Catalog",
+  "settings": [
+    { "type": "text", "id": "subtitle", "label": "Subtitle after product count", "default": "packs, game night gear and apparel" },
+    { "type": "checkbox", "id": "show_amazon_card", "label": "Show Amazon side card", "default": true },
+    { "type": "text", "id": "amazon_title", "label": "Amazon card title", "default": "Need the box itself?" },
+    { "type": "textarea", "id": "amazon_copy", "label": "Amazon card copy (desktop)", "default": "450 cards, buzzer and timer — $29.99, exclusive on Amazon." },
+    { "type": "textarea", "id": "amazon_copy_mobile", "label": "Amazon card copy (mobile)", "default": "450 game cards, the electronic buzzer and the timer — $29.99, exclusive on Amazon. Taboosters stay in this bag." },
+    { "type": "url", "id": "amazon_url", "label": "Amazon listing URL" }
+  ],
+  "blocks": [
+    {
+      "type": "filter",
+      "name": "Collection filter link",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Tabooster packs" },
+        { "type": "url", "id": "url", "label": "Link" }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Catalog",
+      "blocks": [
+        { "type": "filter", "settings": { "label": "All" } },
+        { "type": "filter", "settings": { "label": "Tabooster packs" } },
+        { "type": "filter", "settings": { "label": "Game Night" } },
+        { "type": "filter", "settings": { "label": "Apparel" } },
+        { "type": "filter", "settings": { "label": "Under $20" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

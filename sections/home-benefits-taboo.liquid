@@ -1,0 +1,120 @@
+{%- doc -%}
+  Teal "Why everyone loves it" benefits band. Mobile: single column list.
+  Desktop: 320px label column + 2-col checklist grid.
+{%- enddoc -%}
+
+{% liquid
+  assign eyebrow = section.settings.eyebrow | default: 'Why everyone loves it'
+  assign heading = section.settings.heading
+  assign items = section.blocks | where: 'type', 'item'
+%}
+
+<section class="taboo-benefits-{{ section.id }}">
+  <div class="taboo-benefits-{{ section.id }}__inner">
+    <div class="taboo-benefits-{{ section.id }}__label">
+      <p class="taboo-benefits-{{ section.id }}__eyebrow">{{ eyebrow }}</p>
+      {% if heading != blank %}
+        <h2 class="taboo-benefits-{{ section.id }}__heading">{{ heading }}</h2>
+      {% endif %}
+    </div>
+    <div class="taboo-benefits-{{ section.id }}__list">
+      {% for block in items %}
+        <div class="taboo-benefits-{{ section.id }}__item" {{ block.shopify_attributes }}>
+          <span class="taboo-benefits-{{ section.id }}__check">✓</span>{{ block.settings.text }}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<style>
+  .taboo-benefits-{{ section.id }} {
+    background: #1F7A6B;
+    color: #FFF6E9;
+    font-family: 'DM Sans', system-ui, sans-serif;
+  }
+
+  .taboo-benefits-{{ section.id }}__eyebrow {
+    margin: 0 0 12px;
+    font: 700 11px 'DM Sans', system-ui, sans-serif;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: #F2B233;
+  }
+
+  .taboo-benefits-{{ section.id }}__heading {
+    margin: 0;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 800;
+    letter-spacing: -.04em;
+  }
+
+  .taboo-benefits-{{ section.id }}__check {
+    flex: 0 0 auto;
+    border-radius: 50%;
+    background: #F2B233;
+    color: #14100F;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @media screen and (max-width: 1023px) {
+    .taboo-benefits-{{ section.id }} { padding: 26px 18px; }
+    .taboo-benefits-{{ section.id }}__eyebrow { margin: 0 0 14px; }
+    .taboo-benefits-{{ section.id }}__list { display: flex; flex-direction: column; gap: 11px; }
+    .taboo-benefits-{{ section.id }}__item {
+      display: flex; gap: 11px; align-items: flex-start; font-size: 15px; line-height: 1.4;
+    }
+    .taboo-benefits-{{ section.id }}__check { width: 18px; height: 18px; font-size: 11px; margin-top: 2px; }
+  }
+
+  @media screen and (min-width: 1024px) {
+    .taboo-benefits-{{ section.id }} { margin-top: 64px; }
+    .taboo-benefits-{{ section.id }}__inner {
+      max-width: 1200px; margin: 0 auto; padding: 56px 24px;
+      display: grid; grid-template-columns: 320px 1fr; gap: 56px;
+    }
+    .taboo-benefits-{{ section.id }}__heading { font-size: 38px; line-height: 1; }
+    .taboo-benefits-{{ section.id }}__list {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 20px 40px;
+    }
+    .taboo-benefits-{{ section.id }}__item {
+      display: flex; gap: 13px; align-items: flex-start; font-size: 17px; line-height: 1.45;
+      padding-top: 16px; border-top: 1.5px solid rgba(255,246,233,.25);
+    }
+    .taboo-benefits-{{ section.id }}__check { width: 20px; height: 20px; font-size: 12px; margin-top: 3px; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Benefits band",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Why everyone loves it" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Perfect for parties, families and groups" }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Benefit",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Text", "default": "Fits in a coat pocket" }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Benefits band",
+      "blocks": [
+        { "type": "item", "settings": { "text": "Fits in a coat pocket" } },
+        { "type": "item", "settings": { "text": "No batteries needed" } },
+        { "type": "item", "settings": { "text": "300+ new cards per pack" } },
+        { "type": "item", "settings": { "text": "Works with the game you already own" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

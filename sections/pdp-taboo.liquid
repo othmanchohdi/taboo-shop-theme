@@ -1,0 +1,360 @@
+{%- doc -%}
+  Taboo PDP. Wired to the real `product` object: variants, price, availability.
+  Amazon-exclusive products (tagged `amazon-exclusive`) swap the variant block +
+  buy button for a "Where it ships from" note and a Buy on Amazon link
+  (product.metafields.custom.amazon_url) instead of add-to-cart.
+  "What you get" checklist, sample card, and ships note come from metafields
+  since they vary per product; safe fallbacks are provided if unset.
+{%- enddoc -%}
+
+{% liquid
+  assign is_external = false
+  if product.tags contains 'amazon-exclusive'
+    assign is_external = true
+  endif
+
+  assign what_you_get = product.metafields.custom.what_you_get.value
+  assign ships_note = product.metafields.custom.ships_note.value | default: 'Ships in 1-2 business days'
+  assign sample_word = product.metafields.custom.sample_word.value
+  assign sample_taboo = product.metafields.custom.sample_taboo_words.value
+  assign related_products = product.metafields.custom.related_products.value
+  assign amazon_url = product.metafields.custom.amazon_url.value
+%}
+
+<taboo-pdp class="taboo-pdp-{{ section.id }}" data-product-url="{{ product.url }}">
+  <a href="{{ section.settings.back_url | default: '/collections/all' }}" class="taboo-pdp-{{ section.id }}__back">← Back to catalog</a>
+
+  <div class="taboo-pdp-{{ section.id }}__layout">
+    <div class="taboo-pdp-{{ section.id }}__gallery">
+      <div class="taboo-pdp-{{ section.id }}__gallery-main" data-gallery-main>
+        {% if product.featured_image %}
+          <img
+            src="{{ product.featured_image | image_url: width: 1000 }}"
+            alt="{{ product.featured_image.alt | default: product.title }}"
+            width="1000"
+            height="1000"
+            data-gallery-image
+          >
+        {% else %}
+          <span class="taboo-pdp-{{ section.id }}__gallery-fallback">{{ product.title }}</span>
+        {% endif %}
+      </div>
+      {% if product.images.size > 1 %}
+        <div class="taboo-pdp-{{ section.id }}__thumbs">
+          {% for image in product.images %}
+            <button
+              type="button"
+              class="taboo-pdp-{{ section.id }}__thumb{% if forloop.first %} is-active{% endif %}"
+              data-thumb
+              data-full-src="{{ image | image_url: width: 1000 }}"
+            >
+              <img src="{{ image | image_url: width: 200 }}" alt="" loading="lazy" width="200" height="200">
+            </button>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="taboo-pdp-{{ section.id }}__buybox">
+      <div class="taboo-pdp-{{ section.id }}__pills">
+        <span class="taboo-pdp-{{ section.id }}__pill">{{ product.type }}</span>
+        <span class="taboo-pdp-{{ section.id }}__pill">{% if product.available %}In stock{% else %}Sold out{% endif %}</span>
+      </div>
+
+      <h1 class="taboo-pdp-{{ section.id }}__title">{{ product.title }}</h1>
+
+      <div class="taboo-pdp-{{ section.id }}__price-row">
+        <span class="taboo-pdp-{{ section.id }}__price" data-price>{{ product.selected_or_first_available_variant.price | money }}</span>
+        {% if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price %}
+          <span class="taboo-pdp-{{ section.id }}__price-compare">{{ product.selected_or_first_available_variant.compare_at_price | money }}</span>
+        {% endif %}
+      </div>
+
+      {% if product.description != blank %}
+        <div class="taboo-pdp-{{ section.id }}__description">{{ product.description }}</div>
+      {% endif %}
+
+      {% if is_external %}
+        <div class="taboo-pdp-{{ section.id }}__external-note">
+          <p class="taboo-pdp-{{ section.id }}__external-label">Where it ships from</p>
+          <p class="taboo-pdp-{{ section.id }}__external-copy">This edition is exclusive on Amazon. Buy it there — your Taboosters stay in this cart and check out here.</p>
+        </div>
+        {% if amazon_url %}
+          <a href="{{ amazon_url }}" target="_blank" rel="noopener" class="taboo-pdp-{{ section.id }}__buy-external">Buy on Amazon ↗</a>
+        {% endif %}
+      {% else %}
+        {% form 'product', product, class: 'taboo-pdp-form', data-pdp-form: '' %}
+          {% if product.has_only_default_variant == false %}
+            <p class="taboo-pdp-{{ section.id }}__variant-label">{{ product.options_with_values.first.name }}</p>
+            <div class="taboo-pdp-{{ section.id }}__variants">
+              {% for variant in product.variants %}
+                <label class="taboo-pdp-{{ section.id }}__variant{% if variant == product.selected_or_first_available_variant %} is-selected{% endif %}{% unless variant.available %} is-unavailable{% endunless %}">
+                  <input
+                    type="radio"
+                    name="id"
+                    value="{{ variant.id }}"
+                    {% if variant == product.selected_or_first_available_variant %}checked{% endif %}
+                    {% unless variant.available %}disabled{% endunless %}
+                    data-variant-radio
+                    data-price="{{ variant.price | money }}"
+                    class="taboo-pdp-{{ section.id }}__variant-input"
+                  >
+                  <span class="taboo-pdp-{{ section.id }}__variant-dot"></span>
+                  <span class="taboo-pdp-{{ section.id }}__variant-text">
+                    <span class="taboo-pdp-{{ section.id }}__variant-name">{{ variant.title }}</span>
+                    {% unless variant.available %}<span class="taboo-pdp-{{ section.id }}__variant-note">Sold out</span>{% endunless %}
+                  </span>
+                  <span class="taboo-pdp-{{ section.id }}__variant-price">{{ variant.price | money }}</span>
+                </label>
+              {% endfor %}
+            </div>
+          {% else %}
+            <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+          {% endif %}
+
+          <div class="taboo-pdp-{{ section.id }}__buy-row">
+            <div class="taboo-pdp-{{ section.id }}__qty">
+              <button type="button" data-qty-down aria-label="Decrease quantity">−</button>
+              <span data-qty-value>1</span>
+              <button type="button" data-qty-up aria-label="Increase quantity">+</button>
+            </div>
+            <input type="hidden" name="quantity" value="1" data-qty-input>
+            <button type="submit" class="taboo-pdp-{{ section.id }}__add-btn" data-add-btn {% unless product.available %}disabled{% endunless %}>
+              <span data-add-label>{% if product.available %}Add to cart{% else %}Sold out{% endif %}</span>
+            </button>
+          </div>
+        {% endform %}
+      {% endif %}
+
+      {% if what_you_get != blank or ships_note != blank %}
+        <div class="taboo-pdp-{{ section.id }}__box">
+          {% if what_you_get != blank %}
+            <div class="taboo-pdp-{{ section.id }}__box-top">
+              <p class="taboo-pdp-{{ section.id }}__box-label">What you get</p>
+              <div class="taboo-pdp-{{ section.id }}__box-list">
+                {% for item in what_you_get %}
+                  <div class="taboo-pdp-{{ section.id }}__box-item">
+                    <span class="taboo-pdp-{{ section.id }}__box-check">✓</span>{{ item }}
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+          {% endif %}
+          {% if ships_note != blank %}
+            <div class="taboo-pdp-{{ section.id }}__box-ships">{{ ships_note }}</div>
+          {% endif %}
+        </div>
+      {% endif %}
+
+      {% if sample_word != blank %}
+        <div class="taboo-pdp-{{ section.id }}__sample">
+          <p class="taboo-pdp-{{ section.id }}__sample-label">A card from this pack</p>
+          <div class="taboo-pdp-{{ section.id }}__sample-word">{{ sample_word }}</div>
+          {% if sample_taboo != blank %}
+            <div class="taboo-pdp-{{ section.id }}__sample-tags">
+              {% for word in sample_taboo %}
+                <span class="taboo-pdp-{{ section.id }}__sample-tag">{{ word }}</span>
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+  {% if related_products != blank %}
+    <div class="taboo-pdp-{{ section.id }}__related">
+      <h2 class="taboo-pdp-{{ section.id }}__related-title">Goes well with</h2>
+      <div class="taboo-pdp-{{ section.id }}__related-grid">
+        {% for related in related_products limit: 5 %}
+          <a href="{{ related.url }}" class="taboo-pdp-{{ section.id }}__related-card">
+            <div class="taboo-pdp-{{ section.id }}__related-media">
+              {% if related.featured_image %}
+                <img src="{{ related.featured_image | image_url: width: 400 }}" alt="{{ related.title }}" loading="lazy" width="400" height="400">
+              {% endif %}
+            </div>
+            <div class="taboo-pdp-{{ section.id }}__related-name">{{ related.title }}</div>
+            <div class="taboo-pdp-{{ section.id }}__related-price">{{ related.price | money }}</div>
+          </a>
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+
+  {% unless is_external %}
+    <div class="taboo-pdp-{{ section.id }}__sticky-bar" data-sticky-bar>
+      <div class="taboo-pdp-{{ section.id }}__sticky-info">
+        <span class="taboo-pdp-{{ section.id }}__sticky-type">{{ product.type }}</span>
+        <span class="taboo-pdp-{{ section.id }}__sticky-price" data-sticky-price>{{ product.selected_or_first_available_variant.price | money }}</span>
+      </div>
+      <button type="button" class="taboo-pdp-{{ section.id }}__sticky-btn" data-sticky-add {% unless product.available %}disabled{% endunless %}>
+        {% if product.available %}Add to cart{% else %}Sold out{% endif %}
+      </button>
+    </div>
+  {% endunless %}
+</taboo-pdp>
+
+<script src="{{ 'taboo-pdp.js' | asset_url }}" defer="defer"></script>
+
+<style>
+  .taboo-pdp-{{ section.id }} { display: block; font-family: 'DM Sans', system-ui, sans-serif; color: #14100F; }
+
+  .taboo-pdp-{{ section.id }}__back { display: inline-block; text-decoration: none; font: 700 13.5px 'DM Sans', system-ui, sans-serif; color: #8A7C73; }
+
+  .taboo-pdp-{{ section.id }}__gallery-main {
+    background: {{ section.settings.tint_color | default: '#F2B233' }};
+    border-radius: 20px; aspect-ratio: 1; display: flex; align-items: center; justify-content: center; overflow: hidden;
+  }
+  .taboo-pdp-{{ section.id }}__gallery-main img { max-width: 100%; max-height: 100%; object-fit: contain; display: block; }
+  .taboo-pdp-{{ section.id }}__gallery-fallback { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 34px; text-align: center; }
+  .taboo-pdp-{{ section.id }}__thumbs { display: flex; gap: 8px; }
+  .taboo-pdp-{{ section.id }}__thumb {
+    flex: 0 0 auto; aspect-ratio: 1; border-radius: 12px; background: {{ section.settings.tint_color | default: '#F2B233' }};
+    border: 2px solid transparent; padding: 5px; cursor: pointer; display: flex; align-items: center; justify-content: center; overflow: hidden;
+  }
+  .taboo-pdp-{{ section.id }}__thumb.is-active { border-color: #14100F; }
+  .taboo-pdp-{{ section.id }}__thumb img { max-width: 100%; max-height: 100%; object-fit: contain; display: block; }
+
+  .taboo-pdp-{{ section.id }}__pills { display: flex; align-items: center; gap: 7px; }
+  .taboo-pdp-{{ section.id }}__pill {
+    background: #EFE4D4; border-radius: 999px; font: 700 9.5px 'DM Sans', system-ui, sans-serif;
+    letter-spacing: .12em; text-transform: uppercase; color: #8A7C73; padding: 4px 9px;
+  }
+  .taboo-pdp-{{ section.id }}__title { margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; letter-spacing: -.04em; }
+  .taboo-pdp-{{ section.id }}__price-row { display: flex; align-items: baseline; gap: 10px; }
+  .taboo-pdp-{{ section.id }}__price { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; color: #E8402A; }
+  .taboo-pdp-{{ section.id }}__price-compare { text-decoration: line-through; color: #8A7C73; font: 500 14px 'DM Sans', system-ui, sans-serif; }
+  .taboo-pdp-{{ section.id }}__description { color: #5A4F49; line-height: 1.55; }
+  .taboo-pdp-{{ section.id }}__description p { margin: 0 0 12px; }
+
+  .taboo-pdp-{{ section.id }}__external-note { border: 2px solid #14100F; border-radius: 16px; padding: 16px; background: #EFE4D4; }
+  .taboo-pdp-{{ section.id }}__external-label { margin: 0 0 10px; font: 700 10.5px 'DM Sans', system-ui, sans-serif; letter-spacing: .14em; text-transform: uppercase; }
+  .taboo-pdp-{{ section.id }}__external-copy { margin: 0; color: #5A4F49; line-height: 1.5; }
+  .taboo-pdp-{{ section.id }}__buy-external {
+    display: block; text-align: center; text-decoration: none; background: #E8402A; color: #FFF6E9; border-radius: 14px;
+    padding: 16px; font: 700 15px 'DM Sans', system-ui, sans-serif; cursor: pointer;
+  }
+
+  .taboo-pdp-{{ section.id }}__variant-label { margin: 0; font: 700 10.5px 'DM Sans', system-ui, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #8A7C73; }
+  .taboo-pdp-{{ section.id }}__variants { display: flex; flex-direction: column; gap: 8px; }
+  .taboo-pdp-{{ section.id }}__variant {
+    display: flex; align-items: center; gap: 12px; border: 2px solid #DCCEBB; border-radius: 14px; padding: 13px 14px; cursor: pointer;
+  }
+  .taboo-pdp-{{ section.id }}__variant.is-selected { border-color: #E8402A; background: #FDE3DE; }
+  .taboo-pdp-{{ section.id }}__variant.is-unavailable { opacity: .5; cursor: not-allowed; }
+  .taboo-pdp-{{ section.id }}__variant-input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  .taboo-pdp-{{ section.id }}__variant-dot { flex: 0 0 auto; width: 18px; height: 18px; border-radius: 50%; border: 2px solid #DCCEBB; }
+  .taboo-pdp-{{ section.id }}__variant.is-selected .taboo-pdp-{{ section.id }}__variant-dot { border-color: #E8402A; background: #E8402A; }
+  .taboo-pdp-{{ section.id }}__variant-text { flex: 1; }
+  .taboo-pdp-{{ section.id }}__variant-name { display: block; font: 700 14px 'DM Sans', system-ui, sans-serif; }
+  .taboo-pdp-{{ section.id }}__variant-note { display: block; font: 400 12.5px 'DM Sans', system-ui, sans-serif; color: #5A4F49; }
+  .taboo-pdp-{{ section.id }}__variant-price { font: 700 14px 'DM Sans', system-ui, sans-serif; color: #E8402A; }
+
+  .taboo-pdp-{{ section.id }}__buy-row { display: flex; gap: 12px; }
+  .taboo-pdp-{{ section.id }}__qty {
+    display: flex; align-items: center; gap: 18px; border: 1.5px solid #DCCEBB; border-radius: 14px; padding: 0 18px;
+  }
+  .taboo-pdp-{{ section.id }}__qty button { background: none; border: 0; font: 700 20px 'DM Sans', system-ui, sans-serif; cursor: pointer; color: #14100F; line-height: 1; }
+  .taboo-pdp-{{ section.id }}__qty span { font: 700 15px 'DM Sans', system-ui, sans-serif; min-width: 14px; text-align: center; }
+  .taboo-pdp-{{ section.id }}__add-btn {
+    flex: 1; background: #E8402A; color: #FFF6E9; border: 0; border-radius: 14px; padding: 19px;
+    font: 700 16.5px 'DM Sans', system-ui, sans-serif; cursor: pointer;
+  }
+  .taboo-pdp-{{ section.id }}__add-btn[disabled] { opacity: .5; cursor: not-allowed; }
+  .taboo-pdp-{{ section.id }}__add-btn.is-added { background: #1F7A6B; }
+
+  .taboo-pdp-{{ section.id }}__box { border: 1.5px solid #E7DCCC; border-radius: 18px; overflow: hidden; }
+  .taboo-pdp-{{ section.id }}__box-top { background: #FFFFFF; padding: 20px 22px; }
+  .taboo-pdp-{{ section.id }}__box-label { margin: 0 0 13px; font: 700 11px 'DM Sans', system-ui, sans-serif; letter-spacing: .14em; text-transform: uppercase; }
+  .taboo-pdp-{{ section.id }}__box-item { display: flex; gap: 11px; align-items: center; font-size: 15px; color: #5A4F49; }
+  .taboo-pdp-{{ section.id }}__box-check {
+    flex: 0 0 auto; width: 18px; height: 18px; border-radius: 50%; background: #1F7A6B; color: #FFF6E9;
+    font: 800 11px 'DM Sans', system-ui, sans-serif; display: flex; align-items: center; justify-content: center;
+  }
+  .taboo-pdp-{{ section.id }}__box-ships { background: #EFE4D4; padding: 13px 22px; font: 500 13.5px 'DM Sans', system-ui, sans-serif; color: #5A4F49; }
+
+  .taboo-pdp-{{ section.id }}__sample { background: #14100F; color: #FFF6E9; border-radius: 20px; padding: 24px; }
+  .taboo-pdp-{{ section.id }}__sample-label { margin: 0 0 14px; font: 700 11px 'DM Sans', system-ui, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #F2B233; }
+  .taboo-pdp-{{ section.id }}__sample-word {
+    font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 38px; text-transform: uppercase; letter-spacing: -.03em; margin-bottom: 14px;
+  }
+  .taboo-pdp-{{ section.id }}__sample-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .taboo-pdp-{{ section.id }}__sample-tag {
+    border: 1px solid rgba(255,246,233,.28); border-radius: 999px; padding: 7px 13px; font: 500 13px 'DM Sans', system-ui, sans-serif;
+    text-transform: uppercase; opacity: .85; text-decoration: line-through; text-decoration-color: #E8402A; text-decoration-thickness: 2px;
+  }
+
+  .taboo-pdp-{{ section.id }}__related-title { margin: 0 0 22px; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; letter-spacing: -.04em; }
+  .taboo-pdp-{{ section.id }}__related-card { text-decoration: none; color: #14100F; display: block; }
+  .taboo-pdp-{{ section.id }}__related-media { background: #F2B233; border-radius: 18px; aspect-ratio: 1; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .taboo-pdp-{{ section.id }}__related-media img { max-width: 100%; max-height: 100%; object-fit: contain; }
+  .taboo-pdp-{{ section.id }}__related-name { font: 700 14px 'DM Sans', system-ui, sans-serif; margin-top: 10px; margin-bottom: 4px; }
+  .taboo-pdp-{{ section.id }}__related-price { font: 700 14px 'DM Sans', system-ui, sans-serif; color: #E8402A; }
+
+  .taboo-pdp-{{ section.id }}__sticky-bar { display: none; }
+
+  @media screen and (max-width: 1023px) {
+    .taboo-pdp-{{ section.id }} { padding: 14px 18px 100px; }
+    .taboo-pdp-{{ section.id }}__back { margin-bottom: 12px; background: rgba(255,255,255,.75); border-radius: 999px; padding: 8px 14px; font-size: 12px; }
+    .taboo-pdp-{{ section.id }}__layout { display: flex; flex-direction: column; gap: 22px; }
+    .taboo-pdp-{{ section.id }}__gallery-main { padding: 16px; }
+    .taboo-pdp-{{ section.id }}__thumbs { margin-top: 12px; }
+    .taboo-pdp-{{ section.id }}__thumb { flex-basis: 68px; }
+    .taboo-pdp-{{ section.id }}__buybox { display: flex; flex-direction: column; gap: 16px; }
+    .taboo-pdp-{{ section.id }}__title { font-size: 32px; line-height: 1; }
+    .taboo-pdp-{{ section.id }}__price { font-size: 29px; }
+    .taboo-pdp-{{ section.id }}__description { font-size: 15px; }
+    .taboo-pdp-form { display: flex; flex-direction: column; gap: 16px; }
+    .taboo-pdp-{{ section.id }}__related { margin-top: 26px; }
+    .taboo-pdp-{{ section.id }}__related-grid { display: flex; gap: 10px; overflow-x: auto; scrollbar-width: none; }
+    .taboo-pdp-{{ section.id }}__related-card { flex: 0 0 150px; }
+
+    .taboo-pdp-{{ section.id }}__sticky-bar {
+      position: fixed; left: 0; right: 0; bottom: 64px; padding: 10px 14px;
+      background: rgba(255,246,233,.95); backdrop-filter: blur(10px); border-top: 1px solid #E7DCCC;
+      display: flex; gap: 10px; align-items: center; z-index: 900;
+    }
+    .taboo-pdp-{{ section.id }}__sticky-info { flex: 0 0 auto; }
+    .taboo-pdp-{{ section.id }}__sticky-type { display: block; font: 700 11.5px 'DM Sans', system-ui, sans-serif; color: #8A7C73; }
+    .taboo-pdp-{{ section.id }}__sticky-price { font: 700 15px 'DM Sans', system-ui, sans-serif; color: #E8402A; }
+    .taboo-pdp-{{ section.id }}__sticky-btn {
+      flex: 1; background: #E8402A; color: #FFF6E9; border: 0; border-radius: 13px; padding: 15px;
+      font: 700 15px 'DM Sans', system-ui, sans-serif; cursor: pointer;
+    }
+    .taboo-pdp-{{ section.id }}__sticky-btn[disabled] { opacity: .5; }
+  }
+
+  @media screen and (min-width: 1024px) {
+    .taboo-pdp-{{ section.id }} { max-width: 1200px; margin: 0 auto; padding: 28px 24px 80px; }
+    .taboo-pdp-{{ section.id }}__back { margin-bottom: 20px; }
+    .taboo-pdp-{{ section.id }}__layout { display: grid; grid-template-columns: 1fr 460px; gap: 56px; align-items: start; }
+    .taboo-pdp-{{ section.id }}__gallery { position: sticky; top: 110px; }
+    .taboo-pdp-{{ section.id }}__gallery-main { padding: 40px; border-radius: 26px; }
+    .taboo-pdp-{{ section.id }}__thumbs { margin-top: 14px; }
+    .taboo-pdp-{{ section.id }}__thumb { flex-basis: 92px; border-radius: 14px; padding: 8px; }
+    .taboo-pdp-{{ section.id }}__buybox { display: flex; flex-direction: column; gap: 20px; }
+    .taboo-pdp-{{ section.id }}__title { font-size: 46px; }
+    .taboo-pdp-{{ section.id }}__price { font-size: 36px; }
+    .taboo-pdp-{{ section.id }}__description { font-size: 16.5px; }
+    .taboo-pdp-form { display: flex; flex-direction: column; gap: 20px; }
+    .taboo-pdp-{{ section.id }}__box-item-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 11px 22px; }
+    .taboo-pdp-{{ section.id }}__related { margin-top: 72px; }
+    .taboo-pdp-{{ section.id }}__related-title { font-size: 34px; }
+    .taboo-pdp-{{ section.id }}__related-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 18px; }
+    .taboo-pdp-{{ section.id }}__related-card { border-radius: 18px; overflow: hidden; background: #FFFFFF; transition: box-shadow .2s ease; }
+    .taboo-pdp-{{ section.id }}__related-card:hover { box-shadow: 0 12px 26px rgba(20,16,15,.12); }
+    .taboo-pdp-{{ section.id }}__related-card .taboo-pdp-{{ section.id }}__related-name,
+    .taboo-pdp-{{ section.id }}__related-card .taboo-pdp-{{ section.id }}__related-price { padding: 0 16px; }
+    .taboo-pdp-{{ section.id }}__related-card .taboo-pdp-{{ section.id }}__related-price { padding-bottom: 16px; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Product detail",
+  "settings": [
+    { "type": "color", "id": "tint_color", "label": "Product image tint background", "default": "#F2B233" },
+    { "type": "url", "id": "back_url", "label": "\"Back to catalog\" link" }
+  ]
+}
+{% endschema %}

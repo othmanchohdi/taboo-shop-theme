@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  body { margin: 0; background: #FFF6E9; }
+  a { color: #E8402A; text-decoration: none; }
+  a:hover { color: #14100F; }
+  @keyframes dealInD { from { opacity: 0; transform: translateY(18px) rotate(-3deg) scale(.95); } to { opacity: 1; transform: none; } }
+  @keyframes buzzShakeD { 0%,100% { transform: none; } 20% { transform: translateX(-10px) rotate(-1deg); } 40% { transform: translateX(10px) rotate(1deg); } 60% { transform: translateX(-6px); } 80% { transform: translateX(6px); } }
+  @keyframes marqD { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @keyframes popInD { from { opacity: 0; transform: scale(.94) translateY(12px); } to { opacity: 1; transform: none; } }
+</style>
+</helmet>
+<div style="width:1440px;position:relative;background:#FFF6E9;font-family:'DM Sans',system-ui,sans-serif;color:#14100F;overflow:hidden">
+
+  <div style="background:#F2B233;color:#14100F;overflow:hidden;white-space:nowrap;padding:8px 0;font:700 11px 'DM Sans';letter-spacing:.18em;text-transform:uppercase">
+    <div style="display:inline-block;animation:marqD 30s linear infinite">
+      <span style="padding:0 22px">300 cards per pack</span><span style="padding:0 22px">★</span><span style="padding:0 22px">No buzzer. No timer. No giant box.</span><span style="padding:0 22px">★</span><span style="padding:0 22px">Learn it in under 60 seconds</span><span style="padding:0 22px">★</span><span style="padding:0 22px">Free shipping over $35</span><span style="padding:0 22px">★</span><span style="padding:0 22px">300 cards per pack</span><span style="padding:0 22px">★</span><span style="padding:0 22px">No buzzer. No timer. No giant box.</span><span style="padding:0 22px">★</span><span style="padding:0 22px">Learn it in under 60 seconds</span><span style="padding:0 22px">★</span><span style="padding:0 22px">Free shipping over $35</span><span style="padding:0 22px">★</span>
+    </div>
+  </div>
+
+  <div style="background:#14100F;position:sticky;top:0;z-index:30">
+    <div style="max-width:1200px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;gap:40px">
+      <button onClick="{{ goHome }}" style="flex:0 0 auto;background:#FFF6E9;border:0;border-radius:10px;padding:7px 14px;cursor:pointer;line-height:0">
+        <img src="https://taboothegame.com/cdn/shop/files/Your_paragraph_text_2.png?height=100&amp;v=1774032736" alt="The Taboo Shop" style="height:30px;width:auto;display:block" />
+      </button>
+      <div style="flex:1;display:flex;align-items:center;gap:26px">
+        <button onClick="{{ goShop }}" style="background:none;border:0;padding:0;cursor:pointer;color:{{ navShop }};font:700 14.5px 'DM Sans'">Catalog</button>
+        <button onClick="{{ goPacks }}" style="background:none;border:0;padding:0;cursor:pointer;color:#FFF6E9;font:500 14.5px 'DM Sans';opacity:.78">Tabooster packs</button>
+        <button onClick="{{ goGear }}" style="background:none;border:0;padding:0;cursor:pointer;color:#FFF6E9;font:500 14.5px 'DM Sans';opacity:.78">Game Night</button>
+        <button onClick="{{ goPlay }}" style="background:none;border:0;padding:0;cursor:pointer;color:{{ navPlay }};font:700 14.5px 'DM Sans'">How to play</button>
+        <button onClick="{{ goAbout }}" style="background:none;border:0;padding:0;cursor:pointer;color:{{ navAbout }};font:700 14.5px 'DM Sans'">Our story</button>
+      </div>
+      <div style="flex:0 0 auto;display:flex;align-items:center;gap:14px">
+        <button onClick="{{ goBase }}" style="background:none;border:1.5px solid rgba(255,246,233,.35);border-radius:10px;padding:10px 14px;cursor:pointer;color:#FFF6E9;font:700 13px 'DM Sans'">Board game on Amazon ↗</button>
+        <button onClick="{{ goCart }}" style="position:relative;background:#E8402A;border:0;border-radius:10px;padding:10px 16px;cursor:pointer;color:#FFF6E9;font:700 13px 'DM Sans';display:flex;align-items:center;gap:8px">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7.5h14l-1.2 13H6.2Z"></path><path d="M8.75 9.5V6a3.25 3.25 0 0 1 6.5 0v3.5"></path></svg>
+          Cart · {{ cartCount }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+    <div style="background:#E8402A;color:#FFF6E9">
+      <div style="max-width:1200px;margin:0 auto;padding:64px 24px 72px;display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center">
+        <div>
+          <p style="margin:0 0 18px;font:700 11.5px 'DM Sans';letter-spacing:.22em;text-transform:uppercase;opacity:.9">Tabooster packs · 3 flavors</p>
+          <h1 style="margin:0;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:86px;line-height:.86;letter-spacing:-.05em">No buzzer.<br />No timer.<br />No giant box.</h1>
+          <p style="margin:26px 0 0;font-size:20px;line-height:1.5;max-width:470px;opacity:.95">Just 300 wildly fun cards designed for your favorite game night. Cards-only expansion packs for the Taboo game you already own.</p>
+          <div style="display:flex;gap:12px;margin-top:32px">
+            <button onClick="{{ goPacks }}" style="background:#FFF6E9;color:#14100F;border:0;border-radius:14px;padding:18px 26px;font:700 16px 'DM Sans';cursor:pointer">Shop Tabooster packs</button>
+            <button onClick="{{ goPlay }}" style="background:none;color:#FFF6E9;border:2px solid rgba(255,246,233,.45);border-radius:14px;padding:18px 26px;font:700 16px 'DM Sans';cursor:pointer">How to play</button>
+          </div>
+        </div>
+        <img src="https://taboothegame.com/cdn/shop/files/Shopify6.png?v=1778118214&amp;width=1600" alt="Tabooster packs" style="width:100%;display:block;border-radius:24px;aspect-ratio:4/3;object-fit:cover" />
+      </div>
+    </div>
+
+    <div style="max-width:1200px;margin:0 auto;padding:72px 24px 24px;display:grid;grid-template-columns:1fr 420px;gap:56px;align-items:start">
+      <div>
+        <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:8px">
+          <h2 style="margin:0;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:42px;letter-spacing:-.04em">Tabooster Packs</h2>
+          <button onClick="{{ goShop }}" style="background:none;border:0;padding:0;font:700 14.5px 'DM Sans';color:#E8402A;cursor:pointer">See the whole catalog →</button>
+        </div>
+        <p style="margin:0 0 26px;font-size:16px;color:#5A4F49">300+ all-new cards each. Compact, travel-friendly box. Shuffle them into the game you already own.</p>
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:20px">
+          <sc-for list="{{ featured }}" as="p" hint-placeholder-count="4">
+            <button onClick="{{ p.open }}" style="text-align:left;background:#FFFFFF;border:0;border-radius:22px;padding:0;overflow:hidden;cursor:pointer;color:#14100F" style-hover="box-shadow:0 16px 34px rgba(20,16,15,.14)">
+              <div style="aspect-ratio:4/3;background:{{ p.tint }};display:flex;align-items:center;justify-content:center;padding:16px">
+                <sc-if value="{{ p.hasImg }}" hint-placeholder-val="{{ false }}">
+                  <img src="{{ p.img }}" alt="{{ p.name }}" style="max-width:100%;max-height:100%;object-fit:contain;display:block" />
+                </sc-if>
+                <sc-if value="{{ p.noImg }}" hint-placeholder-val="{{ false }}">
+                  <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:30px;line-height:.94;letter-spacing:-.035em;color:{{ p.ink }};text-align:center">{{ p.short }}</span>
+                </sc-if>
+              </div>
+              <div style="padding:18px 20px 20px">
+                <div style="font:700 18px 'DM Sans';margin-bottom:4px">{{ p.name }}</div>
+                <div style="font:500 13px 'DM Sans';color:#8A7C73;margin-bottom:12px">{{ p.cardLine }}</div>
+                <div style="display:flex;align-items:center;justify-content:space-between">
+                  <span style="font:700 19px 'DM Sans';color:#E8402A">{{ p.price }}</span>
+                  <span style="background:#14100F;color:#FFF6E9;border-radius:11px;padding:10px 16px;font:700 13.5px 'DM Sans'">View pack</span>
+                </div>
+              </div>
+            </button>
+          </sc-for>
+        </div>
+      </div>
+
+      <div style="background:#FFFFFF;border:2px solid #14100F;border-radius:24px;box-shadow:10px 10px 0 #14100F;overflow:hidden;position:sticky;top:110px">
+        <div style="padding:22px 22px 8px">
+          <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:6px">
+            <h3 style="margin:0;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:26px;letter-spacing:-.035em">Try a card</h3>
+            <span style="font:700 10.5px 'DM Sans';letter-spacing:.14em;text-transform:uppercase;color:#E8402A">Live from the packs</span>
+          </div>
+          <p style="margin:0 0 18px;font-size:14.5px;line-height:1.5;color:#5A4F49">Get someone to say the top word. Use any of the words below it and the buzzer wins.</p>
+        </div>
+        <div key="{{ cardKey }}" style="animation:dealInD .4s cubic-bezier(.2,.9,.3,1.2) both;padding:0 22px 18px">
+          <button onClick="{{ openCardPack }}" style="width:100%;background:none;border:0;padding:0;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;font:700 10.5px 'DM Sans';letter-spacing:.16em;text-transform:uppercase;color:#8A7C73">
+            <span>{{ card.pack }}</span><span style="color:#E8402A">Shop it →</span>
+          </button>
+          <div style="background:#14100F;color:#FFF6E9;border-radius:16px;padding:22px;text-align:center;margin-bottom:16px">
+            <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:40px;letter-spacing:-.03em;text-transform:uppercase">{{ card.word }}</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:9px">
+            <sc-for list="{{ card.taboo }}" as="w" hint-placeholder-count="5">
+              <div style="display:flex;align-items:center;gap:11px">
+                <span style="flex:0 0 auto;width:18px;height:18px;border-radius:50%;background:#FDE3DE;color:#E8402A;font:800 12px 'DM Sans';display:flex;align-items:center;justify-content:center">×</span>
+                <span style="font:500 17px 'DM Sans';text-transform:uppercase;color:#5A4F49;text-decoration:line-through;text-decoration-color:#E8402A;text-decoration-thickness:2px">{{ w }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+        <div style="background:#14100F;padding:14px;display:flex;gap:10px;align-items:center">
+          <div style="flex:0 0 auto;width:64px;text-align:center;color:#FFF6E9">
+            <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:26px;letter-spacing:-.02em;color:{{ timerColor }}">{{ timeLabel }}</div>
+            <div style="font:700 9px 'DM Sans';letter-spacing:.14em;text-transform:uppercase;opacity:.5">left</div>
+          </div>
+          <button onClick="{{ toggleTimer }}" style="flex:1;background:#FFF6E9;color:#14100F;border:0;border-radius:12px;padding:15px;font:700 15px 'DM Sans';cursor:pointer">{{ timerLabel }}</button>
+          <button onClick="{{ nextCard }}" style="flex:0 0 auto;background:rgba(255,246,233,.14);color:#FFF6E9;border:0;border-radius:12px;padding:15px 16px;font:700 14px 'DM Sans';cursor:pointer">Next</button>
+          <button onClick="{{ buzz }}" style="flex:0 0 auto;width:78px;height:50px;background:#E8402A;color:#FFF6E9;border:0;border-radius:12px;font:800 13px 'DM Sans';letter-spacing:.1em;cursor:pointer">BUZZ</button>
+        </div>
+      </div>
+    </div>
+
+    <div style="max-width:1200px;margin:0 auto;padding:48px 24px 0">
+      <div style="border:2px solid #14100F;border-radius:24px;overflow:hidden;display:grid;grid-template-columns:230px 1fr auto;align-items:center;background:#EFE4D4">
+        <img src="https://taboothegame.com/cdn/shop/files/24.png?v=1773341930&amp;width=800" alt="Taboo Board Game with Buzzer" style="width:100%;height:190px;object-fit:contain;background:#FFFFFF;display:block" />
+        <div style="padding:26px 30px">
+          <span style="display:inline-block;background:#14100F;color:#FFF6E9;border-radius:999px;padding:5px 11px;font:700 10px 'DM Sans';letter-spacing:.14em;text-transform:uppercase;margin-bottom:10px">Don't own the game?</span>
+          <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:30px;line-height:1;letter-spacing:-.04em;margin-bottom:8px">Taboo Board Game with Buzzer!</div>
+          <p style="margin:0;font-size:15.5px;line-height:1.5;color:#5A4F49;max-width:620px">450 game cards including food and drink categories, the electronic buzzer and the 1-minute timer. $29.99, exclusive on Amazon — Taboosters stay in your cart here.</p>
+        </div>
+        <button onClick="{{ goBase }}" style="align-self:stretch;background:#F2B233;border:0;border-left:2px solid #14100F;padding:0 34px;font:700 15.5px 'DM Sans';color:#14100F;cursor:pointer;display:flex;align-items:center;gap:10px">
+          Buy on Amazon
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 5h11v11"></path><path d="M19 5 6 18"></path></svg>
+        </button>
+      </div>
+    </div>
+
+    <div style="background:#1F7A6B;color:#FFF6E9;margin-top:64px">
+      <div style="max-width:1200px;margin:0 auto;padding:56px 24px;display:grid;grid-template-columns:320px 1fr;gap:56px">
+        <div>
+          <p style="margin:0 0 12px;font:700 11px 'DM Sans';letter-spacing:.18em;text-transform:uppercase;color:#F2B233">Why everyone loves it</p>
+          <h2 style="margin:0;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:38px;line-height:1;letter-spacing:-.04em">Perfect for parties, families and groups</h2>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px 40px">
+          <sc-for list="{{ loves }}" as="l" hint-placeholder-count="4">
+            <div style="display:flex;gap:13px;align-items:flex-start;font-size:17px;line-height:1.45;padding-top:16px;border-top:1.5px solid rgba(255,246,233,.25)">
+              <span style="flex:0 0 auto;width:20px;height:20px;border-radius:50%;background:#F2B233;color:#14100F;font:800 12px 'DM Sans';display:flex;align-items:center;justify-content:center;margin-top:3px">✓</span>{{ l }}
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+
+    <div style="max-width:1200px;margin:0 auto;padding:64px 24px 72px;display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center">
+      <div>
+        <h2 style="margin:0 0 8px;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:42px;letter-spacing:-.04em">Never played?</h2>
+        <p style="margin:0 0 22px;font-size:16px;color:#5A4F49">Three lines and you're ready.</p>
+        <sc-for list="{{ rules }}" as="r" hint-placeholder-count="3">
+          <div style="display:flex;gap:18px;align-items:flex-start;padding:18px 0;border-top:1.5px solid #E7DCCC">
+            <span style="flex:0 0 auto;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:32px;line-height:1;letter-spacing:-.04em;color:#E8402A;width:32px">{{ r.n }}</span>
+            <span style="font-size:16.5px;line-height:1.45;color:#5A4F49;padding-top:4px">{{ r.t }}</span>
+          </div>
+        </sc-for>
+        <button onClick="{{ goPlay }}" style="margin-top:24px;background:#14100F;color:#FFF6E9;border:0;border-radius:14px;padding:17px 26px;font:700 15.5px 'DM Sans';cursor:pointer">Read the full rules</button>
+      </div>
+      <img src="https://taboothegame.com/cdn/shop/files/card_3x_popCulture_rev01.png?v=1778118582&amp;width=1200" alt="Tabooster cards" style="width:100%;display:block;border-radius:24px;aspect-ratio:4/3;object-fit:cover;background:#14100F" />
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isShop }}" hint-placeholder-val="{{ false }}">
+    <div style="background:#14100F;color:#FFF6E9">
+      <div style="max-width:1200px;margin:0 auto;padding:52px 24px">
+        <h1 style="margin:0 0 10px;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:64px;letter-spacing:-.05em;line-height:.92">Catalog</h1>
+        <p style="margin:0;font-size:17px;color:rgba(255,246,233,.65)">{{ productCount }} products — Tabooster packs, Game Night gear and apparel.</p>
+      </div>
+    </div>
+    <div style="max-width:1200px;margin:0 auto;padding:40px 24px 80px;display:grid;grid-template-columns:230px 1fr;gap:44px;align-items:start">
+      <div style="position:sticky;top:110px">
+        <p style="margin:0 0 14px;font:700 11px 'DM Sans';letter-spacing:.16em;text-transform:uppercase;color:#8A7C73">Collections</p>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:28px">
+          <sc-for list="{{ filters }}" as="f" hint-placeholder-count="5">
+            <button onClick="{{ f.pick }}" style="text-align:left;border:1.5px solid {{ f.border }};background:{{ f.bg }};color:{{ f.fg }};border-radius:12px;padding:12px 15px;font:700 14px 'DM Sans';cursor:pointer">{{ f.label }}</button>
+          </sc-for>
+        </div>
+        <div style="border:2px solid #14100F;border-radius:16px;padding:16px;background:#EFE4D4">
+          <div style="font:700 14.5px 'DM Sans';margin-bottom:6px">Need the box itself?</div>
+          <p style="margin:0 0 12px;font-size:13.5px;line-height:1.5;color:#5A4F49">450 cards, buzzer and timer — $29.99, exclusive on Amazon.</p>
+          <button onClick="{{ goBase }}" style="width:100%;background:#F2B233;border:1.5px solid #14100F;border-radius:11px;padding:12px;font:700 13.5px 'DM Sans';color:#14100F;cursor:pointer">Buy on Amazon ↗</button>
+        </div>
+      </div>
+      <div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+          <p style="margin:0;font:500 14.5px 'DM Sans';color:#5A4F49">{{ resultCount }} items</p>
+          <span style="font:700 13.5px 'DM Sans';color:#8A7C73">Sort: Featured</span>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:22px">
+          <sc-for list="{{ shopList }}" as="p" hint-placeholder-count="9">
+            <button onClick="{{ p.open }}" style="text-align:left;background:#FFFFFF;border:0;border-radius:20px;padding:0;overflow:hidden;cursor:pointer;color:#14100F" style-hover="box-shadow:0 14px 30px rgba(20,16,15,.13)">
+              <div style="aspect-ratio:1;background:{{ p.tint }};display:flex;align-items:center;justify-content:center;padding:16px;position:relative">
+                <sc-if value="{{ p.hot }}" hint-placeholder-val="{{ false }}">
+                  <span style="position:absolute;top:12px;left:12px;background:#E8402A;color:#FFF6E9;border-radius:999px;padding:4px 10px;font:700 10px 'DM Sans';letter-spacing:.12em;text-transform:uppercase">Best seller</span>
+                </sc-if>
+                <sc-if value="{{ p.hasImg }}" hint-placeholder-val="{{ false }}">
+                  <img src="{{ p.img }}" alt="{{ p.name }}" style="max-width:100%;max-height:100%;object-fit:contain;display:block" />
+                </sc-if>
+                <sc-if value="{{ p.noImg }}" hint-placeholder-val="{{ false }}">
+                  <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:24px;line-height:.96;letter-spacing:-.035em;color:{{ p.ink }};text-align:center">{{ p.short }}</span>
+                </sc-if>
+              </div>
+              <div style="padding:16px 18px 18px">
+                <div style="font:700 10px 'DM Sans';letter-spacing:.14em;text-transform:uppercase;color:#8A7C73;margin-bottom:7px">{{ p.cat }}</div>
+                <div style="font:700 16.5px 'DM Sans';line-height:1.25;margin-bottom:4px">{{ p.name }}</div>
+                <div style="font:500 12.5px 'DM Sans';color:#8A7C73;margin-bottom:12px">{{ p.cardLine }}</div>
+                <div style="display:flex;align-items:center;justify-content:space-between">
+                  <span style="font:700 17px 'DM Sans';color:#E8402A">{{ p.price }}</span>
+                  <span style="font:700 13px 'DM Sans';color:#14100F;border:1.5px solid #DCCEBB;border-radius:10px;padding:8px 14px">View</span>
+                </div>
+              </div>
+            </button>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isPdp }}" hint-placeholder-val="{{ false }}">
+    <div style="max-width:1200px;margin:0 auto;padding:28px 24px 80px">
+      <button onClick="{{ goShop }}" style="background:none;border:0;padding:0;font:700 13.5px 'DM Sans';color:#8A7C73;cursor:pointer;margin-bottom:20px">← Back to catalog</button>
+      <div style="display:grid;grid-template-columns:1fr 460px;gap:56px;align-items:start">
+        <div style="position:sticky;top:110px">
+          <div style="background:{{ prod.tint }};border-radius:26px;aspect-ratio:1;display:flex;align-items:center;justify-content:center;padding:40px;overflow:hidden">
+            <sc-if value="{{ galleryHasImg }}" hint-placeholder-val="{{ false }}">
+              <img src="{{ galleryImg }}" alt="{{ prod.name }}" style="max-width:100%;max-height:100%;object-fit:contain;display:block" />
+            </sc-if>
+            <sc-if value="{{ galleryNoImg }}" hint-placeholder-val="{{ false }}">
+              <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:56px;line-height:.94;letter-spacing:-.045em;color:{{ prod.ink }};text-align:center">{{ prod.short }}</span>
+            </sc-if>
+          </div>
+          <div style="display:flex;gap:12px;margin-top:14px">
+            <sc-for list="{{ thumbs }}" as="t" hint-placeholder-count="0">
+              <button onClick="{{ t.pick }}" style="flex:0 0 92px;aspect-ratio:1;border-radius:14px;background:{{ prod.tint }};border:2px solid {{ t.b }};padding:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;overflow:hidden">
+                <img src="{{ t.img }}" alt="" style="max-width:100%;max-height:100%;object-fit:contain;display:block" />
+              </button>
+            </sc-for>
+          </div>
+        </div>
+
+        <div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px">
+            <span style="background:#EFE4D4;border-radius:999px;padding:5px 11px;font:700 10px 'DM Sans';letter-spacing:.13em;text-transform:uppercase;color:#8A7C73">{{ prod.cat }}</span>
+            <span style="background:#EFE4D4;border-radius:999px;padding:5px 11px;font:700 10px 'DM Sans';letter-spacing:.13em;text-transform:uppercase;color:#8A7C73">{{ prod.stock }}</span>
+          </div>
+          <h1 style="margin:0 0 14px;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:46px;line-height:1;letter-spacing:-.045em">{{ prod.name }}</h1>
+          <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:20px">
+            <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:36px;letter-spacing:-.035em;color:#E8402A">{{ prod.price }}</span>
+            <span style="font:500 14px 'DM Sans';color:#8A7C73">{{ prod.priceNote }}</span>
+          </div>
+          <p style="margin:0 0 16px;font-size:16.5px;line-height:1.6;color:#5A4F49">{{ prod.blurb }}</p>
+          <p style="margin:0 0 26px;font-size:16.5px;line-height:1.6;color:#5A4F49">{{ prod.blurb2 }}</p>
+
+          <sc-if value="{{ isExternal }}" hint-placeholder-val="{{ false }}">
+            <div style="border:2px solid #14100F;border-radius:18px;padding:18px;margin-bottom:24px;background:#EFE4D4">
+              <p style="margin:0 0 10px;font:700 11px 'DM Sans';letter-spacing:.14em;text-transform:uppercase">Where it ships from</p>
+              <p style="margin:0;font-size:15px;line-height:1.5;color:#5A4F49">This edition is exclusive on Amazon. Buy it there — your Taboosters stay in this cart and check out here.</p>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ hasVariants }}" hint-placeholder-val="{{ true }}">
+            <p style="margin:0 0 10px;font:700 11px 'DM Sans';letter-spacing:.14em;text-transform:uppercase;color:#8A7C73">{{ variantTitle }}</p>
+            <div style="display:flex;flex-direction:column;gap:9px;margin-bottom:24px">
+              <sc-for list="{{ variants }}" as="v" hint-placeholder-count="2">
+                <button onClick="{{ v.pick }}" style="display:flex;align-items:center;gap:14px;text-align:left;border:2px solid {{ v.border }};background:{{ v.bg }};border-radius:15px;padding:15px 16px;cursor:pointer;color:#14100F;width:100%">
+                  <span style="flex:0 0 auto;width:20px;height:20px;border-radius:50%;border:2px solid {{ v.dot }};background:{{ v.dotFill }}"></span>
+                  <span style="flex:1">
+                    <span style="display:block;font:700 15px 'DM Sans'">{{ v.label }}</span>
+                    <span style="display:block;font:400 13.5px 'DM Sans';color:#5A4F49">{{ v.note }}</span>
+                  </span>
+                  <span style="font:700 15px 'DM Sans';color:#E8402A">{{ v.price }}</span>
+                </button>
+              </sc-for>
+            </div>
+          </sc-if>
+
+          <div style="display:flex;gap:12px;margin-bottom:26px">
+            <div style="display:flex;align-items:center;gap:18px;border:1.5px solid #DCCEBB;border-radius:14px;padding:0 18px">
+              <button onClick="{{ qtyDown }}" style="background:none;border:0;font:700 20px 'DM Sans';cursor:pointer;color:#14100F;line-height:1">−</button>
+              <span style="font:700 15px 'DM Sans';min-width:14px;text-align:center">{{ qty }}</span>
+              <button onClick="{{ qtyUp }}" style="background:none;border:0;font:700 20px 'DM Sans';cursor:pointer;color:#14100F;line-height:1">+</button>
+            </div>
+            <button onClick="{{ buyAction }}" style="flex:1;background:#E8402A;color:#FFF6E9;border:0;border-radius:14px;padding:19px;font:700 16.5px 'DM Sans';cursor:pointer">{{ addLabel }}</button>
+          </div>
+
+          <div style="border:1.5px solid #E7DCCC;border-radius:18px;overflow:hidden;margin-bottom:22px">
+            <div style="background:#FFFFFF;padding:20px 22px">
+              <p style="margin:0 0 13px;font:700 11px 'DM Sans';letter-spacing:.14em;text-transform:uppercase">What you get</p>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:11px 22px">
+                <sc-for list="{{ prod.box }}" as="b" hint-placeholder-count="4">
+                  <div style="display:flex;gap:11px;align-items:center;font-size:15px;color:#5A4F49">
+                    <span style="flex:0 0 auto;width:18px;height:18px;border-radius:50%;background:#1F7A6B;color:#FFF6E9;font:800 11px 'DM Sans';display:flex;align-items:center;justify-content:center">✓</span>{{ b }}
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+            <div style="background:#EFE4D4;padding:13px 22px;font:500 13.5px 'DM Sans';color:#5A4F49">{{ prod.ships }}</div>
+          </div>
+
+          <sc-if value="{{ hasSample }}" hint-placeholder-val="{{ true }}">
+            <div style="background:#14100F;color:#FFF6E9;border-radius:20px;padding:24px">
+              <p style="margin:0 0 14px;font:700 11px 'DM Sans';letter-spacing:.14em;text-transform:uppercase;color:#F2B233">A card from this pack</p>
+              <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:38px;text-transform:uppercase;letter-spacing:-.03em;margin-bottom:14px">{{ prod.sample.word }}</div>
+              <div style="display:flex;flex-wrap:wrap;gap:8px">
+                <sc-for list="{{ prod.sample.taboo }}" as="t" hint-placeholder-count="5">
+                  <span style="border:1px solid rgba(255,246,233,.28);border-radius:999px;padding:7px 13px;font:500 13px 'DM Sans';text-transform:uppercase;opacity:.85;text-decoration:line-through;text-decoration-color:#E8402A;text-decoration-thickness:2px">{{ t }}</span>
+                </sc-for>
+              </div>
+            </div>
+          </sc-if>
+        </div>
+      </div>
+
+      <h2 style="margin:72px 0 22px;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:34px;letter-spacing:-.04em">Goes well with</h2>
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:18px">
+        <sc-for list="{{ related }}" as="r" hint-placeholder-count="5">
+          <button onClick="{{ r.open }}" style="text-align:left;background:#FFFFFF;border:0;border-radius:18px;padding:0;overflow:hidden;cursor:pointer;color:#14100F" style-hover="box-shadow:0 12px 26px rgba(20,16,15,.12)">
+            <div style="aspect-ratio:1;background:{{ r.tint }};display:flex;align-items:center;justify-content:center;padding:14px">
+              <sc-if value="{{ r.hasImg }}" hint-placeholder-val="{{ false }}">
+                <img src="{{ r.img }}" alt="{{ r.name }}" style="max-width:100%;max-height:100%;object-fit:contain;display:block" />
+              </sc-if>
+              <sc-if value="{{ r.noImg }}" hint-placeholder-val="{{ false }}">
+                <span style="font:700 14px 'DM Sans';color:{{ r.ink }};text-align:center">{{ r.short }}</span>
+              </sc-if>
+            </div>
+            <div style="padding:14px 16px 16px">
+              <div style="font:700 14px 'DM Sans';line-height:1.25;margin-bottom:6px">{{ r.name }}</div>
+              <div style="font:700 14px 'DM Sans';color:#E8402A">{{ r.price }}</div>
+            </div>
+          </button>
+        </sc-for>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isCart }}" hint-placeholder-val="{{ false }}">
+    <div style="max-width:1200px;margin:0 auto;padding:48px 24px 80px">
+      <h1 style="margin:0 0 28px;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:56px;letter-spacing:-.05em">Your cart</h1>
+      <div style="display:grid;grid-template-columns:1fr 380px;gap:48px;align-items:start">
+        <div>
+          <div style="background:#FFFFFF;border-radius:16px;padding:16px 20px;margin-bottom:24px">
+            <p style="margin:0 0 10px;font:700 14px 'DM Sans'">{{ shipNote }}</p>
+            <span style="display:block;height:8px;border-radius:4px;background:#EFE4D4;overflow:hidden"><span style="display:block;height:8px;width:{{ shipPct }};background:#1F7A6B"></span></span>
+          </div>
+          <sc-if value="{{ cartEmpty }}" hint-placeholder-val="{{ false }}">
+            <div style="background:#FFFFFF;border-radius:20px;padding:56px;text-align:center">
+              <p style="margin:0 0 18px;font-size:17px;color:#5A4F49">Your cart is empty. Suspiciously quiet.</p>
+              <button onClick="{{ goShop }}" style="background:#E8402A;color:#FFF6E9;border:0;border-radius:13px;padding:15px 26px;font:700 15px 'DM Sans';cursor:pointer">Continue shopping</button>
+            </div>
+          </sc-if>
+          <sc-for list="{{ cartLines }}" as="l" hint-placeholder-count="2">
+            <div style="display:flex;gap:20px;padding:22px 0;border-top:1.5px solid #E7DCCC;align-items:center">
+              <div style="flex:0 0 110px;height:110px;border-radius:16px;background:{{ l.tint }};display:flex;align-items:center;justify-content:center;padding:10px;overflow:hidden">
+                <sc-if value="{{ l.hasImg }}" hint-placeholder-val="{{ false }}">
+                  <img src="{{ l.img }}" alt="{{ l.name }}" style="max-width:100%;max-height:100%;object-fit:contain;display:block" />
+                </sc-if>
+                <sc-if value="{{ l.noImg }}" hint-placeholder-val="{{ false }}">
+                  <span style="font:700 13px 'DM Sans';color:{{ l.ink }};text-align:center">{{ l.short }}</span>
+                </sc-if>
+              </div>
+              <div style="flex:1;min-width:0">
+                <div style="font:700 18px 'DM Sans';margin-bottom:4px">{{ l.name }}</div>
+                <div style="font:500 13.5px 'DM Sans';color:#8A7C73">{{ l.variant }}</div>
+              </div>
+              <div style="display:flex;align-items:center;gap:16px;border:1.5px solid #E7DCCC;border-radius:999px;padding:8px 16px">
+                <button onClick="{{ l.dec }}" style="background:none;border:0;font:700 19px 'DM Sans';cursor:pointer;color:#14100F;line-height:1">−</button>
+                <span style="font:700 14.5px 'DM Sans';min-width:14px;text-align:center">{{ l.qty }}</span>
+                <button onClick="{{ l.inc }}" style="background:none;border:0;font:700 19px 'DM Sans';cursor:pointer;color:#14100F;line-height:1">+</button>
+              </div>
+              <div style="flex:0 0 110px;text-align:right">
+                <div style="font:700 18px 'DM Sans';color:#E8402A;margin-bottom:6px">{{ l.total }}</div>
+                <button onClick="{{ l.remove }}" style="background:none;border:0;padding:0;font:500 13px 'DM Sans';color:#8A7C73;cursor:pointer">Remove</button>
+              </div>
+            </div>
+          </sc-for>
+
+          <p style="margin:36px 0 14px;font:700 11px 'DM Sans';letter-spacing:.14em;text-transform:uppercase;color:#8A7C73">Goes well with</p>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px">
+            <sc-for list="{{ upsells }}" as="u" hint-placeholder-count="3">
+              <div style="background:#FFFFFF;border-radius:18px;padding:16px;display:flex;gap:14px;align-items:center">
+                <div style="flex:0 0 64px;height:64px;border-radius:12px;background:{{ u.tint }};display:flex;align-items:center;justify-content:center;padding:6px;overflow:hidden">
+                  <sc-if value="{{ u.hasImg }}" hint-placeholder-val="{{ false }}">
+                    <img src="{{ u.img }}" alt="{{ u.name }}" style="max-width:100%;max-height:100%;object-fit:contain;display:block" />
+                  </sc-if>
+                  <sc-if value="{{ u.noImg }}" hint-placeholder-val="{{ false }}">
+                    <span style="font:700 10px 'DM Sans';color:{{ u.ink }};text-align:center">{{ u.short }}</span>
+                  </sc-if>
+                </div>
+                <div style="flex:1;min-width:0">
+                  <div style="font:700 14px 'DM Sans';line-height:1.25;margin-bottom:6px">{{ u.name }}</div>
+                  <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+                    <span style="font:700 14px 'DM Sans';color:#E8402A">{{ u.price }}</span>
+                    <button onClick="{{ u.add }}" style="background:#14100F;color:#FFF6E9;border:0;border-radius:10px;padding:8px 13px;font:700 12.5px 'DM Sans';cursor:pointer">Add</button>
+                  </div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+        <div style="background:#FFFFFF;border-radius:22px;padding:24px;position:sticky;top:110px">
+          <h2 style="margin:0 0 18px;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:24px;letter-spacing:-.035em">Order summary</h2>
+          <div style="display:flex;justify-content:space-between;font-size:15px;color:#5A4F49;margin-bottom:10px"><span>{{ cartCount }} items</span><span>{{ subtotal }}</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:15px;color:#5A4F49;margin-bottom:10px"><span>Shipping</span><span>{{ shipping }}</span></div>
+          <div style="display:flex;justify-content:space-between;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:26px;letter-spacing:-.03em;padding-top:14px;border-top:1.5px dashed #E7DCCC;margin-bottom:20px"><span>Total</span><span>{{ total }}</span></div>
+          <button onClick="{{ payAction }}" style="width:100%;background:#E8402A;color:#FFF6E9;border:0;border-radius:14px;padding:18px;font:700 16px 'DM Sans';cursor:pointer">Checkout</button>
+          <button onClick="{{ goShop }}" style="width:100%;margin-top:10px;background:none;border:0;padding:12px;font:700 14px 'DM Sans';color:#8A7C73;cursor:pointer">Continue shopping</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isCheckout }}" hint-placeholder-val="{{ false }}">
+    <div style="max-width:1200px;margin:0 auto;padding:48px 24px 80px">
+      <button onClick="{{ goCart }}" style="background:none;border:0;padding:0;font:700 13.5px 'DM Sans';color:#E8402A;cursor:pointer;margin-bottom:16px">← Back to cart</button>
+      <h1 style="margin:0 0 28px;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:56px;letter-spacing:-.05em">Checkout</h1>
+      <div style="display:grid;grid-template-columns:1fr 380px;gap:48px;align-items:start">
+        <div>
+          <div style="display:flex;gap:10px;margin-bottom:28px">
+            <sc-for list="{{ steps3 }}" as="s" hint-placeholder-count="3">
+              <div style="flex:1">
+                <span style="display:block;height:5px;border-radius:3px;background:{{ s.bar }};margin-bottom:8px"></span>
+                <span style="font:700 10.5px 'DM Sans';letter-spacing:.13em;text-transform:uppercase;color:{{ s.fg }}">{{ s.label }}</span>
+              </div>
+            </sc-for>
+          </div>
+          <div style="display:flex;gap:12px;margin-bottom:20px">
+            <button style="flex:1;background:#14100F;color:#FFF6E9;border:0;border-radius:14px;padding:17px;font:700 15px 'DM Sans';cursor:pointer">Shop Pay</button>
+            <button style="flex:1;background:#FFFFFF;color:#14100F;border:1.5px solid #E7DCCC;border-radius:14px;padding:17px;font:700 15px 'DM Sans';cursor:pointer">PayPal</button>
+            <button style="flex:1;background:#FFFFFF;color:#14100F;border:1.5px solid #E7DCCC;border-radius:14px;padding:17px;font:700 15px 'DM Sans';cursor:pointer">Google Pay</button>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:22px;color:#8A7C73;font:500 13px 'DM Sans'">
+            <span style="flex:1;height:1px;background:#E7DCCC"></span>or pay by card<span style="flex:1;height:1px;background:#E7DCCC"></span>
+          </div>
+          <div style="background:#FFFFFF;border-radius:20px;padding:24px;display:grid;grid-template-columns:1fr 1fr;gap:16px">
+            <sc-for list="{{ fields }}" as="f" hint-placeholder-count="6">
+              <label style="display:block;grid-column:{{ f.span }}">
+                <span style="display:block;font:700 11px 'DM Sans';letter-spacing:.13em;text-transform:uppercase;color:#8A7C73;margin-bottom:7px">{{ f.label }}</span>
+                <input placeholder="{{ f.ph }}" style="width:100%;background:#FFF6E9;border:1.5px solid #E7DCCC;border-radius:12px;padding:15px;font:500 15.5px 'DM Sans';color:#14100F;outline:none" style-focus="border-color:#E8402A" />
+              </label>
+            </sc-for>
+          </div>
+          <label style="display:flex;gap:12px;align-items:flex-start;margin-top:20px;background:#F2B233;border-radius:16px;padding:18px;font-size:14.5px;line-height:1.45">
+            <input type="checkbox" style="margin-top:2px;accent-color:#14100F;width:18px;height:18px" />
+            <span>Email me exclusive deals and early access to new products.</span>
+          </label>
+        </div>
+        <div style="background:#FFFFFF;border-radius:22px;padding:24px;position:sticky;top:110px">
+          <h2 style="margin:0 0 18px;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:24px;letter-spacing:-.035em">Order summary</h2>
+          <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:18px">
+            <sc-for list="{{ cartLines }}" as="l" hint-placeholder-count="2">
+              <div style="display:flex;gap:12px;align-items:center">
+                <div style="flex:0 0 48px;height:48px;border-radius:10px;background:{{ l.tint }};display:flex;align-items:center;justify-content:center;padding:4px;overflow:hidden">
+                  <sc-if value="{{ l.hasImg }}" hint-placeholder-val="{{ false }}">
+                    <img src="{{ l.img }}" alt="{{ l.name }}" style="max-width:100%;max-height:100%;object-fit:contain;display:block" />
+                  </sc-if>
+                </div>
+                <div style="flex:1;min-width:0">
+                  <div style="font:700 13.5px 'DM Sans';line-height:1.2">{{ l.name }}</div>
+                  <div style="font:500 12px 'DM Sans';color:#8A7C73">{{ l.variant }} · {{ l.qty }}</div>
+                </div>
+                <span style="font:700 14px 'DM Sans'">{{ l.total }}</span>
+              </div>
+            </sc-for>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:15px;color:#5A4F49;margin-bottom:10px;padding-top:14px;border-top:1.5px solid #E7DCCC"><span>Subtotal</span><span>{{ subtotal }}</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:15px;color:#5A4F49;margin-bottom:10px"><span>Shipping</span><span>{{ shipping }}</span></div>
+          <div style="display:flex;justify-content:space-between;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:26px;letter-spacing:-.03em;padding-top:14px;border-top:1.5px dashed #E7DCCC;margin-bottom:20px"><span>Total</span><span>{{ total }}</span></div>
+          <button onClick="{{ payAction }}" style="width:100%;background:#E8402A;color:#FFF6E9;border:0;border-radius:14px;padding:18px;font:700 16px 'DM Sans';cursor:pointer">{{ payLabel }}</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isDone }}" hint-placeholder-val="{{ false }}">
+    <div style="max-width:1200px;margin:0 auto;padding:80px 24px 100px">
+      <div style="max-width:640px;margin:0 auto;text-align:center;animation:popInD .42s cubic-bezier(.2,.9,.3,1.3) both">
+        <div style="width:104px;height:104px;border-radius:50%;background:#E8402A;color:#FFF6E9;display:flex;align-items:center;justify-content:center;margin:0 auto 28px;font:800 17px 'DM Sans';letter-spacing:.1em">BZZT</div>
+        <h1 style="margin:0 0 14px;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:60px;line-height:.98;letter-spacing:-.05em">Order in.</h1>
+        <p style="margin:0 0 30px;font-size:18px;line-height:1.55;color:#5A4F49">Confirmation sent. Your Taboosters are on the way — enough time to find people who lose gracefully.</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;text-align:left;margin-bottom:20px">
+          <div style="background:#FFFFFF;border-radius:18px;padding:20px">
+            <div style="font:500 13px 'DM Sans';color:#8A7C73;margin-bottom:6px">Order</div>
+            <div style="font:700 20px 'DM Sans'">#TB-40218</div>
+          </div>
+          <div style="background:#FFFFFF;border-radius:18px;padding:20px">
+            <div style="font:500 13px 'DM Sans';color:#8A7C73;margin-bottom:6px">Arrives</div>
+            <div style="font:700 20px 'DM Sans'">Fri, Aug 21</div>
+          </div>
+        </div>
+        <div style="background:#EFE4D4;border-radius:18px;padding:22px;text-align:left;display:flex;gap:18px;align-items:center;margin-bottom:26px">
+          <img src="https://taboothegame.com/cdn/shop/files/25.png?v=1773341932&amp;width=400" alt="Taboo Board Game with Buzzer" style="flex:0 0 86px;width:86px;height:86px;object-fit:contain;border-radius:12px;background:#FFFFFF" />
+          <div style="flex:1">
+            <div style="font:700 16px 'DM Sans';margin-bottom:4px">Don't own the board game yet?</div>
+            <p style="margin:0;font-size:14.5px;line-height:1.5;color:#5A4F49">450 cards, buzzer and timer — $29.99 on Amazon.</p>
+          </div>
+          <button onClick="{{ goBase }}" style="flex:0 0 auto;background:#F2B233;border:1.5px solid #14100F;border-radius:12px;padding:14px 18px;font:700 14px 'DM Sans';color:#14100F;cursor:pointer">Buy on Amazon ↗</button>
+        </div>
+        <button onClick="{{ goHome }}" style="background:#14100F;color:#FFF6E9;border:0;border-radius:14px;padding:17px 30px;font:700 16px 'DM Sans';cursor:pointer">Back to the game</button>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isPlay }}" hint-placeholder-val="{{ false }}">
+    <div style="background:#1F7A6B;color:#FFF6E9">
+      <div style="max-width:1200px;margin:0 auto;padding:60px 24px;display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center">
+        <div>
+          <p style="margin:0 0 14px;font:700 11.5px 'DM Sans';letter-spacing:.2em;text-transform:uppercase;opacity:.82">4+ players · ages 13+ · 60 seconds</p>
+          <h1 style="margin:0 0 16px;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:68px;line-height:.94;letter-spacing:-.05em">How to play</h1>
+          <p style="margin:0;font-size:18px;line-height:1.55;opacity:.92;max-width:460px">Easy to learn in under 60 seconds. Learning it is not the hard part.</p>
+        </div>
+        <img src="https://taboothegame.com/cdn/shop/files/card_3x_90s_rev02.png?v=1778118582&amp;width=1200" alt="Tabooster cards" style="width:100%;display:block;border-radius:24px;aspect-ratio:16/10;object-fit:cover;background:#14100F" />
+      </div>
+    </div>
+    <div style="max-width:1200px;margin:0 auto;padding:52px 24px 80px;display:grid;grid-template-columns:1fr 380px;gap:56px;align-items:start">
+      <div>
+        <sc-for list="{{ steps }}" as="s" hint-placeholder-count="5">
+          <div style="display:flex;gap:20px;align-items:flex-start;padding:22px 0;border-bottom:1.5px solid #E7DCCC">
+            <span style="flex:0 0 42px;height:42px;border-radius:12px;background:#14100F;color:#FFF6E9;font:800 17px 'DM Sans';display:flex;align-items:center;justify-content:center">{{ s.n }}</span>
+            <div>
+              <div style="font:700 19px 'DM Sans';margin-bottom:5px">{{ s.h }}</div>
+              <div style="font-size:16px;line-height:1.5;color:#5A4F49;max-width:640px">{{ s.t }}</div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+      <div style="position:sticky;top:110px;display:flex;flex-direction:column;gap:18px">
+        <div style="background:#14100F;color:#FFF6E9;border-radius:22px;padding:24px">
+          <p style="margin:0 0 12px;font:700 11px 'DM Sans';letter-spacing:.14em;text-transform:uppercase;color:#F2B233">Taboosters need no batteries</p>
+          <p style="margin:0 0 18px;font-size:16px;line-height:1.5">Every Tabooster is cards-only — no buzzer, no timer, no giant box. Shuffle them into the game you already own and play exactly the same way.</p>
+          <button onClick="{{ goPacks }}" style="background:#E8402A;color:#FFF6E9;border:0;border-radius:13px;padding:15px 22px;font:700 15px 'DM Sans';cursor:pointer">Shop the packs</button>
+        </div>
+        <div style="border:2px solid #14100F;border-radius:20px;padding:22px;background:#EFE4D4">
+          <div style="font:700 16px 'DM Sans';margin-bottom:6px">Don't own the box?</div>
+          <p style="margin:0 0 14px;font-size:14.5px;line-height:1.5;color:#5A4F49">450 cards, buzzer and timer — $29.99, exclusive on Amazon.</p>
+          <button onClick="{{ goBase }}" style="width:100%;background:#F2B233;border:1.5px solid #14100F;border-radius:12px;padding:14px;font:700 14.5px 'DM Sans';color:#14100F;cursor:pointer">Buy on Amazon ↗</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isAbout }}" hint-placeholder-val="{{ false }}">
+    <div style="max-width:1200px;margin:0 auto;padding:60px 24px 40px;display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center">
+      <div>
+        <p style="margin:0 0 14px;font:700 11.5px 'DM Sans';letter-spacing:.2em;text-transform:uppercase;color:#E8402A">The Taboo Shop</p>
+        <h1 style="margin:0 0 20px;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:68px;line-height:.92;letter-spacing:-.05em">We make the words</h1>
+        <p style="margin:0;font-size:17.5px;line-height:1.6;color:#5A4F49">For over 35 years the box hasn't needed changing — the cards are another story. Once your table has heard them all, the game gets quiet. So we write Taboosters: cards-only expansion packs, 300 all-new cards at a time, in three flavors so far. No buzzer. No timer. No giant box.</p>
+      </div>
+      <img src="https://taboothegame.com/cdn/shop/files/card_3x_family_rev03.png?v=1778118582&amp;width=1200" alt="Tabooster cards" style="width:100%;display:block;border-radius:24px;aspect-ratio:4/3;object-fit:cover;background:#14100F" />
+    </div>
+    <div style="max-width:1200px;margin:0 auto;padding:0 24px 60px;display:grid;grid-template-columns:repeat(4,1fr);gap:18px">
+      <sc-for list="{{ stats }}" as="s" hint-placeholder-count="4">
+        <div style="background:#FFFFFF;border-radius:20px;padding:24px">
+          <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:42px;letter-spacing:-.04em;color:#E8402A">{{ s.v }}</div>
+          <div style="font-size:14.5px;line-height:1.4;color:#5A4F49;margin-top:6px">{{ s.l }}</div>
+        </div>
+      </sc-for>
+    </div>
+    <div style="background:#E8402A;color:#FFF6E9">
+      <div style="max-width:1200px;margin:0 auto;padding:56px 24px;display:flex;align-items:center;justify-content:space-between;gap:40px">
+        <div>
+          <h2 style="margin:0 0 10px;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:40px;letter-spacing:-.04em">Refill the box</h2>
+          <p style="margin:0;font-size:17px;line-height:1.5;opacity:.92">Pop Culture, 90s, Family — or the Party Pack with all three for $44.99.</p>
+        </div>
+        <button onClick="{{ goShop }}" style="flex:0 0 auto;background:#14100F;color:#FFF6E9;border:0;border-radius:14px;padding:18px 28px;font:700 16px 'DM Sans';cursor:pointer">Shop the catalog</button>
+      </div>
+    </div>
+  </sc-if>
+
+  <div style="background:#14100F;color:rgba(255,246,233,.65)">
+    <div style="max-width:1200px;margin:0 auto;padding:52px 24px 36px;display:grid;grid-template-columns:280px 1fr 1fr 1fr;gap:40px">
+      <div>
+        <div style="background:#FFF6E9;border-radius:10px;padding:8px 14px;display:inline-block;line-height:0;margin-bottom:16px">
+          <img src="https://taboothegame.com/cdn/shop/files/Your_paragraph_text_2.png?height=100&amp;v=1774032736" alt="The Taboo Shop" style="height:28px;width:auto;display:block" />
+        </div>
+        <p style="margin:0;font-size:14px;line-height:1.6">Cards-only expansion packs for the game of unspeakable fun.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px;align-items:flex-start">
+        <span style="font:700 11px 'DM Sans';letter-spacing:.14em;text-transform:uppercase;color:#FFF6E9;margin-bottom:2px">Shop</span>
+        <button onClick="{{ goPacks }}" style="background:none;border:0;padding:0;color:inherit;font:500 14px 'DM Sans';cursor:pointer">Tabooster packs</button>
+        <button onClick="{{ goGear }}" style="background:none;border:0;padding:0;color:inherit;font:500 14px 'DM Sans';cursor:pointer">Game Night</button>
+        <button onClick="{{ goShop }}" style="background:none;border:0;padding:0;color:inherit;font:500 14px 'DM Sans';cursor:pointer">Catalog</button>
+        <button onClick="{{ goBase }}" style="background:none;border:0;padding:0;color:inherit;font:500 14px 'DM Sans';cursor:pointer">Board game on Amazon ↗</button>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px;align-items:flex-start">
+        <span style="font:700 11px 'DM Sans';letter-spacing:.14em;text-transform:uppercase;color:#FFF6E9;margin-bottom:2px">Help</span>
+        <span style="font:500 14px 'DM Sans'">Contact</span>
+        <span style="font:500 14px 'DM Sans'">Blog</span>
+        <span style="font:500 14px 'DM Sans'">Refund policy</span>
+        <span style="font:500 14px 'DM Sans'">Privacy policy</span>
+      </div>
+      <div>
+        <span style="display:block;font:700 11px 'DM Sans';letter-spacing:.14em;text-transform:uppercase;color:#FFF6E9;margin-bottom:12px">Join our mailing list</span>
+        <p style="margin:0 0 14px;font-size:14px;line-height:1.55">Get exclusive deals and early access to new products.</p>
+        <div style="display:flex;gap:8px">
+          <input placeholder="Email" style="flex:1;background:rgba(255,246,233,.08);border:1.5px solid rgba(255,246,233,.25);border-radius:11px;padding:13px;font:500 14px 'DM Sans';color:#FFF6E9;outline:none" style-focus="border-color:#F2B233" />
+          <button style="background:#F2B233;color:#14100F;border:0;border-radius:11px;padding:13px 18px;font:700 14px 'DM Sans';cursor:pointer">Join</button>
+        </div>
+      </div>
+    </div>
+    <div style="max-width:1200px;margin:0 auto;padding:0 24px 32px;font-size:12.5px;opacity:.55">© 2026 The Taboo Shop · concept redesign</div>
+  </div>
+
+  <sc-if value="{{ buzzing }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;inset:0;background:rgba(232,64,42,.94);color:#FFF6E9;display:flex;align-items:center;justify-content:center;z-index:60;animation:buzzShakeD .4s ease-in-out both;pointer-events:none">
+      <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:150px;letter-spacing:-.05em">BZZT!</span>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ showAmazon }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;inset:0;z-index:55;display:flex;align-items:center;justify-content:center;padding:40px">
+      <div onClick="{{ closeAmazon }}" style="position:absolute;inset:0;background:rgba(20,16,15,.6)"></div>
+      <div style="position:relative;width:560px;background:#FFF6E9;border-radius:26px;padding:32px;animation:popInD .28s ease-out both">
+        <h2 style="margin:0 0 12px;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:34px;line-height:1.05;letter-spacing:-.04em">Heading to Amazon</h2>
+        <p style="margin:0 0 22px;font-size:16px;line-height:1.55;color:#5A4F49">The Taboo Board Game with Buzzer — 450 cards including food and drink categories — is exclusive on Amazon. Your Taboosters stay in this cart.</p>
+        <div style="display:flex;gap:18px;align-items:center;background:#FFFFFF;border-radius:18px;padding:18px;margin-bottom:22px">
+          <img src="https://taboothegame.com/cdn/shop/files/24.png?v=1773341930&amp;width=400" alt="Taboo Board Game with Buzzer" style="flex:0 0 84px;width:84px;height:84px;object-fit:contain;border-radius:12px" />
+          <div style="flex:1">
+            <div style="font:700 17px 'DM Sans';margin-bottom:4px">Taboo Board Game with Buzzer!</div>
+            <div style="font:500 14px 'DM Sans';color:#8A7C73">$29.99 · 4+ players, ages 13+</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:12px">
+          <button onClick="{{ closeAmazon }}" style="flex:1;background:#F2B233;color:#14100F;border:0;border-radius:14px;padding:17px;font:700 16px 'DM Sans';cursor:pointer">Continue to Amazon ↗</button>
+          <button onClick="{{ closeAmazon }}" style="flex:0 0 auto;background:none;border:1.5px solid #DCCEBB;border-radius:14px;padding:17px 24px;font:700 15px 'DM Sans';color:#8A7C73;cursor:pointer">Stay here</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:1000}}">
+const CDN = "https://taboothegame.com/cdn/shop/files/";
+const IMG = {
+  popBox: CDN + "box_popCulture_rev01_5f9bd6bd-1fa0-4131-9a30-e51f05569a55.png?v=1778006395&width=800",
+  popCards: CDN + "card_3x_popCulture_rev01.png?v=1778118582&width=800",
+  famBox: CDN + "box_family_rev01.png?v=1778006525&width=800",
+  famCards: CDN + "card_3x_family_rev03.png?v=1778118582&width=800",
+  ninBox: CDN + "box_90s_rev03.png?v=1778006740&width=800",
+  ninCards: CDN + "card_3x_90s_rev02.png?v=1778118582&width=800",
+  base1: CDN + "24.png?v=1773341930&width=800",
+  base2: CDN + "25.png?v=1773341932&width=800"
+};
+
+const CARDS = [
+  { word: "Red carpet", taboo: ["Awards", "Dress", "Premiere", "Photographers", "Hollywood"], pack: "Pop Culture Edition", id: "popculture" },
+  { word: "Dial-up", taboo: ["Internet", "Modem", "Sound", "Slow", "Phone line"], pack: "90s Edition", id: "nineties" },
+  { word: "Pancake", taboo: ["Breakfast", "Syrup", "Flip", "Batter", "Round"], pack: "Family Game Night", id: "family" },
+  { word: "Boy band", taboo: ["Sing", "Five", "Dance", "Poster", "Screaming"], pack: "90s Edition", id: "nineties" },
+  { word: "Viral meme", taboo: ["Internet", "Share", "Funny", "Trend", "Post"], pack: "Pop Culture Edition", id: "popculture" },
+  { word: "Sleepover", taboo: ["Night", "Friends", "Pyjamas", "Sleeping bag", "House"], pack: "Family Game Night", id: "family" }
+];
+
+const PRODUCTS = [
+  { id: "popculture", name: "Tabooster: Pop Culture Edition", short: "Pop Culture", price: 19.99, cat: "Pack", hot: true,
+    tint: "#EFE4D4", ink: "#14100F", img: IMG.popBox, gallery: [IMG.popBox, IMG.popCards], cardLine: "300+ cards · cards-only pack",
+    blurb: "A cards-only expansion pack with 300+ hilarious new cards that brings your Taboo game straight into the spotlight — movie moments, viral memes, chart-toppers and celebrity drama.",
+    blurb2: "Fast, funny and totally extra. This one's for the drama lovers, the binge-watchers and the ones who always know what's trending first.",
+    box: ["300 all new cards", "No buzzer required", "No timer required", "Compact, travel-friendly box"], sample: CARDS[0] },
+  { id: "family", name: "Tabooster: Family Game Night", short: "Family", price: 19.99, cat: "Pack", hot: true,
+    tint: "#EFE4D4", ink: "#14100F", img: IMG.famBox, gallery: [IMG.famBox, IMG.famCards], cardLine: "300+ cards · cards-only pack",
+    blurb: "A cards-only expansion pack with 300+ new cards, carefully selected so they're fun for the whole family — silly, clever and kid-approved clues.",
+    blurb2: "Wholesome chaos, family-friendly competition and nonstop laughs. From parents to grandparents, everyone gets in on the giggles.",
+    box: ["300 all new cards", "Easy to learn in under 60 seconds", "No buzzer or timer required", "Compact, travel-friendly box"], sample: CARDS[2] },
+  { id: "nineties", name: "Tabooster: 90s Edition", short: "90s", price: 19.99, cat: "Pack", hot: true,
+    tint: "#EFE4D4", ink: "#14100F", img: IMG.ninBox, gallery: [IMG.ninBox, IMG.ninCards], cardLine: "300+ cards · cards-only pack",
+    blurb: "300+ new cards that blast your Taboo game back to the decade of baggy jeans, Blockbuster runs and dial-up drama.",
+    blurb2: "Iconic 90s slang, music, movies and moments you still quote. Perfect for parties, reunions, or anyone who knows what \u201Cbe kind, rewind\u201D means.",
+    box: ["300 all new cards", "No buzzer required", "No timer required", "Compact, travel-friendly box"], sample: CARDS[1] },
+  { id: "partypack", name: "Tabooster Party Pack", short: "All 3 packs", price: 44.99, cat: "Bundle", hot: true,
+    tint: "#E8402A", ink: "#FFF6E9", img: "", gallery: [], cardLine: "900 cards · all three flavors",
+    blurb: "All three Tabooster packs in one order — Pop Culture, 90s and Family Game Night. 900 wildly fun cards designed for your favorite game night.",
+    blurb2: "Get all 3 for a great deal: $44.99 instead of $59.97. No buzzer. No timer. No giant box.",
+    box: ["3 Tabooster packs", "900 cards total", "Saves $14.98", "Ships in one box"], sample: CARDS[3] },
+  { id: "bob", name: "Taboo Bob Plush Toy", short: "Taboo Bob", price: 14.99, cat: "Toy",
+    tint: "#F2B233", ink: "#14100F", img: "", gallery: [], cardLine: "Plush mascot",
+    blurb: "Taboo Bob, in plush form. The mascot who has heard every forbidden word and judged you for all of them.",
+    blurb2: "Sits on the table, keeps score in silence, absorbs the blame when someone says the word.",
+    box: ["Soft plush mascot", "Surface washable"], sample: null },
+  { id: "tote-gn", name: "Game Night Tote Bag", short: "Game Night tote", price: 27.99, cat: "Accessories",
+    tint: "#1F7A6B", ink: "#FFF6E9", img: "", gallery: [], cardLine: "Carries the whole night",
+    blurb: "The Game Night tote: big enough for the box, the packs, the snacks and whatever else the host insists on bringing.",
+    blurb2: "Printed on demand and shipped by our print partner.", box: ["Roomy cotton tote", "Printed both sides"], sample: null },
+  { id: "bowl", name: "Game Night Discard Bowl", short: "Discard bowl", price: 35.99, cat: "Accessories",
+    tint: "#8C6DD4", ink: "#FFF6E9", img: "", gallery: [], cardLine: "For the cards you lost",
+    blurb: "A dedicated bowl for buzzed cards, snack shells and the pride of whoever said the forbidden word first.",
+    blurb2: "Printed on demand and shipped by our print partner.", box: ["Ceramic bowl", "Dishwasher safe"], sample: null },
+  { id: "mug", name: "Taboo Travel Mug", short: "Travel mug", price: 29.99, cat: "Accessories",
+    tint: "#2E6FB8", ink: "#FFF6E9", img: "", gallery: [], cardLine: "Insulated · Taboo face",
+    blurb: "An insulated travel mug wearing the Taboo face, for the round-two coffee that keeps game night alive.",
+    blurb2: "Printed on demand and shipped by our print partner.", box: ["Insulated stainless steel", "Screw lid"], sample: null },
+  { id: "pouch", name: "Taboo Travel Pouch — OG Wink", short: "Travel pouch", price: 14.99, cat: "Accessories",
+    tint: "#B0295E", ink: "#FFF6E9", img: "", gallery: [], cardLine: "Small · fits a Tabooster",
+    blurb: "A small zip pouch in the OG Wink print — sized to carry one Tabooster deck and nothing you don't need.",
+    blurb2: "Printed on demand and shipped by our print partner.", box: ["Zip pouch, small", "OG Wink print"], sample: null },
+  { id: "pin", name: "Taboo Winking Face Pin", short: "Winking pin", price: 4.95, cat: "Accessories",
+    tint: "#F2B233", ink: "#14100F", img: "", gallery: [], cardLine: "Button pin",
+    blurb: "The winking face, pinned to your jacket. Cheapest way to declare which team you're on.",
+    blurb2: "Printed on demand and shipped by our print partner.", box: ["Button pin", "Winking face art"], sample: null },
+  { id: "coasters", name: "Taboo Face Coasters", short: "Coasters", price: 7.70, cat: "Accessories",
+    tint: "#EFE4D4", ink: "#14100F", img: "", gallery: [], cardLine: "Protects the table",
+    blurb: "Taboo face coasters, because the table has suffered enough already.",
+    blurb2: "Printed on demand and shipped by our print partner.", box: ["Set of coasters", "Taboo face art"], sample: null },
+  { id: "hoodie", name: "Taboo Hoodie", short: "Hoodie", price: 35.58, cat: "Apparel",
+    tint: "#14100F", ink: "#F2B233", img: "", gallery: [], cardLine: "Unisex sizing",
+    blurb: "A soft hooded sweatshirt for the person who hosts, explains the rules, and still loses.",
+    blurb2: "Printed on demand and shipped by our print partner.", box: ["Unisex hoodie", "Sizes S–2XL"], sample: null },
+  { id: "sweatshirt", name: "Purple Embroidered Sweatshirt", short: "Embroidered", price: 49.0, cat: "Apparel",
+    tint: "#6B4F9E", ink: "#FFF6E9", img: "", gallery: [], cardLine: "Embroidered logo",
+    blurb: "Embroidered Taboo logo on a heavyweight purple crewneck. Also available in grey and pink.",
+    blurb2: "Printed on demand and shipped by our print partner.", box: ["Embroidered crewneck", "Sizes S–2XL"], sample: null },
+  { id: "tee", name: "Winking Face T-Shirt", short: "Winking tee", price: 23.99, cat: "Apparel",
+    tint: "#1F7A6B", ink: "#FFF6E9", img: "", gallery: [], cardLine: "Unisex sizing",
+    blurb: "The winking face on a soft cotton tee — the least you can do to warn people before the game starts.",
+    blurb2: "Printed on demand and shipped by our print partner.", box: ["Unisex tee", "Sizes S–2XL"], sample: null },
+  { id: "cap", name: "Taboo Baseball Cap", short: "Cap", price: 29.99, cat: "Apparel",
+    tint: "#D97534", ink: "#14100F", img: "", gallery: [], cardLine: "Adjustable strap",
+    blurb: "An embroidered baseball cap, ideal for hiding your face when the buzzer goes off.",
+    blurb2: "Printed on demand and shipped by our print partner.", box: ["Embroidered cap", "Adjustable strap"], sample: null },
+  { id: "socks", name: "Taboo Face Socks", short: "Socks", price: 24.99, cat: "Apparel",
+    tint: "#4FA37A", ink: "#14100F", img: "", gallery: [], cardLine: "One size",
+    blurb: "Taboo face socks. Nobody sees them until you put your feet on the coffee table, which you will.",
+    blurb2: "Printed on demand and shipped by our print partner.", box: ["Printed socks", "One size"], sample: null }
+];
+
+const BASE = {
+  id: "basegame", name: "Taboo Board Game with Buzzer!", short: "The box", price: 29.99, cat: "Board game",
+  tint: "#EFE4D4", ink: "#14100F", img: IMG.base1, gallery: [IMG.base1, IMG.base2], cardLine: "450 cards · buzzer · timer",
+  external: true, stock: "Exclusive on Amazon",
+  blurb: "The classic game of unspeakable fun. This exclusive edition includes 450 game cards — food and drink category cards included — plus the electronic buzzer and the timer.",
+  blurb2: "Say a forbidden word and the buzzer interrupts you, and you lose a turn. Fast paced fun for 4 or more players, ages 13 and up.",
+  box: ["450 game cards", "Electronic buzzer", "1-minute timer", "For 4+ players, ages 13+"], sample: null
+};
+
+const money = (n) => "$" + n.toFixed(2);
+
+class Component extends DCLogic {
+  state = {
+    screen: "home", prodId: "popculture", cardIdx: 0, variant: 0, filter: "All", shot: 0, qty: 1,
+    cart: [{ id: "popculture", qty: 1, variant: "Single pack" }],
+    time: 60, running: false, buzzing: false, added: false, amazon: false
+  };
+
+  componentWillUnmount() { clearInterval(this._t); clearTimeout(this._b); clearTimeout(this._a); }
+
+  go = (screen) => {
+    this.setState({ screen, added: false });
+    window.scrollTo({ top: 0 });
+  };
+
+  buzz = () => {
+    try {
+      const Ctx = window.AudioContext || window.webkitAudioContext;
+      const ctx = this._ctx || (this._ctx = new Ctx());
+      const o = ctx.createOscillator(), g = ctx.createGain();
+      o.type = "square"; o.frequency.setValueAtTime(150, ctx.currentTime);
+      o.frequency.exponentialRampToValueAtTime(75, ctx.currentTime + 0.45);
+      g.gain.setValueAtTime(0.16, ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.5);
+      o.connect(g); g.connect(ctx.destination); o.start(); o.stop(ctx.currentTime + 0.5);
+    } catch (e) {}
+    if (navigator.vibrate) navigator.vibrate([90, 50, 140]);
+    clearInterval(this._t);
+    this.setState({ buzzing: true, running: false });
+    clearTimeout(this._b);
+    this._b = setTimeout(() => this.setState({ buzzing: false }), 620);
+  };
+
+  tick = () => this.setState((s) => {
+    if (s.time <= 1) { clearInterval(this._t); setTimeout(this.buzz, 60); return { time: 0, running: false }; }
+    return { time: s.time - 1 };
+  });
+
+  toggleTimer = () => {
+    if (this.state.running) { clearInterval(this._t); this.setState({ running: false }); return; }
+    this.setState((s) => ({ running: true, time: s.time === 0 ? 60 : s.time }));
+    clearInterval(this._t);
+    this._t = setInterval(this.tick, 1000);
+  };
+
+  nextCard = () => {
+    clearInterval(this._t);
+    this.setState((s) => ({ cardIdx: (s.cardIdx + 1) % CARDS.length, time: 60, running: false }));
+  };
+
+  openProduct = (id) => { this.setState({ prodId: id, variant: 0, shot: 0, qty: 1 }); this.go("pdp"); };
+
+  product() {
+    if (this.state.prodId === "basegame") return BASE;
+    return PRODUCTS.find((p) => p.id === this.state.prodId) || PRODUCTS[0];
+  }
+
+  variantList() {
+    const p = this.product();
+    if (p.external) return [];
+    if (p.cat === "Pack") return [
+      { label: "Single pack", note: "300 all new cards", add: 0 },
+      { label: "Two packs", note: "600 cards, one order", add: p.price }
+    ];
+    if (p.cat === "Bundle") return [
+      { label: "Party Pack", note: "All 3 packs · 900 cards", add: 0 },
+      { label: "Two Party Packs", note: "Two households, one order", add: p.price }
+    ];
+    if (p.cat === "Apparel") return [
+      { label: "Medium", note: "Unisex sizing", add: 0 },
+      { label: "Large", note: "Unisex sizing", add: 0 },
+      { label: "X-Large", note: "Unisex sizing", add: 0 }
+    ];
+    return [];
+  }
+
+  variantPrice() {
+    const vs = this.variantList();
+    return this.product().price + (vs.length ? vs[this.state.variant].add : 0);
+  }
+
+  addToCart = () => {
+    const p = this.product();
+    const vs = this.variantList();
+    const v = vs.length ? vs[this.state.variant].label : "One";
+    const q = this.state.qty;
+    this.setState((s) => {
+      const i = s.cart.findIndex((l) => l.id === p.id && l.variant === v);
+      const cart = s.cart.slice();
+      if (i >= 0) cart[i] = { ...cart[i], qty: cart[i].qty + q };
+      else cart.push({ id: p.id, qty: q, variant: v, price: this.variantPrice() });
+      return { cart, added: true };
+    });
+    clearTimeout(this._a);
+    this._a = setTimeout(() => this.setState({ added: false }), 1500);
+  };
+
+  addItem = (id) => this.setState((s) => {
+    const p = PRODUCTS.find((x) => x.id === id);
+    const i = s.cart.findIndex((l) => l.id === id);
+    const cart = s.cart.slice();
+    if (i >= 0) cart[i] = { ...cart[i], qty: cart[i].qty + 1 };
+    else cart.push({ id, qty: 1, variant: p.cat === "Pack" ? "Single pack" : "One", price: p.price });
+    return { cart };
+  });
+
+  bump = (idx, d) => this.setState((s) => ({
+    cart: s.cart.map((l, i) => (i === idx ? { ...l, qty: l.qty + d } : l)).filter((l) => l.qty > 0)
+  }));
+
+  linePrice(l) {
+    if (l.price != null) return l.price;
+    const p = PRODUCTS.find((x) => x.id === l.id);
+    return p ? p.price : 0;
+  }
+
+  renderVals() {
+    const s = this.state;
+    const p = this.product();
+    const sub = s.cart.reduce((n, l) => n + this.linePrice(l) * l.qty, 0);
+    const shipFree = sub >= 35 || sub === 0;
+    const ship = shipFree ? 0 : 4.95;
+    const card = CARDS[s.cardIdx];
+    const cartCount = s.cart.reduce((n, l) => n + l.qty, 0);
+    const external = !!p.external;
+    const vs = this.variantList();
+    const gal = p.gallery || [];
+    const shot = gal[Math.min(s.shot, Math.max(0, gal.length - 1))] || "";
+
+    const decorate = (x) => ({
+      ...x, price: money(x.price), open: () => this.openProduct(x.id),
+      hasImg: !!x.img, noImg: !x.img
+    });
+    const navColor = (on) => (on ? "#F2B233" : "#FFF6E9");
+    const checkoutStep = s.screen === "checkout";
+    const list = PRODUCTS.filter((x) => {
+      if (s.filter === "All") return true;
+      if (s.filter === "Tabooster packs") return x.cat === "Pack" || x.cat === "Bundle";
+      if (s.filter === "Game Night") return x.cat === "Accessories" || x.cat === "Toy";
+      if (s.filter === "Apparel") return x.cat === "Apparel";
+      if (s.filter === "Under $20") return x.price < 20;
+      return true;
+    });
+
+    return {
+      isHome: s.screen === "home",
+      isShop: s.screen === "shop",
+      isPdp: s.screen === "pdp",
+      isCart: s.screen === "cart",
+      isCheckout: checkoutStep,
+      isDone: s.screen === "done",
+      isPlay: s.screen === "play",
+      isAbout: s.screen === "about",
+
+      goHome: () => this.go("home"),
+      goShop: () => { this.setState({ filter: "All" }); this.go("shop"); },
+      goPacks: () => { this.setState({ filter: "Tabooster packs" }); this.go("shop"); },
+      goGear: () => { this.setState({ filter: "Game Night" }); this.go("shop"); },
+      goCart: () => this.go("cart"),
+      goPlay: () => this.go("play"), goAbout: () => this.go("about"),
+      goBase: () => this.setState({ amazon: true }),
+      showAmazon: s.amazon, closeAmazon: () => this.setState({ amazon: false }),
+
+      navShop: navColor(s.screen === "shop" || s.screen === "pdp"),
+      navPlay: navColor(s.screen === "play"),
+      navAbout: navColor(s.screen === "about"),
+
+      cartCount, hasItems: cartCount > 0,
+      card, cardKey: s.cardIdx,
+      openCardPack: () => this.openProduct(card.id),
+      timeLabel: "0:" + String(s.time).padStart(2, "0"),
+      timerLabel: s.running ? "Pause" : s.time === 60 ? "Start 60s" : "Resume",
+      timerColor: s.time <= 10 ? "#E8402A" : "#FFF6E9",
+      toggleTimer: this.toggleTimer, nextCard: this.nextCard, buzz: this.buzz, buzzing: s.buzzing,
+
+      featured: PRODUCTS.filter((x) => x.hot).map(decorate),
+      productCount: PRODUCTS.length + 1,
+      resultCount: list.length,
+      shopList: list.map(decorate),
+      filters: ["All", "Tabooster packs", "Game Night", "Apparel", "Under $20"].map((f) => ({
+        label: f, pick: () => this.setState({ filter: f }),
+        bg: s.filter === f ? "#14100F" : "transparent",
+        fg: s.filter === f ? "#FFF6E9" : "#14100F",
+        border: s.filter === f ? "#14100F" : "#DCCEBB"
+      })),
+
+      prod: {
+        ...p, price: money(p.price),
+        stock: p.stock || "In stock",
+        ships: external ? "Sold and shipped by Amazon" : p.cat === "Pack" || p.cat === "Bundle" ? "Ships from The Taboo Shop" : "Made to order by our print partner",
+        priceNote: external ? "price set by Amazon" : ""
+      },
+      galleryImg: shot, galleryHasImg: !!shot, galleryNoImg: !shot,
+      thumbs: gal.map((g, i) => ({ img: g, b: s.shot === i ? "#14100F" : "transparent", pick: () => this.setState({ shot: i }) })),
+
+      isExternal: external,
+      hasVariants: vs.length > 0,
+      variantTitle: p.cat === "Apparel" ? "Choose a size" : "Choose your quantity",
+      variants: vs.map((v, i) => ({
+        label: v.label, note: v.note, price: money(p.price + v.add),
+        pick: () => this.setState({ variant: i }),
+        bg: s.variant === i ? "#FFFFFF" : "transparent",
+        border: s.variant === i ? "#14100F" : "#E7DCCC",
+        dot: s.variant === i ? "#E8402A" : "#DCCEBB",
+        dotFill: s.variant === i ? "#E8402A" : "transparent"
+      })),
+      hasSample: !!p.sample,
+      qty: s.qty,
+      qtyUp: () => this.setState((st) => ({ qty: st.qty + 1 })),
+      qtyDown: () => this.setState((st) => ({ qty: Math.max(1, st.qty - 1) })),
+
+      related: PRODUCTS.filter((x) => x.id !== p.id).slice(0, 5).map(decorate),
+
+      addLabel: external ? "Buy on Amazon ↗" : s.added ? "Added to cart ✓" : "Add to cart · " + money(this.variantPrice() * s.qty),
+      buyAction: external ? () => this.setState({ amazon: true }) : this.addToCart,
+
+      payLabel: checkoutStep ? "Place order · " + money(sub + ship) : "Checkout · " + money(sub + ship),
+      payAction: () => this.go(checkoutStep ? "done" : "checkout"),
+
+      cartEmpty: cartCount === 0,
+      cartLines: s.cart.map((l, i) => {
+        const pp = PRODUCTS.find((x) => x.id === l.id) || BASE;
+        return {
+          name: pp.name, variant: l.variant, qty: l.qty, tint: pp.tint, ink: pp.ink, short: pp.short,
+          img: pp.img, hasImg: !!pp.img, noImg: !pp.img,
+          total: money(this.linePrice(l) * l.qty),
+          inc: () => this.bump(i, 1), dec: () => this.bump(i, -1), remove: () => this.bump(i, -l.qty)
+        };
+      }),
+      upsells: ["partypack", "bob", "pin"].map((id) => {
+        const u = PRODUCTS.find((x) => x.id === id);
+        return { name: u.name, price: money(u.price), tint: u.tint, ink: u.ink, short: u.short, img: u.img, hasImg: !!u.img, noImg: !u.img, add: () => this.addItem(id) };
+      }),
+      subtotal: money(sub),
+      shipping: shipFree ? "Free" : money(ship),
+      total: money(sub + ship),
+      shipNote: shipFree ? "Free shipping unlocked." : "Add " + money(35 - sub) + " more for free shipping.",
+      shipPct: Math.min(100, Math.round((sub / 35) * 100)) + "%",
+
+      loves: ["300 original cards in every pack", "Fast-paced and easy to learn in under 60 seconds", "Hilarious slip-ups and buzzer moments", "Encourages creativity and quick thinking"],
+
+      steps3: [
+        { label: "Cart", bar: "#E8402A", fg: "#14100F" },
+        { label: "Details", bar: "#E8402A", fg: "#14100F" },
+        { label: "Done", bar: "#E7DCCC", fg: "#8A7C73" }
+      ],
+      fields: [
+        { label: "Email", ph: "you@gamenight.com", span: "span 2" },
+        { label: "Full name", ph: "Alex Moreno", span: "span 1" },
+        { label: "Phone", ph: "(503) 555-0142", span: "span 1" },
+        { label: "Address", ph: "18 Kitchen Table Rd", span: "span 2" },
+        { label: "City & ZIP", ph: "Portland, 97205", span: "span 1" },
+        { label: "Card number", ph: "4242 4242 4242 4242", span: "span 1" }
+      ],
+
+      rules: [
+        { n: "1", t: "One player describes the word on the card to their team." },
+        { n: "2", t: "They can't say any of the taboo words listed underneath it." },
+        { n: "3", t: "Slip up and the buzzer interrupts you — you lose the turn." }
+      ],
+      steps: [
+        { n: "1", h: "Split into teams", t: "For 4 or more players, ages 13 and up. Uneven teams are fine." },
+        { n: "2", h: "One describer per round", t: "They draw a card and get their team to guess the word at the top." },
+        { n: "3", h: "The listed words are off limits", t: "Say a forbidden word and you'll get interrupted by the buzzer, and lose a turn." },
+        { n: "4", h: "Race the timer", t: "Players race against the 1-minute timer to get through as many cards as they can." },
+        { n: "5", h: "Shuffle in a Tabooster", t: "Drop in 300 all-new cards whenever the deck starts feeling familiar." }
+      ],
+      stats: [
+        { v: "3", l: "Tabooster flavors so far" },
+        { v: "900", l: "All-new cards across the packs" },
+        { v: "450", l: "Cards in the Amazon box" },
+        { v: "35+", l: "Years of unspeakable fun" }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

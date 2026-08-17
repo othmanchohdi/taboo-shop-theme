@@ -1,0 +1,282 @@
+{% liquid
+  assign heading = section.settings.heading | default: 'No buzzer.<br>No timer.<br>No giant box.'
+  assign subheading = section.settings.subheading
+  assign eyebrow = section.settings.eyebrow | default: 'Tabooster packs'
+  assign image = section.settings.image
+  assign primary_label = section.settings.primary_label | default: 'Shop Tabooster packs'
+  assign primary_url = section.settings.primary_url
+  assign secondary_label = section.settings.secondary_label | default: 'Rules'
+  assign secondary_url = section.settings.secondary_url
+%}
+
+<section class="taboo-hero-{{ section.id }} {{ section.settings.section_width }}">
+  <div class="taboo-hero-{{ section.id }}__media">
+    {% if image %}
+      <img
+        src="{{ image | image_url: width: 1600 }}"
+        srcset="{{ image | image_url: width: 800 }} 800w, {{ image | image_url: width: 1200 }} 1200w, {{ image | image_url: width: 1600 }} 1600w"
+        sizes="(max-width: 767px) 100vw, 50vw"
+        alt="{{ image.alt | default: eyebrow }}"
+        width="{{ image.width }}"
+        height="{{ image.height }}"
+        loading="eager"
+        fetchpriority="high"
+      >
+    {% else %}
+      <div class="taboo-hero-{{ section.id }}__media-placeholder"></div>
+    {% endif %}
+  </div>
+
+  <div class="taboo-hero-{{ section.id }}__content">
+    <p class="taboo-hero-{{ section.id }}__eyebrow">{{ eyebrow }}</p>
+    <h1 class="taboo-hero-{{ section.id }}__heading">{{ heading }}</h1>
+    {% if subheading != blank %}
+      <p class="taboo-hero-{{ section.id }}__sub">{{ subheading }}</p>
+    {% endif %}
+    <div class="taboo-hero-{{ section.id }}__desktop-actions">
+      {% if primary_url %}
+        <a href="{{ primary_url }}" class="taboo-hero-{{ section.id }}__btn-primary">{{ primary_label }}</a>
+      {% endif %}
+      {% if secondary_url %}
+        <a href="{{ secondary_url }}" class="taboo-hero-{{ section.id }}__btn-secondary-outline">{{ secondary_label }}</a>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="taboo-hero-{{ section.id }}__cta-card">
+    {% if primary_url %}
+      <a href="{{ primary_url }}" class="taboo-hero-{{ section.id }}__btn-primary">{{ primary_label }}</a>
+    {% endif %}
+    {% if secondary_url %}
+      <a href="{{ secondary_url }}" class="taboo-hero-{{ section.id }}__btn-secondary">{{ secondary_label }}</a>
+    {% endif %}
+  </div>
+</section>
+
+<style>
+  .taboo-hero-{{ section.id }} {
+    position: relative;
+    font-family: 'DM Sans', system-ui, sans-serif;
+  }
+
+  .taboo-hero-{{ section.id }}__media {
+    position: relative;
+    background: #E8402A;
+  }
+
+  .taboo-hero-{{ section.id }}__media img,
+  .taboo-hero-{{ section.id }}__media-placeholder {
+    width: 100%;
+    display: block;
+    object-fit: cover;
+  }
+
+  .taboo-hero-{{ section.id }}__media-placeholder {
+    aspect-ratio: 4 / 3;
+    background: #E8402A;
+  }
+
+  .taboo-hero-{{ section.id }}__desktop-actions {
+    display: none;
+  }
+
+  .taboo-hero-{{ section.id }}__btn-primary,
+  .taboo-hero-{{ section.id }}__btn-secondary,
+  .taboo-hero-{{ section.id }}__btn-secondary-outline {
+    font: 700 15px 'DM Sans', system-ui, sans-serif;
+    text-decoration: none;
+    cursor: pointer;
+    border: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .taboo-hero-{{ section.id }}__btn-primary {
+    background: #FFF6E9;
+    color: #14100F;
+    border-radius: 15px;
+    padding: 16px;
+  }
+
+  .taboo-hero-{{ section.id }}__btn-secondary {
+    background: none;
+    color: #FFF6E9;
+    padding: 16px 18px;
+  }
+
+  .taboo-hero-{{ section.id }}__btn-secondary-outline {
+    background: none;
+    color: #FFF6E9;
+    border: 2px solid rgba(255, 246, 233, .45);
+    border-radius: 14px;
+    padding: 18px 26px;
+  }
+
+  /* Mobile: image, gradient headline overlay, overlapping CTA card */
+  @media screen and (max-width: 1023px) {
+    .taboo-hero-{{ section.id }}__media {
+      color: #FFF6E9;
+    }
+
+    .taboo-hero-{{ section.id }}__media img,
+    .taboo-hero-{{ section.id }}__media-placeholder {
+      aspect-ratio: 4 / 3;
+      opacity: .95;
+    }
+
+    .taboo-hero-{{ section.id }}__content {
+      position: absolute;
+      inset: auto 0 0 0;
+      padding: 24px 18px 66px;
+      background: linear-gradient(to top, #E8402A 34%, rgba(232, 64, 42, .86) 68%, rgba(232, 64, 42, 0));
+      color: #FFF6E9;
+    }
+
+    .taboo-hero-{{ section.id }}__eyebrow {
+      margin: 0 0 10px;
+      font: 700 10.5px 'DM Sans', system-ui, sans-serif;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      opacity: .9;
+    }
+
+    .taboo-hero-{{ section.id }}__heading {
+      margin: 0;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 800;
+      font-size: 44px;
+      line-height: .9;
+      letter-spacing: -.045em;
+    }
+
+    .taboo-hero-{{ section.id }}__sub {
+      margin: 14px 0 0;
+      font-size: 15.5px;
+      line-height: 1.5;
+      max-width: 300px;
+      opacity: .95;
+    }
+
+    .taboo-hero-{{ section.id }}__cta-card {
+      margin-top: -48px;
+      padding: 0 18px;
+      position: relative;
+      z-index: 2;
+      background: #14100F;
+      border-radius: 20px;
+      padding: 6px 18px;
+      margin-inline: 18px;
+      display: flex;
+      gap: 6px;
+    }
+
+    .taboo-hero-{{ section.id }}__cta-card .taboo-hero-{{ section.id }}__btn-primary { flex: 1; padding: 16px; }
+    .taboo-hero-{{ section.id }}__cta-card .taboo-hero-{{ section.id }}__btn-secondary { flex: 0 0 auto; }
+  }
+
+  /* Desktop: 2-col grid, actions inline under copy, no overlap card */
+  @media screen and (min-width: 1024px) {
+    .taboo-hero-{{ section.id }} {
+      background: #E8402A;
+      color: #FFF6E9;
+    }
+
+    .taboo-hero-{{ section.id }}__cta-card {
+      display: none;
+    }
+
+    .taboo-hero-{{ section.id }} {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 56px;
+      align-items: center;
+      padding: 64px 24px 72px;
+    }
+
+    .taboo-hero-{{ section.id }}.page-width {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .taboo-hero-{{ section.id }}.full-width {
+      max-width: none;
+      padding-inline: 40px;
+    }
+
+    .taboo-hero-{{ section.id }}__media {
+      order: 2;
+      background: transparent;
+    }
+
+    .taboo-hero-{{ section.id }}__media img,
+    .taboo-hero-{{ section.id }}__media-placeholder {
+      border-radius: 24px;
+      aspect-ratio: 4 / 3;
+    }
+
+    .taboo-hero-{{ section.id }}__content {
+      order: 1;
+    }
+
+    .taboo-hero-{{ section.id }}__eyebrow {
+      margin: 0 0 18px;
+      font: 700 11.5px 'DM Sans', system-ui, sans-serif;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      opacity: .9;
+    }
+
+    .taboo-hero-{{ section.id }}__heading {
+      margin: 0;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 800;
+      font-size: 86px;
+      line-height: .86;
+      letter-spacing: -.05em;
+    }
+
+    .taboo-hero-{{ section.id }}__sub {
+      margin: 26px 0 0;
+      font-size: 20px;
+      line-height: 1.5;
+      max-width: 470px;
+      opacity: .95;
+    }
+
+    .taboo-hero-{{ section.id }}__desktop-actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 32px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Taboo hero",
+  "settings": [
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "t:settings.width",
+      "options": [
+        { "value": "page-width", "label": "t:options.page" },
+        { "value": "full-width", "label": "t:options.full" }
+      ],
+      "default": "page-width"
+    },
+    { "type": "image_picker", "id": "image", "label": "Hero image" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Tabooster packs" },
+    { "type": "html", "id": "heading", "label": "Heading", "default": "No buzzer.<br>No timer.<br>No giant box." },
+    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Just 300 wildly fun cards designed for your favorite game night." },
+    { "type": "text", "id": "primary_label", "label": "Primary button label", "default": "Shop Tabooster packs" },
+    { "type": "url", "id": "primary_url", "label": "Primary button link" },
+    { "type": "text", "id": "secondary_label", "label": "Secondary button label", "default": "Rules" },
+    { "type": "url", "id": "secondary_url", "label": "Secondary button link" }
+  ],
+  "presets": [
+    { "name": "Taboo hero" }
+  ]
+}
+{% endschema %}

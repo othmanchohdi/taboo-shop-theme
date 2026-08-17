@@ -1,0 +1,131 @@
+{%- doc -%}
+  Continuous horizontal scrolling ticker for The Taboo Shop.
+  Placed inside the header group, above header_section, in header-group.json.
+  Horizon's stock `marquee` section cannot be used in header/footer (disabled_on),
+  so this is a small dedicated section replicating the same continuous-scroll effect
+  from the design handoff (@keyframes marq2 / marqD).
+{%- enddoc -%}
+
+{% liquid
+  assign bg = section.settings.background_color | default: '#F2B233'
+  assign ink = section.settings.text_color | default: '#14100F'
+  assign speed = section.settings.speed | default: 26
+%}
+
+<div
+  class="taboo-ticker-{{ section.id }}"
+  role="marquee"
+  aria-label="{{ section.settings.aria_label | default: 'Store highlights' }}"
+>
+  <div class="taboo-ticker-{{ section.id }}__track">
+    {% for i in (1..2) %}
+      <div class="taboo-ticker-{{ section.id }}__set" aria-hidden="{% if i == 2 %}true{% else %}false{% endif %}">
+        {% for block in section.blocks %}
+          <span class="taboo-ticker-{{ section.id }}__item" {{ block.shopify_attributes }}>
+            {{ block.settings.text }}
+          </span>
+          {% unless forloop.last %}
+            <span class="taboo-ticker-{{ section.id }}__dot" aria-hidden="true">★</span>
+          {% endunless %}
+        {% endfor %}
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<style>
+  .taboo-ticker-{{ section.id }} {
+    background: {{ bg }};
+    color: {{ ink }};
+    overflow: hidden;
+    white-space: nowrap;
+    padding: 8px 0;
+  }
+
+  .taboo-ticker-{{ section.id }}__track {
+    display: inline-flex;
+    animation: taboo-ticker-scroll-{{ section.id }} {{ speed }}s linear infinite;
+    will-change: transform;
+  }
+
+  .taboo-ticker-{{ section.id }}__set {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .taboo-ticker-{{ section.id }}__item {
+    padding: 0 18px;
+    font: 700 11px 'DM Sans', system-ui, sans-serif;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .taboo-ticker-{{ section.id }}__dot {
+    font-size: 11px;
+    opacity: .8;
+  }
+
+  @keyframes taboo-ticker-scroll-{{ section.id }} {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .taboo-ticker-{{ section.id }}__track { animation: none; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Taboo ticker",
+  "enabled_on": {
+    "groups": ["header"]
+  },
+  "settings": [
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#F2B233"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#14100F"
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "label": "Scroll duration (seconds, lower = faster)",
+      "min": 10,
+      "max": 60,
+      "step": 1,
+      "default": 26
+    },
+    {
+      "type": "text",
+      "id": "aria_label",
+      "label": "Accessibility label",
+      "default": "Store highlights"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Ticker item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "300 cards per pack"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 8
+}
+{% endschema %}

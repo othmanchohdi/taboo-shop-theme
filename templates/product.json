@@ -1,0 +1,12 @@
+{
+  "sections": {
+    "taboo_pdp": {
+      "type": "pdp-taboo",
+      "settings": {
+        "tint_color": "#F2B233",
+        "back_url": "/collections/all"
+      }
+    }
+  },
+  "order": ["taboo_pdp"]
+}

@@ -1,0 +1,24 @@
+{
+  "sections": {
+    "taboo_catalog": {
+      "type": "catalog-taboo",
+      "blocks": {
+        "f_all": { "type": "filter", "settings": { "label": "All", "url": "/collections/all" } },
+        "f_packs": { "type": "filter", "settings": { "label": "Tabooster packs", "url": "/collections/tabooster-packs" } },
+        "f_game_night": { "type": "filter", "settings": { "label": "Game Night", "url": "/collections/game-night" } },
+        "f_apparel": { "type": "filter", "settings": { "label": "Apparel", "url": "/collections/apparel" } },
+        "f_under_20": { "type": "filter", "settings": { "label": "Under $20", "url": "/collections/under-20" } }
+      },
+      "block_order": ["f_all", "f_packs", "f_game_night", "f_apparel", "f_under_20"],
+      "settings": {
+        "subtitle": "packs, game night gear and apparel",
+        "show_amazon_card": true,
+        "amazon_title": "Need the box itself?",
+        "amazon_copy": "450 cards, buzzer and timer — $29.99, exclusive on Amazon.",
+        "amazon_copy_mobile": "450 game cards, the electronic buzzer and the timer — $29.99, exclusive on Amazon. Taboosters stay in this bag.",
+        "amazon_url": "https://www.amazon.com/"
+      }
+    }
+  },
+  "order": ["taboo_catalog"]
+}

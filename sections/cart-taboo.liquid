@@ -1,0 +1,221 @@
+{%- doc -%}
+  Taboo cart page. Wired to the real `cart` object. Quantity changes and removals
+  go through /cart/change.js so the page updates without a full reload.
+  Free-shipping threshold is a section setting (per the design README, it's an
+  unconfirmed policy — confirm the real number with the client before launch).
+{%- enddoc -%}
+
+{% liquid
+  assign threshold = section.settings.free_shipping_threshold | default: 35
+  assign threshold_cents = threshold | times: 100
+  assign ship_pct = 100
+  if cart.total_price < threshold_cents
+    assign ship_pct = cart.total_price | times: 100.0 | divided_by: threshold_cents | round
+  endif
+  assign remaining = threshold_cents | minus: cart.total_price
+%}
+
+<taboo-cart class="taboo-cart-{{ section.id }}" data-threshold-cents="{{ threshold_cents }}">
+  <h1 class="taboo-cart-{{ section.id }}__title">Your {{ section.settings.bag_word | default: 'bag' }}</h1>
+
+  <div class="taboo-cart-{{ section.id }}__layout">
+    <div class="taboo-cart-{{ section.id }}__main">
+      <div class="taboo-cart-{{ section.id }}__ship-card" data-ship-card {% if cart.total_price >= threshold_cents %}hidden{% endif %}>
+        <p class="taboo-cart-{{ section.id }}__ship-note" data-ship-note>
+          {% if cart.total_price >= threshold_cents %}
+            You've got free shipping!
+          {% else %}
+            {{ remaining | money }} away from free shipping
+          {% endif %}
+        </p>
+        <span class="taboo-cart-{{ section.id }}__ship-track">
+          <span class="taboo-cart-{{ section.id }}__ship-fill" data-ship-fill style="width:{{ ship_pct }}%"></span>
+        </span>
+      </div>
+
+      {% if cart.item_count == 0 %}
+        <div class="taboo-cart-{{ section.id }}__empty">
+          <p>Your cart is empty. Suspiciously quiet.</p>
+          <a href="{{ section.settings.shop_url | default: '/collections/all' }}" class="taboo-cart-{{ section.id }}__empty-btn">Continue shopping</a>
+        </div>
+      {% else %}
+        <div class="taboo-cart-{{ section.id }}__lines">
+          {% for item in cart.items %}
+            <div class="taboo-cart-{{ section.id }}__line" data-line data-line-key="{{ item.key }}" data-line-index="{{ forloop.index }}">
+              <div class="taboo-cart-{{ section.id }}__line-media">
+                {% if item.image %}
+                  <img src="{{ item.image | image_url: width: 220 }}" alt="{{ item.title }}" loading="lazy" width="220" height="220">
+                {% endif %}
+              </div>
+              <div class="taboo-cart-{{ section.id }}__line-body">
+                <div class="taboo-cart-{{ section.id }}__line-top">
+                  <span class="taboo-cart-{{ section.id }}__line-name">{{ item.product.title }}</span>
+                  <button type="button" class="taboo-cart-{{ section.id }}__line-remove" data-remove>Remove</button>
+                </div>
+                <div class="taboo-cart-{{ section.id }}__line-variant">{{ item.variant.title | default: '' }}</div>
+                <div class="taboo-cart-{{ section.id }}__line-bottom">
+                  <div class="taboo-cart-{{ section.id }}__line-qty">
+                    <button type="button" data-qty-down aria-label="Decrease quantity">−</button>
+                    <span data-qty-value>{{ item.quantity }}</span>
+                    <button type="button" data-qty-up aria-label="Increase quantity">+</button>
+                  </div>
+                  <span class="taboo-cart-{{ section.id }}__line-total" data-line-total>{{ item.final_line_price | money }}</span>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+
+        {% if section.blocks.size > 0 %}
+          <p class="taboo-cart-{{ section.id }}__upsell-label">Goes well with</p>
+          <div class="taboo-cart-{{ section.id }}__upsells">
+            {% for block in section.blocks %}
+              {% assign upsell = block.settings.product %}
+              {% if upsell %}
+                <div class="taboo-cart-{{ section.id }}__upsell" {{ block.shopify_attributes }}>
+                  <div class="taboo-cart-{{ section.id }}__upsell-media">
+                    {% if upsell.featured_image %}
+                      <img src="{{ upsell.featured_image | image_url: width: 160 }}" alt="{{ upsell.title }}" loading="lazy" width="160" height="160">
+                    {% endif %}
+                  </div>
+                  <div class="taboo-cart-{{ section.id }}__upsell-body">
+                    <div class="taboo-cart-{{ section.id }}__upsell-name">{{ upsell.title }}</div>
+                    <div class="taboo-cart-{{ section.id }}__upsell-bottom">
+                      <span class="taboo-cart-{{ section.id }}__upsell-price">{{ upsell.price | money }}</span>
+                      <button type="button" class="taboo-cart-{{ section.id }}__upsell-add" data-upsell-add data-variant-id="{{ upsell.selected_or_first_available_variant.id }}">Add</button>
+                    </div>
+                  </div>
+                </div>
+              {% endif %}
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endif %}
+    </div>
+
+    <div class="taboo-cart-{{ section.id }}__summary">
+      <h2 class="taboo-cart-{{ section.id }}__summary-title">Order summary</h2>
+      <div class="taboo-cart-{{ section.id }}__summary-row"><span data-item-count>{{ cart.item_count }} items</span><span data-subtotal>{{ cart.total_price | money }}</span></div>
+      <div class="taboo-cart-{{ section.id }}__summary-row"><span>Shipping</span><span data-shipping>{% if cart.total_price >= threshold_cents %}Free{% else %}{{ section.settings.flat_shipping_rate | default: '$4.95' }}{% endif %}</span></div>
+      <div class="taboo-cart-{{ section.id }}__summary-total"><span>Total</span><span data-total>{{ cart.total_price | money }}</span></div>
+      <a href="/checkout" class="taboo-cart-{{ section.id }}__checkout-btn">Checkout</a>
+      <a href="{{ section.settings.shop_url | default: '/collections/all' }}" class="taboo-cart-{{ section.id }}__continue-link">Continue shopping</a>
+    </div>
+  </div>
+</taboo-cart>
+
+<script src="{{ 'taboo-cart.js' | asset_url }}" defer="defer"></script>
+
+<style>
+  .taboo-cart-{{ section.id }} { display: block; font-family: 'DM Sans', system-ui, sans-serif; color: #14100F; }
+
+  .taboo-cart-{{ section.id }}__title { margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; letter-spacing: -.05em; }
+
+  .taboo-cart-{{ section.id }}__ship-card { background: #FFFFFF; border-radius: 14px; }
+  .taboo-cart-{{ section.id }}__ship-note { margin: 0 0 9px; font: 700 12.5px 'DM Sans', system-ui, sans-serif; }
+  .taboo-cart-{{ section.id }}__ship-track { display: block; height: 7px; border-radius: 4px; background: #EFE4D4; overflow: hidden; }
+  .taboo-cart-{{ section.id }}__ship-fill { display: block; height: 7px; background: #1F7A6B; transition: width .3s ease; }
+
+  .taboo-cart-{{ section.id }}__empty { background: #FFFFFF; border-radius: 18px; text-align: center; }
+  .taboo-cart-{{ section.id }}__empty p { margin: 0 0 14px; color: #5A4F49; }
+  .taboo-cart-{{ section.id }}__empty-btn {
+    display: inline-block; text-decoration: none; background: #E8402A; color: #FFF6E9; border-radius: 12px;
+    padding: 13px 22px; font: 700 14px 'DM Sans', system-ui, sans-serif;
+  }
+
+  .taboo-cart-{{ section.id }}__line { display: flex; border-top: 1.5px solid #E7DCCC; align-items: center; }
+  .taboo-cart-{{ section.id }}__line-media { flex: 0 0 auto; border-radius: 14px; overflow: hidden; background: #F2B233; display: flex; align-items: center; justify-content: center; }
+  .taboo-cart-{{ section.id }}__line-media img { max-width: 100%; max-height: 100%; object-fit: contain; }
+  .taboo-cart-{{ section.id }}__line-body { flex: 1; min-width: 0; }
+  .taboo-cart-{{ section.id }}__line-top { display: flex; justify-content: space-between; gap: 8px; }
+  .taboo-cart-{{ section.id }}__line-name { font: 700 14.5px 'DM Sans', system-ui, sans-serif; }
+  .taboo-cart-{{ section.id }}__line-remove { background: none; border: 0; padding: 0; font: 500 12px 'DM Sans', system-ui, sans-serif; color: #8A7C73; cursor: pointer; }
+  .taboo-cart-{{ section.id }}__line-variant { font: 500 12px 'DM Sans', system-ui, sans-serif; color: #8A7C73; }
+  .taboo-cart-{{ section.id }}__line-bottom { display: flex; align-items: center; justify-content: space-between; }
+  .taboo-cart-{{ section.id }}__line-qty { display: flex; align-items: center; gap: 12px; border: 1.5px solid #E7DCCC; border-radius: 999px; padding: 4px 10px; }
+  .taboo-cart-{{ section.id }}__line-qty button { background: none; border: 0; font: 700 17px 'DM Sans', system-ui, sans-serif; cursor: pointer; color: #14100F; line-height: 1; }
+  .taboo-cart-{{ section.id }}__line-qty span { font: 700 13px 'DM Sans', system-ui, sans-serif; min-width: 12px; text-align: center; }
+  .taboo-cart-{{ section.id }}__line-total { font: 700 15px 'DM Sans', system-ui, sans-serif; color: #E8402A; }
+
+  .taboo-cart-{{ section.id }}__upsell-label { margin: 0 0 10px; font: 700 10.5px 'DM Sans', system-ui, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #8A7C73; }
+  .taboo-cart-{{ section.id }}__upsell { background: #FFFFFF; border-radius: 16px; display: flex; gap: 14px; align-items: center; }
+  .taboo-cart-{{ section.id }}__upsell-media { flex: 0 0 auto; border-radius: 11px; overflow: hidden; background: #F2B233; display: flex; align-items: center; justify-content: center; }
+  .taboo-cart-{{ section.id }}__upsell-media img { max-width: 100%; max-height: 100%; object-fit: contain; }
+  .taboo-cart-{{ section.id }}__upsell-body { flex: 1; min-width: 0; }
+  .taboo-cart-{{ section.id }}__upsell-name { font: 700 13px 'DM Sans', system-ui, sans-serif; }
+  .taboo-cart-{{ section.id }}__upsell-bottom { display: flex; align-items: center; justify-content: space-between; }
+  .taboo-cart-{{ section.id }}__upsell-price { font: 700 13px 'DM Sans', system-ui, sans-serif; color: #E8402A; }
+  .taboo-cart-{{ section.id }}__upsell-add { background: #14100F; color: #FFF6E9; border: 0; border-radius: 9px; padding: 7px 12px; font: 700 12px 'DM Sans', system-ui, sans-serif; cursor: pointer; }
+
+  .taboo-cart-{{ section.id }}__summary { background: #FFFFFF; }
+  .taboo-cart-{{ section.id }}__summary-title { margin: 0 0 18px; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; letter-spacing: -.035em; }
+  .taboo-cart-{{ section.id }}__summary-row { display: flex; justify-content: space-between; font-size: 14px; color: #5A4F49; margin-bottom: 8px; }
+  .taboo-cart-{{ section.id }}__summary-total {
+    display: flex; justify-content: space-between; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800;
+    padding-top: 10px; border-top: 1.5px dashed #E7DCCC;
+  }
+  .taboo-cart-{{ section.id }}__checkout-btn {
+    display: block; text-align: center; text-decoration: none; background: #E8402A; color: #FFF6E9; border-radius: 14px;
+    padding: 18px; font: 700 16px 'DM Sans', system-ui, sans-serif; cursor: pointer;
+  }
+  .taboo-cart-{{ section.id }}__continue-link {
+    display: block; text-align: center; text-decoration: none; background: none; padding: 12px;
+    font: 700 14px 'DM Sans', system-ui, sans-serif; color: #8A7C73;
+  }
+
+  @media screen and (max-width: 1023px) {
+    .taboo-cart-{{ section.id }} { padding: 24px 18px 30px; }
+    .taboo-cart-{{ section.id }}__title { font-size: 38px; margin-bottom: 14px; }
+    .taboo-cart-{{ section.id }}__ship-card { padding: 13px 15px; margin-bottom: 16px; }
+    .taboo-cart-{{ section.id }}__empty { padding: 34px 20px; }
+    .taboo-cart-{{ section.id }}__line { gap: 13px; padding: 14px 0; }
+    .taboo-cart-{{ section.id }}__line-media { width: 74px; height: 74px; padding: 5px; }
+    .taboo-cart-{{ section.id }}__line-variant { margin-bottom: 9px; }
+    .taboo-cart-{{ section.id }}__upsells { display: flex; gap: 10px; overflow-x: auto; scrollbar-width: none; padding-bottom: 6px; margin-top: 8px; }
+    .taboo-cart-{{ section.id }}__upsell { flex: 0 0 176px; padding: 12px; }
+    .taboo-cart-{{ section.id }}__upsell-media { width: 64px; height: 64px; padding: 5px; margin-bottom: 10px; }
+    .taboo-cart-{{ section.id }}__summary { border-radius: 18px; padding: 16px; margin-top: 18px; }
+    .taboo-cart-{{ section.id }}__summary-title { font-size: 21px; }
+  }
+
+  @media screen and (min-width: 1024px) {
+    .taboo-cart-{{ section.id }} { max-width: 1200px; margin: 0 auto; padding: 48px 24px 80px; }
+    .taboo-cart-{{ section.id }}__title { font-size: 56px; margin-bottom: 28px; }
+    .taboo-cart-{{ section.id }}__layout { display: grid; grid-template-columns: 1fr 380px; gap: 48px; align-items: start; }
+    .taboo-cart-{{ section.id }}__ship-card { padding: 16px 20px; margin-bottom: 24px; }
+    .taboo-cart-{{ section.id }}__empty { padding: 56px; }
+    .taboo-cart-{{ section.id }}__line { gap: 20px; padding: 22px 0; }
+    .taboo-cart-{{ section.id }}__line-media { width: 110px; height: 110px; padding: 10px; }
+    .taboo-cart-{{ section.id }}__line-name { font-size: 18px; }
+    .taboo-cart-{{ section.id }}__line-variant { font-size: 13.5px; }
+    .taboo-cart-{{ section.id }}__line-total { font-size: 18px; }
+    .taboo-cart-{{ section.id }}__upsell-label { margin-top: 36px; }
+    .taboo-cart-{{ section.id }}__upsells { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .taboo-cart-{{ section.id }}__upsell { padding: 16px; }
+    .taboo-cart-{{ section.id }}__upsell-media { width: 64px; height: 64px; padding: 6px; }
+    .taboo-cart-{{ section.id }}__summary { border-radius: 22px; padding: 24px; position: sticky; top: 110px; }
+    .taboo-cart-{{ section.id }}__summary-total { font-size: 26px; margin-bottom: 20px; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Cart",
+  "settings": [
+    { "type": "text", "id": "bag_word", "label": "Word for \"cart\" (e.g. bag)", "default": "bag" },
+    { "type": "number", "id": "free_shipping_threshold", "label": "Free shipping threshold ($)", "info": "Confirm this with the client — the design references $35 as a proposal, not a confirmed policy.", "default": 35 },
+    { "type": "text", "id": "flat_shipping_rate", "label": "Flat shipping rate label (below threshold)", "default": "$4.95" },
+    { "type": "url", "id": "shop_url", "label": "\"Continue shopping\" link" }
+  ],
+  "blocks": [
+    {
+      "type": "upsell",
+      "name": "Upsell product",
+      "settings": [
+        { "type": "product", "id": "product", "label": "Product" }
+      ]
+    }
+  ],
+  "max_blocks": 3
+}
+{% endschema %}

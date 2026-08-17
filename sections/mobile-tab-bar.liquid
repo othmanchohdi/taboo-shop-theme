@@ -1,0 +1,225 @@
+{%- doc -%}
+  Sticky bottom tab bar, mobile only (<768px). Placed inside header-group.json
+  so it renders globally. Horizon has no native equivalent for this.
+  Active tab is determined by comparing request.path against each tab's URL.
+{%- enddoc -%}
+
+{% liquid
+  assign path = request.path
+  assign ink = section.settings.background_color | default: '#FFF6E9'
+  assign border = section.settings.border_color | default: '#E7DCCC'
+  assign active_color = section.settings.active_color | default: '#E8402A'
+  assign inactive_color = section.settings.inactive_color | default: '#8A7C73'
+%}
+
+<nav class="taboo-tabbar-{{ section.id }}" aria-label="Primary mobile navigation">
+  {% for block in section.blocks %}
+    {% liquid
+      assign tab_url = block.settings.url
+      assign is_active = false
+      if tab_url != blank and path == tab_url
+        assign is_active = true
+      endif
+      assign show_badge = false
+      if block.settings.show_cart_count and cart.item_count > 0
+        assign show_badge = true
+      endif
+    %}
+    <a
+      href="{{ tab_url | default: '#' }}"
+      class="taboo-tabbar-{{ section.id }}__tab{% if is_active %} is-active{% endif %}"
+      {% if is_active %}aria-current="page"{% endif %}
+      {{ block.shopify_attributes }}
+    >
+      <span class="taboo-tabbar-{{ section.id }}__icon-wrap">
+        {{ block.settings.icon }}
+        {% if show_badge %}
+          <span class="taboo-tabbar-{{ section.id }}__badge">{{ cart.item_count }}</span>
+        {% endif %}
+      </span>
+      <span class="taboo-tabbar-{{ section.id }}__label">{{ block.settings.label }}</span>
+    </a>
+  {% endfor %}
+</nav>
+
+<style>
+  .taboo-tabbar-{{ section.id }} {
+    display: none;
+  }
+
+  @media screen and (max-width: 767px) {
+    .taboo-tabbar-{{ section.id }} {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 64px;
+      background: {{ ink }};
+      border-top: 1px solid {{ border }};
+      display: grid;
+      grid-template-columns: repeat({{ section.blocks.size }}, 1fr);
+      align-items: center;
+      z-index: 1000;
+      padding-bottom: env(safe-area-inset-bottom, 0);
+    }
+
+    /* prevent content and Horizon's own sticky elements from hiding behind the tab bar */
+    body:has(.taboo-tabbar-{{ section.id }}) {
+      padding-bottom: 64px;
+    }
+  }
+
+  .taboo-tabbar-{{ section.id }}__tab {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding-top: 6px;
+    text-decoration: none;
+    color: {{ inactive_color }};
+  }
+
+  .taboo-tabbar-{{ section.id }}__tab.is-active {
+    color: {{ active_color }};
+  }
+
+  .taboo-tabbar-{{ section.id }}__icon-wrap {
+    position: relative;
+    display: block;
+    line-height: 0;
+  }
+
+  .taboo-tabbar-{{ section.id }}__icon-wrap svg {
+    width: 22px;
+    height: 22px;
+    stroke: currentColor;
+  }
+
+  .taboo-tabbar-{{ section.id }}__badge {
+    position: absolute;
+    top: -5px;
+    right: -8px;
+    min-width: 16px;
+    height: 16px;
+    padding: 0 4px;
+    border-radius: 999px;
+    background: #E8402A;
+    color: #FFF6E9;
+    font: 700 10px 'DM Sans', system-ui, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .taboo-tabbar-{{ section.id }}__label {
+    font: 700 10.5px 'DM Sans', system-ui, sans-serif;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Mobile tab bar",
+  "enabled_on": {
+    "groups": ["header"]
+  },
+  "settings": [
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#FFF6E9"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Top border color",
+      "default": "#E7DCCC"
+    },
+    {
+      "type": "color",
+      "id": "active_color",
+      "label": "Active tab color",
+      "default": "#E8402A"
+    },
+    {
+      "type": "color",
+      "id": "inactive_color",
+      "label": "Inactive tab color",
+      "default": "#8A7C73"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tab",
+      "name": "Tab",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Home"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Link"
+        },
+        {
+          "type": "html",
+          "id": "icon",
+          "label": "Icon SVG",
+          "info": "Paste a 24x24 stroke SVG (stroke=\"currentColor\")",
+          "default": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3 10.5 12 3l9 7.5\"></path><path d=\"M5.5 9.5V20h13V9.5\"></path><path d=\"M9.5 20v-5.5h5V20\"></path></svg>"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_cart_count",
+          "label": "Show cart item count badge",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "max_blocks": 5,
+  "presets": [
+    {
+      "name": "Mobile tab bar",
+      "blocks": [
+        {
+          "type": "tab",
+          "settings": {
+            "label": "Home",
+            "url": "/",
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3 10.5 12 3l9 7.5\"></path><path d=\"M5.5 9.5V20h13V9.5\"></path><path d=\"M9.5 20v-5.5h5V20\"></path></svg>"
+          }
+        },
+        {
+          "type": "tab",
+          "settings": {
+            "label": "Shop",
+            "url": "/collections/all",
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"3.5\" y=\"4.5\" width=\"7\" height=\"7\" rx=\"1.5\"></rect><rect x=\"13.5\" y=\"4.5\" width=\"7\" height=\"7\" rx=\"1.5\"></rect><rect x=\"3.5\" y=\"14.5\" width=\"7\" height=\"7\" rx=\"1.5\"></rect><rect x=\"13.5\" y=\"14.5\" width=\"7\" height=\"7\" rx=\"1.5\"></rect></svg>"
+          }
+        },
+        {
+          "type": "tab",
+          "settings": {
+            "label": "Play",
+            "url": "/pages/how-to-play",
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"13.5\" r=\"7.5\"></circle><path d=\"M12 9.5v4l2.5 1.5\"></path><path d=\"M9 2.5h6\"></path><path d=\"M12 2.5V6\"></path></svg>"
+          }
+        },
+        {
+          "type": "tab",
+          "settings": {
+            "label": "Cart",
+            "url": "/cart",
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M5 7.5h14l-1.2 13H6.2Z\"></path><path d=\"M8.75 9.5V6a3.25 3.25 0 0 1 6.5 0v3.5\"></path></svg>",
+            "show_cart_count": true
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
