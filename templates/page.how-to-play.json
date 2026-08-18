@@ -1,19 +1,65 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "taboo_how_to_play": {
       "type": "how-to-play-taboo",
       "blocks": {
-        "s1": { "type": "step", "settings": { "heading": "Split into teams", "text": "Get four or more players and split into two teams." } },
-        "s2": { "type": "step", "settings": { "heading": "Deal a card", "text": "One player from the active team draws a card and sets the 1-minute timer." } },
-        "s3": { "type": "step", "settings": { "heading": "Get your team to guess", "text": "Describe the top word without saying any of the five taboo words underneath it." } },
-        "s4": { "type": "step", "settings": { "heading": "Buzz on a slip-up", "text": "If a taboo word is said, anyone can buzz — the other team scores instead." } },
-        "s5": { "type": "step", "settings": { "heading": "Swap and keep score", "text": "Switch teams each round and keep going until the cards run out." } }
+        "s1": {
+          "type": "step",
+          "settings": {
+            "heading": "Split into teams",
+            "text": "Get four or more players and split into two teams."
+          }
+        },
+        "s2": {
+          "type": "step",
+          "settings": {
+            "heading": "Deal a card",
+            "text": "One player from the active team draws a card and sets the 1-minute timer."
+          }
+        },
+        "s3": {
+          "type": "step",
+          "settings": {
+            "heading": "Get your team to guess",
+            "text": "Describe the top word without saying any of the five taboo words underneath it."
+          }
+        },
+        "s4": {
+          "type": "step",
+          "settings": {
+            "heading": "Buzz on a slip-up",
+            "text": "If a taboo word is said, anyone can buzz — the other team scores instead."
+          }
+        },
+        "s5": {
+          "type": "step",
+          "settings": {
+            "heading": "Swap and keep score",
+            "text": "Switch teams each round and keep going until the cards run out."
+          }
+        }
       },
-      "block_order": ["s1", "s2", "s3", "s4", "s5"],
+      "block_order": [
+        "s1",
+        "s2",
+        "s3",
+        "s4",
+        "s5"
+      ],
       "settings": {
         "eyebrow": "4+ players · ages 13+ · 60 seconds",
         "heading": "How to play",
         "subheading": "Easy to learn in under 60 seconds. Learning it is not the hard part.",
+        "header_image": "shopify://shop_images/card_3x_90s_rev02.webp",
         "panel_label": "Taboosters need no batteries",
         "panel_copy": "Every Tabooster is cards-only — no buzzer, no timer, no giant box. Shuffle them into the game you already own and play exactly the same way.",
         "panel_cta": "Shop the packs",
@@ -22,5 +68,7 @@
       }
     }
   },
-  "order": ["taboo_how_to_play"]
+  "order": [
+    "taboo_how_to_play"
+  ]
 }
