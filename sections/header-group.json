@@ -117,6 +117,8 @@
         "actions_font_size": "0.875rem",
         "actions_font": "body",
         "actions_text_case": "none",
+        "amazon_url": "shopify://pages/contact",
+        "amazon_label": "Board game on Amazon ↗",
         "background_color_top": "#14100f",
         "text_color_top": "#fff6e9",
         "background_color_bottom": "",
