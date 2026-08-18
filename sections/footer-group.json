@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "type": "footer",
   "name": "t:names.footer",
@@ -5,6 +14,46 @@
     "footer": {
       "type": "footer",
       "blocks": {
+        "menu_shop": {
+          "type": "menu",
+          "settings": {
+            "menu": "footer-shop",
+            "heading": "Shop",
+            "menu_spacing": 10,
+            "show_as_accordion": false,
+            "accordion_icon": "caret",
+            "accordion_dividers": false,
+            "background_color": "",
+            "text_color": "",
+            "heading_preset": "paragraph",
+            "link_preset": "paragraph",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "menu_help": {
+          "type": "menu",
+          "settings": {
+            "menu": "footer-help-1",
+            "heading": "Help",
+            "menu_spacing": 10,
+            "show_as_accordion": false,
+            "accordion_icon": "caret",
+            "accordion_dividers": false,
+            "background_color": "",
+            "text_color": "",
+            "heading_preset": "paragraph",
+            "link_preset": "paragraph",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
         "group_newsletter": {
           "type": "group",
           "settings": {
@@ -12,13 +61,32 @@
             "vertical_on_mobile": true,
             "horizontal_alignment": "flex-start",
             "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "center",
             "gap": 12,
             "width": "fill",
             "custom_width": 100,
             "width_mobile": "fill",
             "custom_width_mobile": 100,
             "height": "fit",
+            "custom_height": 100,
             "background_media": "none",
+            "background_color": "",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_color": "",
+            "border_radius": 0,
+            "link": "",
+            "open_in_new_tab": false,
+            "placeholder": "",
             "padding-block-start": 0,
             "padding-block-end": 0,
             "padding-inline-start": 0,
@@ -29,14 +97,21 @@
               "type": "text",
               "name": "t:names.heading",
               "settings": {
-                "text": "<h2>Join our mailing list</h2>",
+                "text": "<p>Join our mailing list</p>",
                 "width": "100%",
+                "max_width": "normal",
                 "alignment": "left",
-                "type_preset": "h3",
+                "type_preset": "h4",
                 "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
                 "case": "none",
                 "wrap": "pretty",
+                "text_color": "",
                 "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
                 "padding-block-start": 0,
                 "padding-block-end": 0,
                 "padding-inline-start": 0,
@@ -50,12 +125,19 @@
               "settings": {
                 "text": "<p>Get exclusive deals and early access to new products.</p>",
                 "width": "100%",
+                "max_width": "normal",
                 "alignment": "left",
                 "type_preset": "rte",
                 "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
                 "case": "none",
                 "wrap": "pretty",
+                "text_color": "",
                 "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
                 "padding-block-start": 0,
                 "padding-block-end": 0,
                 "padding-inline-start": 0,
@@ -70,17 +152,21 @@
                 "width": "fill",
                 "custom_width": 100,
                 "heading": "",
+                "heading_text_color": "",
+                "heading_preset": "h3",
                 "border_style": "all",
                 "input_style": "custom",
                 "border_width": 2,
                 "border_radius": 11,
-                "input_background_color": "#14100F",
-                "input_border_color": "#3A322D",
+                "input_background_color": "#14100f",
+                "input_text_color": "",
+                "input_border_color": "#3a322d",
                 "input_type_preset": "paragraph",
-                "style_class": "button-secondary",
-                "custom_button_background": "#F2B233",
-                "custom_button_text": "#14100F",
-                "custom_button_border": "#F2B233",
+                "style_class": "button-custom",
+                "custom_button_background": "#f2b233",
+                "custom_button_text": "#14100f",
+                "custom_button_border": "#f2b233",
+                "link_text_color": "",
                 "display_type": "text",
                 "label": "Join",
                 "integrated_button": false,
@@ -93,45 +179,23 @@
               "blocks": {}
             }
           },
-          "block_order": ["text_heading", "text_body", "email_signup"]
-        },
-        "menu_shop": {
-          "type": "menu",
-          "settings": {
-            "menu": "footer-shop",
-            "heading": "Shop",
-            "menu_spacing": 10,
-            "show_as_accordion": false,
-            "heading_preset": "paragraph",
-            "link_preset": "paragraph",
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          }
-        },
-        "menu_help": {
-          "type": "menu",
-          "settings": {
-            "menu": "footer-help",
-            "heading": "Help",
-            "menu_spacing": 10,
-            "show_as_accordion": false,
-            "heading_preset": "paragraph",
-            "link_preset": "paragraph",
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          }
+          "block_order": [
+            "text_heading",
+            "text_body",
+            "email_signup"
+          ]
         }
       },
-      "block_order": ["group_newsletter", "menu_shop", "menu_help"],
+      "block_order": [
+        "menu_shop",
+        "menu_help",
+        "group_newsletter"
+      ],
       "name": "t:names.footer",
       "settings": {
         "section_width": "page-width",
         "gap": 40,
-        "background_color": "#14100F",
+        "background_color": "#14100f",
         "padding-block-start": 52,
         "padding-block-end": 36
       }
@@ -143,28 +207,39 @@
           "type": "footer-copyright",
           "settings": {
             "show_powered_by": false,
+            "text_color": "",
             "font_size": "0.75rem",
             "case": "none"
-          }
+          },
+          "blocks": {}
         },
         "policy_list": {
           "type": "footer-policy-list",
           "settings": {
+            "text_color": "",
             "font_size": "0.75rem",
             "case": "none"
-          }
+          },
+          "blocks": {}
         }
       },
-      "block_order": ["copyright", "policy_list"],
+      "block_order": [
+        "copyright",
+        "policy_list"
+      ],
       "settings": {
         "section_width": "page-width",
         "gap": 24,
-        "background_color": "#14100F",
+        "background_color": "#14100f",
         "divider_thickness": 1,
+        "divider_color": "",
         "padding-block-start": 12,
         "padding-block-end": 16
       }
     }
   },
-  "order": ["footer", "utilities"]
+  "order": [
+    "footer",
+    "utilities"
+  ]
 }
