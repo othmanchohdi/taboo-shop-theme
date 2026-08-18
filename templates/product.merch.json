@@ -1,0 +1,20 @@
+{
+  "sections": {
+    "taboo_pdp": {
+      "type": "pdp-taboo",
+      "blocks": {
+        "checklist_1": { "type": "checklist_item", "settings": { "text": "Insulated stainless steel" } },
+        "checklist_2": { "type": "checklist_item", "settings": { "text": "Screw lid" } }
+      },
+      "block_order": ["checklist_1", "checklist_2"],
+      "settings": {
+        "tint_color": "#F2B233",
+        "back_url": "/collections/all",
+        "show_description": false,
+        "checklist_heading": "What you get",
+        "ships_note": "Made to order by our print partner"
+      }
+    }
+  },
+  "order": ["taboo_pdp"]
+}

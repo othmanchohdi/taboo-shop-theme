@@ -13,8 +13,10 @@
     assign is_external = true
   endif
 
+  assign checklist_blocks = section.blocks | where: 'type', 'checklist_item'
   assign what_you_get = product.metafields.custom.what_you_get.value
-  assign ships_note = product.metafields.custom.ships_note.value | default: 'Ships in 1-2 business days'
+  assign checklist_heading = section.settings.checklist_heading | default: 'What you get'
+  assign ships_note = section.settings.ships_note | default: product.metafields.custom.ships_note.value | default: 'Ships in 1-2 business days'
   assign sample_word = product.metafields.custom.sample_word.value
   assign sample_taboo = product.metafields.custom.sample_taboo_words.value
   assign related_products = product.metafields.custom.related_products.value
@@ -70,7 +72,7 @@
         {% endif %}
       </div>
 
-      {% if product.description != blank %}
+      {% if section.settings.show_description and product.description != blank %}
         <div class="taboo-pdp-{{ section.id }}__description">{{ product.description }}</div>
       {% endif %}
 
@@ -126,17 +128,25 @@
         {% endform %}
       {% endif %}
 
-      {% if what_you_get != blank or ships_note != blank %}
+      {% if checklist_blocks.size > 0 or what_you_get != blank or ships_note != blank %}
         <div class="taboo-pdp-{{ section.id }}__box">
-          {% if what_you_get != blank %}
+          {% if checklist_blocks.size > 0 or what_you_get != blank %}
             <div class="taboo-pdp-{{ section.id }}__box-top">
-              <p class="taboo-pdp-{{ section.id }}__box-label">What you get</p>
+              <p class="taboo-pdp-{{ section.id }}__box-label">{{ checklist_heading }}</p>
               <div class="taboo-pdp-{{ section.id }}__box-list">
-                {% for item in what_you_get %}
-                  <div class="taboo-pdp-{{ section.id }}__box-item">
-                    <span class="taboo-pdp-{{ section.id }}__box-check">✓</span>{{ item }}
-                  </div>
-                {% endfor %}
+                {% if checklist_blocks.size > 0 %}
+                  {% for block in checklist_blocks %}
+                    <div class="taboo-pdp-{{ section.id }}__box-item" {{ block.shopify_attributes }}>
+                      <span class="taboo-pdp-{{ section.id }}__box-check">✓</span>{{ block.settings.text }}
+                    </div>
+                  {% endfor %}
+                {% else %}
+                  {% for item in what_you_get %}
+                    <div class="taboo-pdp-{{ section.id }}__box-item">
+                      <span class="taboo-pdp-{{ section.id }}__box-check">✓</span>{{ item }}
+                    </div>
+                  {% endfor %}
+                {% endif %}
               </div>
             </div>
           {% endif %}
@@ -382,7 +392,38 @@
       "default": "page-width"
     },
     { "type": "color", "id": "tint_color", "label": "Product image tint background", "default": "#F2B233" },
-    { "type": "url", "id": "back_url", "label": "\"Back to catalog\" link" }
-  ]
+    { "type": "url", "id": "back_url", "label": "\"Back to catalog\" link" },
+    {
+      "type": "header",
+      "content": "Description"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_description",
+      "label": "Show full product description",
+      "info": "Turn off to hide the product's body copy and rely on the checklist blocks below instead.",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "What you get checklist"
+    },
+    {
+      "type": "paragraph",
+      "content": "Add checklist items as blocks below. If no checklist blocks are added, the section falls back to the product's \"what_you_get\" metafield (if set)."
+    },
+    { "type": "text", "id": "checklist_heading", "label": "Checklist heading", "default": "What you get" },
+    { "type": "text", "id": "ships_note", "label": "Shipping / production note", "info": "Overrides the product's \"ships_note\" metafield when set.", "placeholder": "e.g. Made to order by our print partner" }
+  ],
+  "blocks": [
+    {
+      "type": "checklist_item",
+      "name": "Checklist item",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Text", "default": "300 all new cards" }
+      ]
+    }
+  ],
+  "max_blocks": 8
 }
 {% endschema %}
