@@ -12,7 +12,7 @@
   assign amazon_url = section.settings.amazon_url
 %}
 
-<section class="taboo-amazon-{{ section.id }}">
+<section class="taboo-amazon-{{ section.id }} {{ section.settings.section_width }}">
   <div class="taboo-amazon-{{ section.id }}__frame">
     <div class="taboo-amazon-{{ section.id }}__media">
       {% if image %}
@@ -108,7 +108,9 @@
   }
 
   @media screen and (min-width: 1024px) {
-    .taboo-amazon-{{ section.id }} { max-width: 1200px; margin: 0 auto; padding: 48px 24px 0; }
+    .taboo-amazon-{{ section.id }} { padding: 48px 24px 0; }
+    .taboo-amazon-{{ section.id }}.page-width { max-width: 1200px; margin: 0 auto; }
+    .taboo-amazon-{{ section.id }}.full-width { padding-inline: 40px; }
     .taboo-amazon-{{ section.id }}__frame {
       /* Desktop: 3-col grid, 24px radius */
       display: grid; grid-template-columns: 230px 1fr auto; align-items: center;
@@ -128,6 +130,16 @@
 {
   "name": "Amazon banner",
   "settings": [
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "t:settings.width",
+      "options": [
+        { "value": "page-width", "label": "t:options.page" },
+        { "value": "full-width", "label": "t:options.full" }
+      ],
+      "default": "page-width"
+    },
     { "type": "image_picker", "id": "image", "label": "Board game image" },
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Don't own the game?" },
     { "type": "text", "id": "title", "label": "Title", "default": "Taboo Board Game with Buzzer!" },

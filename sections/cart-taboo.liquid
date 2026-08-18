@@ -15,7 +15,7 @@
   assign remaining = threshold_cents | minus: cart.total_price
 %}
 
-<taboo-cart class="taboo-cart-{{ section.id }}" data-threshold-cents="{{ threshold_cents }}">
+<taboo-cart class="taboo-cart-{{ section.id }} {{ section.settings.section_width }}" data-threshold-cents="{{ threshold_cents }}">
   <h1 class="taboo-cart-{{ section.id }}__title">Your {{ section.settings.bag_word | default: 'bag' }}</h1>
 
   <div class="taboo-cart-{{ section.id }}__layout">
@@ -180,7 +180,9 @@
   }
 
   @media screen and (min-width: 1024px) {
-    .taboo-cart-{{ section.id }} { max-width: 1200px; margin: 0 auto; padding: 48px 24px 80px; }
+    .taboo-cart-{{ section.id }} { padding: 48px 24px 80px; }
+    .taboo-cart-{{ section.id }}.page-width { max-width: 1200px; margin: 0 auto; }
+    .taboo-cart-{{ section.id }}.full-width { padding-inline: 40px; }
     .taboo-cart-{{ section.id }}__title { font-size: 56px; letter-spacing: -.05em; margin-bottom: 28px; }
     .taboo-cart-{{ section.id }}__layout { display: grid; grid-template-columns: 1fr 380px; gap: 48px; align-items: start; }
     .taboo-cart-{{ section.id }}__ship-card { padding: 16px 20px; margin-bottom: 24px; }
@@ -210,6 +212,16 @@
 {
   "name": "Cart",
   "settings": [
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "t:settings.width",
+      "options": [
+        { "value": "page-width", "label": "t:options.page" },
+        { "value": "full-width", "label": "t:options.full" }
+      ],
+      "default": "page-width"
+    },
     { "type": "text", "id": "bag_word", "label": "Word for \"cart\" (e.g. bag)", "default": "bag" },
     { "type": "number", "id": "free_shipping_threshold", "label": "Free shipping threshold ($)", "info": "Confirm this with the client — the design references $35 as a proposal, not a confirmed policy.", "default": 35 },
     { "type": "text", "id": "flat_shipping_rate", "label": "Flat shipping rate label (below threshold)", "default": "$4.95" },

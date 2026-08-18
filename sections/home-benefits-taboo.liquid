@@ -9,7 +9,7 @@
   assign items = section.blocks | where: 'type', 'item'
 %}
 
-<section class="taboo-benefits-{{ section.id }}">
+<section class="taboo-benefits-{{ section.id }} {{ section.settings.section_width }}">
   <div class="taboo-benefits-{{ section.id }}__inner">
     <div class="taboo-benefits-{{ section.id }}__label">
       <p class="taboo-benefits-{{ section.id }}__eyebrow">{{ eyebrow }}</p>
@@ -74,9 +74,11 @@
   @media screen and (min-width: 1024px) {
     .taboo-benefits-{{ section.id }} { margin-top: 64px; }
     .taboo-benefits-{{ section.id }}__inner {
-      max-width: 1200px; margin: 0 auto; padding: 56px 24px;
+      padding: 56px 24px;
       display: grid; grid-template-columns: 320px 1fr; gap: 56px;
     }
+    .taboo-benefits-{{ section.id }}.page-width .taboo-benefits-{{ section.id }}__inner { max-width: 1200px; margin: 0 auto; }
+    .taboo-benefits-{{ section.id }}.full-width .taboo-benefits-{{ section.id }}__inner { padding-inline: 40px; }
     .taboo-benefits-{{ section.id }}__heading { font-size: 38px; line-height: 1; }
     .taboo-benefits-{{ section.id }}__list {
       display: grid; grid-template-columns: 1fr 1fr; gap: 20px 40px;
@@ -93,6 +95,16 @@
 {
   "name": "Benefits band",
   "settings": [
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "t:settings.width",
+      "options": [
+        { "value": "page-width", "label": "t:options.page" },
+        { "value": "full-width", "label": "t:options.full" }
+      ],
+      "default": "page-width"
+    },
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Why everyone loves it" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "Perfect for parties, families and groups" }
   ],

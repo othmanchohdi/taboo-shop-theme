@@ -10,7 +10,7 @@
   assign filters = section.blocks | where: 'type', 'filter'
 %}
 
-<section class="taboo-catalog-{{ section.id }}">
+<section class="taboo-catalog-{{ section.id }} {{ section.settings.section_width }}">
   <div class="taboo-catalog-{{ section.id }}__header">
     <div class="taboo-catalog-{{ section.id }}__header-inner">
       <h1 class="taboo-catalog-{{ section.id }}__title">{{ collection.title | default: 'Catalog' }}</h1>
@@ -176,14 +176,18 @@
   }
 
   @media screen and (min-width: 1024px) {
-    .taboo-catalog-{{ section.id }}__header-inner { max-width: 1200px; margin: 0 auto; padding: 52px 24px; }
+    .taboo-catalog-{{ section.id }}__header-inner { padding: 52px 24px; }
+    .taboo-catalog-{{ section.id }}.page-width .taboo-catalog-{{ section.id }}__header-inner { max-width: 1200px; margin: 0 auto; }
+    .taboo-catalog-{{ section.id }}.full-width .taboo-catalog-{{ section.id }}__header-inner { padding-inline: 40px; }
     .taboo-catalog-{{ section.id }}__title { font-size: 64px; line-height: .92; letter-spacing: -.05em; }
     .taboo-catalog-{{ section.id }}__count { font-size: 17px; }
 
     .taboo-catalog-{{ section.id }}__body {
-      max-width: 1200px; margin: 0 auto; padding: 40px 24px 80px;
+      padding: 40px 24px 80px;
       display: grid; grid-template-columns: 230px 1fr; gap: 44px; align-items: start;
     }
+    .taboo-catalog-{{ section.id }}.page-width .taboo-catalog-{{ section.id }}__body { max-width: 1200px; margin: 0 auto; }
+    .taboo-catalog-{{ section.id }}.full-width .taboo-catalog-{{ section.id }}__body { padding-inline: 40px; }
     .taboo-catalog-{{ section.id }}__rail { position: sticky; top: 110px; }
     .taboo-catalog-{{ section.id }}__rail-label { margin: 0 0 14px; font: 700 11px 'DM Sans', system-ui, sans-serif; letter-spacing: .16em; text-transform: uppercase; color: #8A7C73; }
     .taboo-catalog-{{ section.id }}__filters { display: flex; flex-direction: column; gap: 8px; margin-bottom: 28px; }
@@ -213,6 +217,16 @@
 {
   "name": "Catalog",
   "settings": [
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "t:settings.width",
+      "options": [
+        { "value": "page-width", "label": "t:options.page" },
+        { "value": "full-width", "label": "t:options.full" }
+      ],
+      "default": "page-width"
+    },
     { "type": "text", "id": "subtitle", "label": "Subtitle after product count", "default": "packs, game night gear and apparel" },
     { "type": "checkbox", "id": "show_amazon_card", "label": "Show Amazon side card", "default": true },
     { "type": "text", "id": "amazon_title", "label": "Amazon card title", "default": "Need the box itself?" },

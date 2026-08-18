@@ -12,7 +12,7 @@
   assign steps = section.blocks | where: 'type', 'step'
 %}
 
-<section class="taboo-rules-{{ section.id }}">
+<section class="taboo-rules-{{ section.id }} {{ section.settings.section_width }}">
   <div class="taboo-rules-{{ section.id }}__inner">
     <div class="taboo-rules-{{ section.id }}__col">
       <h2 class="taboo-rules-{{ section.id }}__heading">{{ heading }}</h2>
@@ -83,9 +83,11 @@
 
   @media screen and (min-width: 1024px) {
     .taboo-rules-{{ section.id }}__inner {
-      max-width: 1200px; margin: 0 auto; padding: 64px 24px 72px;
+      padding: 64px 24px 72px;
       display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center;
     }
+    .taboo-rules-{{ section.id }}.page-width .taboo-rules-{{ section.id }}__inner { max-width: 1200px; margin: 0 auto; }
+    .taboo-rules-{{ section.id }}.full-width .taboo-rules-{{ section.id }}__inner { padding-inline: 40px; }
     .taboo-rules-{{ section.id }}__heading { font-size: 42px; }
     .taboo-rules-{{ section.id }}__sub { font-size: 16px; margin-bottom: 22px; }
     .taboo-rules-{{ section.id }}__step { gap: 18px; padding: 18px 0; }
@@ -100,6 +102,16 @@
 {
   "name": "Never played rules",
   "settings": [
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "t:settings.width",
+      "options": [
+        { "value": "page-width", "label": "t:options.page" },
+        { "value": "full-width", "label": "t:options.full" }
+      ],
+      "default": "page-width"
+    },
     { "type": "text", "id": "heading", "label": "Heading", "default": "Never played?" },
     { "type": "text", "id": "subheading", "label": "Subheading", "default": "Three lines and you're ready." },
     { "type": "image_picker", "id": "image", "label": "Card photo (desktop only)" },

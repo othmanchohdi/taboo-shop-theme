@@ -21,7 +21,7 @@
   assign amazon_url = product.metafields.custom.amazon_url.value
 %}
 
-<taboo-pdp class="taboo-pdp-{{ section.id }}" data-product-url="{{ product.url }}">
+<taboo-pdp class="taboo-pdp-{{ section.id }} {{ section.settings.section_width }}" data-product-url="{{ product.url }}">
   <a href="{{ section.settings.back_url | default: '/collections/all' }}" class="taboo-pdp-{{ section.id }}__back">← Back to catalog</a>
 
   <div class="taboo-pdp-{{ section.id }}__layout">
@@ -325,7 +325,9 @@
   }
 
   @media screen and (min-width: 1024px) {
-    .taboo-pdp-{{ section.id }} { max-width: 1200px; margin: 0 auto; padding: 28px 24px 80px; }
+    .taboo-pdp-{{ section.id }} { padding: 28px 24px 80px; }
+    .taboo-pdp-{{ section.id }}.page-width { max-width: 1200px; margin: 0 auto; }
+    .taboo-pdp-{{ section.id }}.full-width { padding-inline: 40px; }
     .taboo-pdp-{{ section.id }}__back { margin-bottom: 20px; }
     .taboo-pdp-{{ section.id }}__layout { display: grid; grid-template-columns: 1fr 460px; gap: 56px; align-items: start; }
     .taboo-pdp-{{ section.id }}__gallery { position: sticky; top: 110px; }
@@ -369,6 +371,16 @@
 {
   "name": "Product detail",
   "settings": [
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "t:settings.width",
+      "options": [
+        { "value": "page-width", "label": "t:options.page" },
+        { "value": "full-width", "label": "t:options.full" }
+      ],
+      "default": "page-width"
+    },
     { "type": "color", "id": "tint_color", "label": "Product image tint background", "default": "#F2B233" },
     { "type": "url", "id": "back_url", "label": "\"Back to catalog\" link" }
   ]
