@@ -95,6 +95,12 @@
     align-items: center;
     text-decoration: none;
 
+    /* Logo artwork is dark; the header row is dark (#14100F) per design handoff,
+       so it needs a light chip to stay legible. Design spec: #FFF6E9, radius 10, padding 7px 14px. */
+    background: #FFF6E9;
+    border-radius: 10px;
+    padding: 7px 14px;
+
     &[data-hidden-on-home-page] {
       display: none;
 
@@ -105,10 +111,6 @@
         & {
         display: flex;
       }
-    }
-
-    @media screen and (max-width: 749px) {
-      padding: 0;
     }
 
     @media screen and (min-width: 750px) {
