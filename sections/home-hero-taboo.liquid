@@ -10,46 +10,48 @@
 %}
 
 <section class="taboo-hero-{{ section.id }} {{ section.settings.section_width }}">
-  <div class="taboo-hero-{{ section.id }}__media">
-    {% if image %}
-      <img
-        src="{{ image | image_url: width: 1600 }}"
-        srcset="{{ image | image_url: width: 800 }} 800w, {{ image | image_url: width: 1200 }} 1200w, {{ image | image_url: width: 1600 }} 1600w"
-        sizes="(max-width: 767px) 100vw, 50vw"
-        alt="{{ image.alt | default: eyebrow }}"
-        width="{{ image.width }}"
-        height="{{ image.height }}"
-        loading="eager"
-        fetchpriority="high"
-      >
-    {% else %}
-      <div class="taboo-hero-{{ section.id }}__media-placeholder"></div>
-    {% endif %}
-  </div>
+  <div class="taboo-hero-{{ section.id }}__inner">
+    <div class="taboo-hero-{{ section.id }}__media">
+      {% if image %}
+        <img
+          src="{{ image | image_url: width: 1600 }}"
+          srcset="{{ image | image_url: width: 800 }} 800w, {{ image | image_url: width: 1200 }} 1200w, {{ image | image_url: width: 1600 }} 1600w"
+          sizes="(max-width: 767px) 100vw, 50vw"
+          alt="{{ image.alt | default: eyebrow }}"
+          width="{{ image.width }}"
+          height="{{ image.height }}"
+          loading="eager"
+          fetchpriority="high"
+        >
+      {% else %}
+        <div class="taboo-hero-{{ section.id }}__media-placeholder"></div>
+      {% endif %}
+    </div>
 
-  <div class="taboo-hero-{{ section.id }}__content">
-    <p class="taboo-hero-{{ section.id }}__eyebrow">{{ eyebrow }}</p>
-    <h1 class="taboo-hero-{{ section.id }}__heading">{{ heading }}</h1>
-    {% if subheading != blank %}
-      <p class="taboo-hero-{{ section.id }}__sub">{{ subheading }}</p>
-    {% endif %}
-    <div class="taboo-hero-{{ section.id }}__desktop-actions">
+    <div class="taboo-hero-{{ section.id }}__content">
+      <p class="taboo-hero-{{ section.id }}__eyebrow">{{ eyebrow }}</p>
+      <h1 class="taboo-hero-{{ section.id }}__heading">{{ heading }}</h1>
+      {% if subheading != blank %}
+        <p class="taboo-hero-{{ section.id }}__sub">{{ subheading }}</p>
+      {% endif %}
+      <div class="taboo-hero-{{ section.id }}__desktop-actions">
+        {% if primary_url %}
+          <a href="{{ primary_url }}" class="taboo-hero-{{ section.id }}__btn-primary">{{ primary_label }}</a>
+        {% endif %}
+        {% if secondary_url %}
+          <a href="{{ secondary_url }}" class="taboo-hero-{{ section.id }}__btn-secondary-outline">{{ secondary_label }}</a>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="taboo-hero-{{ section.id }}__cta-card">
       {% if primary_url %}
         <a href="{{ primary_url }}" class="taboo-hero-{{ section.id }}__btn-primary">{{ primary_label }}</a>
       {% endif %}
       {% if secondary_url %}
-        <a href="{{ secondary_url }}" class="taboo-hero-{{ section.id }}__btn-secondary-outline">{{ secondary_label }}</a>
+        <a href="{{ secondary_url }}" class="taboo-hero-{{ section.id }}__btn-secondary">{{ secondary_label }}</a>
       {% endif %}
     </div>
-  </div>
-
-  <div class="taboo-hero-{{ section.id }}__cta-card">
-    {% if primary_url %}
-      <a href="{{ primary_url }}" class="taboo-hero-{{ section.id }}__btn-primary">{{ primary_label }}</a>
-    {% endif %}
-    {% if secondary_url %}
-      <a href="{{ secondary_url }}" class="taboo-hero-{{ section.id }}__btn-secondary">{{ secondary_label }}</a>
-    {% endif %}
   </div>
 </section>
 
@@ -174,7 +176,9 @@
     .taboo-hero-{{ section.id }}__cta-card .taboo-hero-{{ section.id }}__btn-secondary { flex: 0 0 auto; }
   }
 
-  /* Desktop: 2-col grid, actions inline under copy, no overlap card */
+  /* Desktop: background bleeds full width on the section; the grid/content
+     is capped to the page width on __inner, matching the design handoff
+     (outer full-bleed background + inner max-width:1200px content column). */
   @media screen and (min-width: 1024px) {
     .taboo-hero-{{ section.id }} {
       background: #E8402A;
@@ -185,7 +189,7 @@
       display: none;
     }
 
-    .taboo-hero-{{ section.id }} {
+    .taboo-hero-{{ section.id }}__inner {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 56px;
@@ -193,12 +197,12 @@
       padding: 64px 24px 72px;
     }
 
-    .taboo-hero-{{ section.id }}.page-width {
+    .taboo-hero-{{ section.id }}.page-width .taboo-hero-{{ section.id }}__inner {
       max-width: 1200px;
       margin: 0 auto;
     }
 
-    .taboo-hero-{{ section.id }}.full-width {
+    .taboo-hero-{{ section.id }}.full-width .taboo-hero-{{ section.id }}__inner {
       max-width: none;
       padding-inline: 40px;
     }
