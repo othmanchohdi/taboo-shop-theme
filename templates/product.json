@@ -1,12 +1,59 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "taboo_pdp": {
       "type": "pdp-taboo",
+      "blocks": {
+        "checklist_item_L6FQgM": {
+          "type": "checklist_item",
+          "settings": {
+            "text": "300 all new cards"
+          }
+        },
+        "checklist_item_FmUt47": {
+          "type": "checklist_item",
+          "settings": {
+            "text": "300 all new cards"
+          }
+        },
+        "checklist_item_kdqaAX": {
+          "type": "checklist_item",
+          "settings": {
+            "text": "300 all new cards"
+          }
+        },
+        "checklist_item_9azmmT": {
+          "type": "checklist_item",
+          "settings": {
+            "text": "300 all new cards"
+          }
+        }
+      },
+      "block_order": [
+        "checklist_item_L6FQgM",
+        "checklist_item_FmUt47",
+        "checklist_item_kdqaAX",
+        "checklist_item_9azmmT"
+      ],
       "settings": {
-        "tint_color": "#F2B233",
-        "back_url": "/collections/all"
+        "section_width": "page-width",
+        "tint_color": "#f2b233",
+        "back_url": "/collections/all",
+        "show_description": false,
+        "checklist_heading": "What you get",
+        "ships_note": ""
       }
     }
   },
-  "order": ["taboo_pdp"]
+  "order": [
+    "taboo_pdp"
+  ]
 }
