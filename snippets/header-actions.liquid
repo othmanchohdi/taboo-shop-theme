@@ -167,6 +167,23 @@
     background: transparent;
   }
 
+  /* Design handoff has no account/login entry in the nav; keep the account
+     action icon-only at every breakpoint rather than showing a text label. */
+  .account-button__text {
+    display: none;
+  }
+
+  /* Design handoff: solid red cart pill on tablet/desktop (mobile stays icon-only). */
+  @media screen and (min-width: 750px) {
+    header-actions .header-actions__action:has(cart-icon) {
+      background: #E8402A;
+      border-radius: 10px;
+      padding: 10px 16px;
+      color: #FFF6E9;
+      --button-color: #FFF6E9;
+    }
+  }
+
   .account-button__icon,
   .account-button__text {
     color: var(--color-account-icon);

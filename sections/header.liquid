@@ -97,6 +97,9 @@
   endcapture
 
   capture actions
+    if section.settings.amazon_url != blank
+      render 'header-amazon-link', url: section.settings.amazon_url, label: section.settings.amazon_label
+    endif
     render 'header-actions', customer_account_menu: section.settings.customer_account_menu, display_style: section.settings.actions_display_style, section: section
   endcapture
 
@@ -1627,6 +1630,22 @@
       ],
       "default": "none",
       "visible_if": "{{ section.settings.actions_display_style == 'text' }}"
+    },
+    {
+      "type": "header",
+      "content": "Amazon board game link"
+    },
+    {
+      "type": "url",
+      "id": "amazon_url",
+      "label": "Amazon link URL",
+      "info": "Outlined button next to the cart on tablet/desktop, matching the design handoff. Leave blank to hide."
+    },
+    {
+      "type": "text",
+      "id": "amazon_label",
+      "label": "Amazon link label",
+      "default": "Board game on Amazon ↗"
     },
     {
       "type": "header",

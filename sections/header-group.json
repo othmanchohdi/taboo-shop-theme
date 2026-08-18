@@ -63,8 +63,11 @@
         "border_width": 0,
         "background_color_top": "#14100F",
         "text_color_top": "#FFF6E9",
+        "actions_display_style": "text",
         "bubble_background_color": "#E8402A",
         "bubble_text_color": "#FFF6E9",
+        "amazon_url": "https://www.amazon.com/",
+        "amazon_label": "Board game on Amazon ↗",
         "enable_transparent_header_home": false,
         "enable_transparent_header_product": false,
         "enable_transparent_header_collection": false
