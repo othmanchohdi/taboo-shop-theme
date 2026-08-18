@@ -50,20 +50,20 @@
             </div>
           {% endfor %}
         </div>
-
-        <div class="taboo-demo-{{ section.id }}__footer-bar">
-          <div class="taboo-demo-{{ section.id }}__timer">
-            <div class="taboo-demo-{{ section.id }}__timer-num" data-timer-display>60</div>
-            <div class="taboo-demo-{{ section.id }}__timer-label">left</div>
-          </div>
-          <button type="button" class="taboo-demo-{{ section.id }}__timer-btn" data-timer-toggle>Start</button>
-          <button type="button" class="taboo-demo-{{ section.id }}__next-btn" data-next-card>Next</button>
-          <button type="button" class="taboo-demo-{{ section.id }}__buzz-btn" data-buzz>BUZZ</button>
-        </div>
       </div>
-
-      <button type="button" class="taboo-demo-{{ section.id }}__deal-btn" data-next-card-mobile>Deal another card</button>
     </div>
+
+    <div class="taboo-demo-{{ section.id }}__footer-bar">
+      <div class="taboo-demo-{{ section.id }}__timer">
+        <div class="taboo-demo-{{ section.id }}__timer-num" data-timer-display>60</div>
+        <div class="taboo-demo-{{ section.id }}__timer-label">left</div>
+      </div>
+      <button type="button" class="taboo-demo-{{ section.id }}__timer-btn" data-timer-toggle>Start</button>
+      <button type="button" class="taboo-demo-{{ section.id }}__next-btn" data-next-card>Next</button>
+      <button type="button" class="taboo-demo-{{ section.id }}__buzz-btn" data-buzz>BUZZ</button>
+    </div>
+
+    <button type="button" class="taboo-demo-{{ section.id }}__deal-btn" data-next-card-mobile>Deal another card</button>
 
     <div class="taboo-demo-{{ section.id }}__buzz-overlay" data-buzz-overlay aria-hidden="true">BZZT!</div>
   </taboo-card-demo>
@@ -208,7 +208,7 @@
     border-radius: 12px; font: 800 12px 'DM Sans', system-ui, sans-serif; letter-spacing: .1em; cursor: pointer;
   }
   .taboo-demo-{{ section.id }}__deal-btn {
-    width: 100%; margin-top: 12px; background: none; border: 1.5px solid #DCCEBB; border-radius: 12px;
+    display: block; margin: 12px 18px 16px; background: none; border: 1.5px solid #DCCEBB; border-radius: 12px;
     padding: 12px; font: 700 13.5px 'DM Sans', system-ui, sans-serif; color: #14100F; cursor: pointer;
   }
 
@@ -322,7 +322,8 @@
     .taboo-demo-{{ section.id }}__packs-grid {
       display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;
     }
-    .taboo-demo-{{ section.id }}__pack-card { transition: box-shadow .2s ease; }
+    /* Desktop pack card: white (mobile is cream #FFF6E9, since it sits on the dark band there) */
+    .taboo-demo-{{ section.id }}__pack-card { background: #FFFFFF; transition: box-shadow .2s ease; }
     .taboo-demo-{{ section.id }}__pack-card:hover { box-shadow: 0 16px 34px rgba(20,16,15,.14); }
     /* Desktop pack media: 4/3 aspect (mobile is 5/4) */
     .taboo-demo-{{ section.id }}__pack-media { aspect-ratio: 4/3; }
