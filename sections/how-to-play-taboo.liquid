@@ -85,7 +85,7 @@
   .taboo-play-{{ section.id }}__amazon-title { font: 700 15px 'DM Sans', system-ui, sans-serif; margin-bottom: 3px; }
   .taboo-play-{{ section.id }}__amazon-copy { margin: 0; font-size: 13px; line-height: 1.45; color: #5A4F49; }
   .taboo-play-{{ section.id }}__amazon-btn {
-    flex: 0 0 auto; display: inline-block; text-decoration: none; background: #F2B233; border-radius: 11px;
+    flex: 0 0 auto; display: inline-block; text-decoration: none; background: #F2B233; border: 1.5px solid #14100F; border-radius: 11px;
     padding: 12px 14px; font: 700 13px 'DM Sans', system-ui, sans-serif; color: #14100F; cursor: pointer;
   }
 
@@ -104,14 +104,14 @@
 
   @media screen and (min-width: 1024px) {
     .taboo-play-{{ section.id }}__header { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; max-width: 1200px; margin: 0 auto; padding: 60px 24px; }
-    .taboo-play-{{ section.id }}__eyebrow { font-size: 11.5px; opacity: .82; }
-    .taboo-play-{{ section.id }}__title { font-size: 68px; line-height: .94; letter-spacing: -.05em; }
+    .taboo-play-{{ section.id }}__eyebrow { margin-bottom: 14px; font-size: 11.5px; opacity: .82; }
+    .taboo-play-{{ section.id }}__title { margin-bottom: 16px; font-size: 68px; line-height: .94; letter-spacing: -.05em; }
     .taboo-play-{{ section.id }}__sub { font-size: 18px; line-height: 1.55; max-width: 460px; }
     .taboo-play-{{ section.id }}__header-image { width: 100%; display: block; border-radius: 24px; aspect-ratio: 16/10; object-fit: cover; background: #14100F; }
     .taboo-play-{{ section.id }}__body { max-width: 1200px; margin: 0 auto; padding: 52px 24px 80px; display: grid; grid-template-columns: 1fr 380px; gap: 56px; align-items: start; }
     .taboo-play-{{ section.id }}__step { gap: 20px; padding: 22px 0; }
     .taboo-play-{{ section.id }}__step-num { width: 42px; height: 42px; font-size: 17px; border-radius: 12px; }
-    .taboo-play-{{ section.id }}__step-heading { font-size: 19px; }
+    .taboo-play-{{ section.id }}__step-heading { margin-bottom: 5px; font-size: 19px; }
     .taboo-play-{{ section.id }}__step-text { font-size: 16px; max-width: 640px; }
     .taboo-play-{{ section.id }}__sidebar { position: sticky; top: 110px; display: flex; flex-direction: column; gap: 18px; }
     .taboo-play-{{ section.id }}__panel { border-radius: 22px; padding: 24px; }
@@ -120,7 +120,7 @@
     .taboo-play-{{ section.id }}__panel-btn { border-radius: 13px; padding: 15px 22px; font-size: 15px; }
     .taboo-play-{{ section.id }}__amazon { border-radius: 20px; flex-direction: column; align-items: stretch; padding: 22px; }
     .taboo-play-{{ section.id }}__amazon-title { font-size: 16px; margin-bottom: 6px; }
-    .taboo-play-{{ section.id }}__amazon-copy { font-size: 14.5px; margin-bottom: 14px; }
+    .taboo-play-{{ section.id }}__amazon-copy { font-size: 14.5px; line-height: 1.5; margin-bottom: 14px; }
     .taboo-play-{{ section.id }}__amazon-btn { flex: unset; text-align: center; padding: 14px; border-radius: 12px; font-size: 14.5px; width: 100%; box-sizing: border-box; }
   }
 </style>
