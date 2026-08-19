@@ -24,8 +24,12 @@
       <div class="taboo-demo-{{ section.id }}__card">
         <div class="taboo-demo-{{ section.id }}__card-inner" data-card-inner>
           {% for block in cards %}
+            {% assign has_static_image = false %}
+            {% if block.settings.card_image %}
+              {% assign has_static_image = true %}
+            {% endif %}
             <div
-              class="taboo-demo-{{ section.id }}__card-face{% if forloop.first %} is-active{% endif %}"
+              class="taboo-demo-{{ section.id }}__card-face{% if forloop.first %} is-active{% endif %}{% if has_static_image %} has-static-image{% endif %}"
               data-card-face
               data-pack-url="{{ block.settings.pack_url }}"
               {{ block.shopify_attributes }}
@@ -35,26 +39,41 @@
                   <span>{{ block.settings.pack_name }}</span>
                   <span class="taboo-demo-{{ section.id }}__card-source-link">Shop it →</span>
                 </button>
-                <button type="button" class="taboo-demo-{{ section.id }}__mode-toggle" data-mode-toggle>Use photo</button>
+                {% unless has_static_image %}
+                  <button type="button" class="taboo-demo-{{ section.id }}__mode-toggle" data-mode-toggle>Use photo</button>
+                {% endunless %}
               </div>
-              <div class="taboo-demo-{{ section.id }}__word-plate">{{ block.settings.word }}</div>
-              <div class="taboo-demo-{{ section.id }}__taboo-list">
-                {% for i in (1..5) %}
-                  {% assign word_key = 'taboo_' | append: i %}
-                  {% assign word = block.settings[word_key] %}
-                  {% if word != blank %}
-                    <div class="taboo-demo-{{ section.id }}__taboo-item">
-                      <span class="taboo-demo-{{ section.id }}__taboo-x">×</span>
-                      <span>{{ word }}</span>
-                    </div>
-                  {% endif %}
-                {% endfor %}
-              </div>
-              <div class="taboo-demo-{{ section.id }}__photo-placeholder" data-photo-placeholder aria-hidden="true">
-                <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-                <span class="taboo-demo-{{ section.id }}__photo-placeholder-label">Drop a card photo here</span>
-                <span class="taboo-demo-{{ section.id }}__photo-placeholder-sub">or tap to upload</span>
-              </div>
+
+              {% if has_static_image %}
+                <div class="taboo-demo-{{ section.id }}__static-image">
+                  <img
+                    src="{{ block.settings.card_image | image_url: width: 800 }}"
+                    alt="{{ block.settings.card_image.alt | default: block.settings.word }}"
+                    loading="lazy"
+                    width="800"
+                    height="{{ block.settings.card_image.height }}"
+                  >
+                </div>
+              {% else %}
+                <div class="taboo-demo-{{ section.id }}__word-plate">{{ block.settings.word }}</div>
+                <div class="taboo-demo-{{ section.id }}__taboo-list">
+                  {% for i in (1..5) %}
+                    {% assign word_key = 'taboo_' | append: i %}
+                    {% assign word = block.settings[word_key] %}
+                    {% if word != blank %}
+                      <div class="taboo-demo-{{ section.id }}__taboo-item">
+                        <span class="taboo-demo-{{ section.id }}__taboo-x">×</span>
+                        <span>{{ word }}</span>
+                      </div>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+                <div class="taboo-demo-{{ section.id }}__photo-placeholder" data-photo-placeholder aria-hidden="true">
+                  <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                  <span class="taboo-demo-{{ section.id }}__photo-placeholder-label">Drop a card photo here</span>
+                  <span class="taboo-demo-{{ section.id }}__photo-placeholder-sub">or tap to upload</span>
+                </div>
+              {% endif %}
             </div>
           {% endfor %}
         </div>
@@ -221,7 +240,7 @@
   .taboo-demo-{{ section.id }}__taboo-item { display: flex; align-items: center; gap: 10px; }
   .taboo-demo-{{ section.id }}__taboo-x {
     flex: 0 0 auto; width: 16px; height: 16px; border-radius: 50%;
-    background: #FDE3DE; color: #AF6EF7; font: 800 11px 'DM Sans', system-ui, sans-serif;
+    background: #F0E4FC; color: #AF6EF7; font: 800 11px 'DM Sans', system-ui, sans-serif;
     display: flex; align-items: center; justify-content: center;
   }
   .taboo-demo-{{ section.id }}__taboo-item span:last-child {
@@ -286,12 +305,20 @@
   .taboo-demo-{{ section.id }}__packs-sub { margin: 0 0 16px; font-size: 14px; color: rgba(255,246,233,.6); }
   .taboo-demo-{{ section.id }}__packs-empty { color: rgba(255,246,233,.6); font-size: 14px; }
 
+  /* Static card image */
+  .taboo-demo-{{ section.id }}__static-image {
+    margin-bottom: 14px;
+  }
+  .taboo-demo-{{ section.id }}__static-image img {
+    width: 100%; display: block; border-radius: 14px; object-fit: cover;
+  }
+
   .taboo-demo-{{ section.id }}__pack-card {
     text-align: left; background: #FFFFFF; border-radius: 20px; overflow: hidden; text-decoration: none;
     color: #14100F; display: block;
   }
   .taboo-demo-{{ section.id }}__pack-media {
-    aspect-ratio: 5/4; background: #F2B233; display: flex; align-items: center; justify-content: center;
+    aspect-ratio: 5/4; background: {{ section.settings.pack_media_bg | default: '#F2B233' }}; display: flex; align-items: center; justify-content: center;
     padding: 10px; position: relative;
   }
   .taboo-demo-{{ section.id }}__pack-media img { max-width: 100%; max-height: 100%; object-fit: contain; display: block; }
@@ -400,7 +427,9 @@
       "default": "page-width"
     },
     { "type": "collection", "id": "collection", "label": "Tabooster Packs collection" },
-    { "type": "url", "id": "shop_all_url", "label": "\"Shop all / See catalog\" link" }
+    { "type": "url", "id": "shop_all_url", "label": "\"Shop all / See catalog\" link" },
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "pack_media_bg", "label": "Pack card image background", "default": "#F2B233" }
   ],
   "blocks": [
     {
@@ -409,6 +438,15 @@
       "settings": [
         { "type": "text", "id": "pack_name", "label": "Pack name (shown as source label)", "default": "Pop Culture" },
         { "type": "url", "id": "pack_url", "label": "\"Shop it\" link" },
+        {
+          "type": "header",
+          "content": "Card content — choose image OR text"
+        },
+        {
+          "type": "paragraph",
+          "content": "Upload a card photo to show a static image. Leave empty to use the text fields below with the live timer & buzz demo."
+        },
+        { "type": "image_picker", "id": "card_image", "label": "Card photo (overrides text content)" },
         { "type": "text", "id": "word", "label": "Word to guess", "default": "BIRTHDAY" },
         { "type": "text", "id": "taboo_1", "label": "Taboo word 1", "default": "CAKE" },
         { "type": "text", "id": "taboo_2", "label": "Taboo word 2", "default": "PARTY" },

@@ -108,6 +108,7 @@
     --cat-accent: {{ section.settings.accent_color | default: '#AF6EF7' }};
     --cat-badge-bg: {{ section.settings.badge_bg | default: '#AF6EF7' }};
     --cat-badge-text: {{ section.settings.badge_text | default: '#FFFFFF' }};
+    --cat-card-media-bg: {{ section.settings.card_media_bg | default: '#F2B233' }};
     font-family: 'DM Sans', system-ui, sans-serif;
     color: var(--cat-text);
     background: var(--cat-bg);
@@ -143,7 +144,7 @@
   .taboo-catalog-{{ section.id }}__sort { font: 700 13.5px 'DM Sans', system-ui, sans-serif; color: var(--cat-muted); }
 
   .taboo-catalog-{{ section.id }}__card { text-decoration: none; color: var(--cat-text); display: block; background: var(--cat-card-bg); }
-  .taboo-catalog-{{ section.id }}__card-media { background: #F2B233; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+  .taboo-catalog-{{ section.id }}__card-media { background: var(--cat-card-media-bg); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
   .taboo-catalog-{{ section.id }}__card-media img { max-width: 100%; max-height: 100%; object-fit: contain; display: block; }
   .taboo-catalog-{{ section.id }}__card-fallback { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; text-align: center; }
   .taboo-catalog-{{ section.id }}__badge {
@@ -254,6 +255,7 @@
     { "type": "color", "id": "text_color", "label": "Body text color", "default": "#14100F" },
     { "type": "color", "id": "muted_text", "label": "Muted / secondary text", "default": "#8A7C73" },
     { "type": "color", "id": "accent_color", "label": "Accent color (prices)", "default": "#AF6EF7" },
+    { "type": "color", "id": "card_media_bg", "label": "Card image background", "default": "#F2B233" },
     { "type": "color", "id": "badge_bg", "label": "Best-seller badge background", "default": "#AF6EF7" },
     { "type": "color", "id": "badge_text", "label": "Best-seller badge text", "default": "#FFFFFF" }
   ],

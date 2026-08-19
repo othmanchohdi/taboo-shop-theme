@@ -1,0 +1,286 @@
+{%- doc -%}
+  Red Carpet — social proof / testimonials band. A full-width section with
+  a dark (or customisable) background, optional eyebrow, headline, and repeatable
+  quote/testimonial blocks. Each block can have a quote, name, role, and avatar image.
+  Mobile: single-column scroll. Desktop: up to 3-col grid.
+{%- enddoc -%}
+
+{% liquid
+  assign quotes = section.blocks | where: 'type', 'quote'
+%}
+
+<section class="taboo-redcarpet-{{ section.id }} {{ section.settings.section_width }}">
+  <div class="taboo-redcarpet-{{ section.id }}__inner">
+
+    {% if section.settings.eyebrow != blank or section.settings.heading != blank %}
+      <div class="taboo-redcarpet-{{ section.id }}__header">
+        {% if section.settings.eyebrow != blank %}
+          <p class="taboo-redcarpet-{{ section.id }}__eyebrow">{{ section.settings.eyebrow }}</p>
+        {% endif %}
+        {% if section.settings.heading != blank %}
+          <h2 class="taboo-redcarpet-{{ section.id }}__heading">{{ section.settings.heading }}</h2>
+        {% endif %}
+        {% if section.settings.subheading != blank %}
+          <p class="taboo-redcarpet-{{ section.id }}__sub">{{ section.settings.subheading }}</p>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    {% if quotes.size > 0 %}
+      <div class="taboo-redcarpet-{{ section.id }}__grid">
+        {% for block in quotes %}
+          <div class="taboo-redcarpet-{{ section.id }}__card" {{ block.shopify_attributes }}>
+            {% if block.settings.stars > 0 %}
+              <div class="taboo-redcarpet-{{ section.id }}__stars" aria-label="{{ block.settings.stars }} out of 5 stars">
+                {% for i in (1..block.settings.stars) %}★{% endfor %}
+              </div>
+            {% endif %}
+            <blockquote class="taboo-redcarpet-{{ section.id }}__quote">
+              "{{ block.settings.quote }}"
+            </blockquote>
+            <div class="taboo-redcarpet-{{ section.id }}__author">
+              {% if block.settings.avatar %}
+                <img
+                  class="taboo-redcarpet-{{ section.id }}__avatar"
+                  src="{{ block.settings.avatar | image_url: width: 120 }}"
+                  alt="{{ block.settings.name }}"
+                  loading="lazy"
+                  width="60"
+                  height="60"
+                >
+              {% endif %}
+              <div class="taboo-redcarpet-{{ section.id }}__author-info">
+                {% if block.settings.name != blank %}
+                  <span class="taboo-redcarpet-{{ section.id }}__name">{{ block.settings.name }}</span>
+                {% endif %}
+                {% if block.settings.role != blank %}
+                  <span class="taboo-redcarpet-{{ section.id }}__role">{{ block.settings.role }}</span>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    {% if section.settings.cta_url != blank %}
+      <div class="taboo-redcarpet-{{ section.id }}__cta-wrap">
+        <a href="{{ section.settings.cta_url }}" class="taboo-redcarpet-{{ section.id }}__cta-btn">
+          {{ section.settings.cta_label | default: 'Shop the packs' }}
+        </a>
+      </div>
+    {% endif %}
+
+  </div>
+</section>
+
+<style>
+  .taboo-redcarpet-{{ section.id }} {
+    --rc-bg: {{ section.settings.bg_color | default: '#14100F' }};
+    --rc-text: {{ section.settings.text_color | default: '#FFFFFF' }};
+    --rc-eyebrow: {{ section.settings.eyebrow_color | default: '#AF6EF7' }};
+    --rc-heading: {{ section.settings.heading_color | default: '#FFFFFF' }};
+    --rc-card-bg: {{ section.settings.card_bg | default: '#1E1A19' }};
+    --rc-card-text: {{ section.settings.card_text | default: '#FFFFFF' }};
+    --rc-stars: {{ section.settings.stars_color | default: '#F2B233' }};
+    --rc-btn-bg: {{ section.settings.btn_bg | default: '#AF6EF7' }};
+    --rc-btn-text: {{ section.settings.btn_text | default: '#FFFFFF' }};
+    background: var(--rc-bg);
+    color: var(--rc-text);
+    font-family: 'DM Sans', system-ui, sans-serif;
+  }
+
+  .taboo-redcarpet-{{ section.id }}__eyebrow {
+    margin: 0 0 10px;
+    font: 700 11px 'DM Sans', system-ui, sans-serif;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--rc-eyebrow);
+  }
+
+  .taboo-redcarpet-{{ section.id }}__heading {
+    margin: 0 0 10px;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 800;
+    letter-spacing: -.045em;
+    color: var(--rc-heading);
+  }
+
+  .taboo-redcarpet-{{ section.id }}__sub {
+    margin: 0;
+    line-height: 1.5;
+    opacity: .8;
+  }
+
+  .taboo-redcarpet-{{ section.id }}__card {
+    background: var(--rc-card-bg);
+    color: var(--rc-card-text);
+    border-radius: 20px;
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .taboo-redcarpet-{{ section.id }}__stars {
+    color: var(--rc-stars);
+    font-size: 14px;
+    letter-spacing: .06em;
+  }
+
+  .taboo-redcarpet-{{ section.id }}__quote {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.55;
+    font-style: italic;
+    opacity: .92;
+    flex: 1;
+  }
+
+  .taboo-redcarpet-{{ section.id }}__author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .taboo-redcarpet-{{ section.id }}__avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex: 0 0 auto;
+  }
+
+  .taboo-redcarpet-{{ section.id }}__author-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .taboo-redcarpet-{{ section.id }}__name {
+    font: 700 14px 'DM Sans', system-ui, sans-serif;
+  }
+
+  .taboo-redcarpet-{{ section.id }}__role {
+    font: 500 12px 'DM Sans', system-ui, sans-serif;
+    opacity: .65;
+  }
+
+  .taboo-redcarpet-{{ section.id }}__cta-btn {
+    display: inline-block;
+    text-decoration: none;
+    background: var(--rc-btn-bg);
+    color: var(--rc-btn-text);
+    border-radius: 14px;
+    padding: 16px 28px;
+    font: 700 15px 'DM Sans', system-ui, sans-serif;
+    cursor: pointer;
+  }
+
+  @media screen and (max-width: 1023px) {
+    .taboo-redcarpet-{{ section.id }}__inner { padding: 40px 18px 48px; }
+    .taboo-redcarpet-{{ section.id }}__header { margin-bottom: 28px; }
+    .taboo-redcarpet-{{ section.id }}__heading { font-size: 32px; }
+    .taboo-redcarpet-{{ section.id }}__grid {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .taboo-redcarpet-{{ section.id }}__cta-wrap { margin-top: 28px; text-align: center; }
+    .taboo-redcarpet-{{ section.id }}__cta-btn { width: 100%; text-align: center; }
+  }
+
+  @media screen and (min-width: 1024px) {
+    .taboo-redcarpet-{{ section.id }}__inner { padding: 72px 24px 80px; }
+    .taboo-redcarpet-{{ section.id }}.page-width .taboo-redcarpet-{{ section.id }}__inner { max-width: 1200px; margin: 0 auto; }
+    .taboo-redcarpet-{{ section.id }}.full-width .taboo-redcarpet-{{ section.id }}__inner { padding-inline: 40px; }
+    .taboo-redcarpet-{{ section.id }}__header { margin-bottom: 48px; max-width: 680px; }
+    .taboo-redcarpet-{{ section.id }}__heading { font-size: 52px; margin-bottom: 14px; }
+    .taboo-redcarpet-{{ section.id }}__sub { font-size: 17px; }
+    .taboo-redcarpet-{{ section.id }}__grid {
+      display: grid;
+      grid-template-columns: repeat({{ section.settings.columns | default: 3 }}, 1fr);
+      gap: 20px;
+    }
+    .taboo-redcarpet-{{ section.id }}__quote { font-size: 17px; }
+    .taboo-redcarpet-{{ section.id }}__cta-wrap { margin-top: 48px; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Red carpet",
+  "settings": [
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "t:settings.width",
+      "options": [
+        { "value": "page-width", "label": "t:options.page" },
+        { "value": "full-width", "label": "t:options.full" }
+      ],
+      "default": "page-width"
+    },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "What people are saying" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Everyone's talking about it" },
+    { "type": "textarea", "id": "subheading", "label": "Subheading" },
+    {
+      "type": "select",
+      "id": "columns",
+      "label": "Desktop columns",
+      "options": [
+        { "value": "2", "label": "2 columns" },
+        { "value": "3", "label": "3 columns" }
+      ],
+      "default": "3"
+    },
+    { "type": "text", "id": "cta_label", "label": "CTA button label", "default": "Shop the packs" },
+    { "type": "url", "id": "cta_url", "label": "CTA button link" },
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "bg_color", "label": "Section background", "default": "#14100F" },
+    { "type": "color", "id": "text_color", "label": "Body text", "default": "#FFFFFF" },
+    { "type": "color", "id": "eyebrow_color", "label": "Eyebrow color", "default": "#AF6EF7" },
+    { "type": "color", "id": "heading_color", "label": "Heading color", "default": "#FFFFFF" },
+    { "type": "color", "id": "card_bg", "label": "Quote card background", "default": "#1E1A19" },
+    { "type": "color", "id": "card_text", "label": "Quote card text", "default": "#FFFFFF" },
+    { "type": "color", "id": "stars_color", "label": "Star rating color", "default": "#F2B233" },
+    { "type": "color", "id": "btn_bg", "label": "CTA button background", "default": "#AF6EF7" },
+    { "type": "color", "id": "btn_text", "label": "CTA button text", "default": "#FFFFFF" }
+  ],
+  "blocks": [
+    {
+      "type": "quote",
+      "name": "Quote",
+      "settings": [
+        { "type": "textarea", "id": "quote", "label": "Quote", "default": "Best game night upgrade we've ever bought. The new cards kept everyone guessing for hours." },
+        { "type": "text", "id": "name", "label": "Name", "default": "Sarah K." },
+        { "type": "text", "id": "role", "label": "Role / location", "default": "Verified buyer" },
+        {
+          "type": "select",
+          "id": "stars",
+          "label": "Star rating",
+          "options": [
+            { "value": "0", "label": "None" },
+            { "value": "3", "label": "3 stars" },
+            { "value": "4", "label": "4 stars" },
+            { "value": "5", "label": "5 stars" }
+          ],
+          "default": "5"
+        },
+        { "type": "image_picker", "id": "avatar", "label": "Avatar photo (optional)" }
+      ]
+    }
+  ],
+  "max_blocks": 9,
+  "presets": [
+    {
+      "name": "Red carpet",
+      "blocks": [
+        { "type": "quote", "settings": { "quote": "Best game night upgrade we've ever bought. The new cards kept everyone guessing for hours.", "name": "Sarah K.", "role": "Verified buyer", "stars": "5" } },
+        { "type": "quote", "settings": { "quote": "We've played Taboo for years and these packs made it feel brand new. Absolutely worth it.", "name": "Marcus T.", "role": "Game night host", "stars": "5" } },
+        { "type": "quote", "settings": { "quote": "Compact, fun, and the pop culture references are spot on. Perfect stocking stuffer.", "name": "Jess R.", "role": "Verified buyer", "stars": "5" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

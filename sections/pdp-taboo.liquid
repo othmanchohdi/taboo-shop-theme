@@ -17,7 +17,7 @@
   assign what_you_get = product.metafields.custom.what_you_get.value
   assign checklist_heading = section.settings.checklist_heading | default: 'What you get'
   assign ships_note = section.settings.ships_note | default: product.metafields.custom.ships_note.value | default: 'Ships in 1-2 business days'
-  assign sample_word = product.metafields.custom.sample_word.value
+  assign sample_word = section.settings.sample_word | default: product.metafields.custom.sample_word.value
   assign sample_taboo = product.metafields.custom.sample_taboo_words.value
   assign related_products = product.metafields.custom.related_products.value
   assign amazon_url = product.metafields.custom.amazon_url.value
@@ -157,17 +157,32 @@
         </div>
       {% endif %}
 
+      {% assign show_sample = false %}
       {% if sample_word != blank %}
+        {% assign show_sample = true %}
+      {% elsif section.settings.sample_word_1 != blank %}
+        {% assign show_sample = true %}
+        {% assign sample_word = section.settings.sample_word_1 %}
+      {% endif %}
+      {% if show_sample %}
         <div class="taboo-pdp-{{ section.id }}__sample">
-          <p class="taboo-pdp-{{ section.id }}__sample-label">A card from this pack</p>
+          <p class="taboo-pdp-{{ section.id }}__sample-label">{{ section.settings.sample_label | default: 'A card from this pack' }}</p>
           <div class="taboo-pdp-{{ section.id }}__sample-word">{{ sample_word }}</div>
-          {% if sample_taboo != blank %}
-            <div class="taboo-pdp-{{ section.id }}__sample-tags">
+          <div class="taboo-pdp-{{ section.id }}__sample-tags">
+            {% if sample_taboo != blank %}
               {% for word in sample_taboo %}
                 <span class="taboo-pdp-{{ section.id }}__sample-tag">{{ word }}</span>
               {% endfor %}
-            </div>
-          {% endif %}
+            {% else %}
+              {% for i in (1..5) %}
+                {% assign tw_key = 'sample_taboo_' | append: i %}
+                {% assign tw = section.settings[tw_key] %}
+                {% if tw != blank %}
+                  <span class="taboo-pdp-{{ section.id }}__sample-tag">{{ tw }}</span>
+                {% endif %}
+              {% endfor %}
+            {% endif %}
+          </div>
         </div>
       {% endif %}
     </div>
@@ -435,7 +450,22 @@
       "content": "Add checklist items as blocks below. If no checklist blocks are added, the section falls back to the product's \"what_you_get\" metafield (if set)."
     },
     { "type": "text", "id": "checklist_heading", "label": "Checklist heading", "default": "What you get" },
-    { "type": "text", "id": "ships_note", "label": "Shipping / production note", "info": "Overrides the product's \"ships_note\" metafield when set.", "placeholder": "e.g. Made to order by our print partner" }
+    { "type": "text", "id": "ships_note", "label": "Shipping / production note", "info": "Overrides the product's \"ships_note\" metafield when set.", "placeholder": "e.g. Made to order by our print partner" },
+    {
+      "type": "header",
+      "content": "Sample card — \"A card from this pack\""
+    },
+    {
+      "type": "paragraph",
+      "content": "If the product has a sample_word metafield, that takes priority. Use the fields below to set a fallback or override for this section."
+    },
+    { "type": "text", "id": "sample_label", "label": "Sample card label", "default": "A card from this pack" },
+    { "type": "text", "id": "sample_word_1", "label": "Word to guess", "placeholder": "e.g. GRADUATION" },
+    { "type": "text", "id": "sample_taboo_1", "label": "Taboo word 1", "placeholder": "e.g. DIPLOMA" },
+    { "type": "text", "id": "sample_taboo_2", "label": "Taboo word 2", "placeholder": "e.g. SCHOOL" },
+    { "type": "text", "id": "sample_taboo_3", "label": "Taboo word 3", "placeholder": "e.g. CEREMONY" },
+    { "type": "text", "id": "sample_taboo_4", "label": "Taboo word 4", "placeholder": "e.g. CAP" },
+    { "type": "text", "id": "sample_taboo_5", "label": "Taboo word 5", "placeholder": "e.g. DEGREE" }
   ],
   "blocks": [
     {
