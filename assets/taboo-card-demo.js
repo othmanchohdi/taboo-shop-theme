@@ -83,8 +83,9 @@ if (!customElements.get('taboo-card-demo')) {
 
     renderTimer() {
       if (!this.timerDisplay) return;
-      this.timerDisplay.textContent = this.secondsLeft;
-      this.timerDisplay.classList.toggle('is-low', this.secondsLeft <= 10);
+      const secs = this.secondsLeft;
+      this.timerDisplay.textContent = '0:' + String(secs).padStart(2, '0');
+      this.timerDisplay.classList.toggle('is-low', secs <= 10);
     }
 
     nextCard() {

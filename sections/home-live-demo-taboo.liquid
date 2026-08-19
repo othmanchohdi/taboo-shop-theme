@@ -55,7 +55,7 @@
 
     <div class="taboo-demo-{{ section.id }}__footer-bar">
       <div class="taboo-demo-{{ section.id }}__timer">
-        <div class="taboo-demo-{{ section.id }}__timer-num" data-timer-display>60</div>
+        <div class="taboo-demo-{{ section.id }}__timer-num" data-timer-display>0:60</div>
         <div class="taboo-demo-{{ section.id }}__timer-label">left</div>
       </div>
       <button type="button" class="taboo-demo-{{ section.id }}__timer-btn" data-timer-toggle>Start</button>
@@ -215,7 +215,7 @@
   .taboo-demo-{{ section.id }}__buzz-overlay {
     position: fixed; inset: 0; background: rgba(232,64,42,.94); color: #FFF6E9;
     display: none; align-items: center; justify-content: center; z-index: 999;
-    font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 70px; letter-spacing: -.04em;
+    font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 70px; letter-spacing: -.05em;
     pointer-events: none;
   }
   .taboo-demo-{{ section.id }}__buzz-overlay.is-active {
@@ -224,10 +224,13 @@
   }
   @keyframes taboo-buzz-shake-{{ section.id }} {
     0%, 100% { transform: none; }
-    20% { transform: translateX(-8px) rotate(-2deg); }
-    40% { transform: translateX(8px) rotate(2deg); }
-    60% { transform: translateX(-5px); }
-    80% { transform: translateX(5px); }
+    20% { transform: translateX(-10px) rotate(-1deg); }
+    40% { transform: translateX(10px) rotate(1deg); }
+    60% { transform: translateX(-6px); }
+    80% { transform: translateX(6px); }
+  }
+  @media screen and (min-width: 1024px) {
+    .taboo-demo-{{ section.id }}__buzz-overlay { font-size: 150px; }
   }
 
   /* ---------- Packs grid ---------- */
