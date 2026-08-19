@@ -99,6 +99,7 @@
                     {% unless variant.available %}disabled{% endunless %}
                     data-variant-radio
                     data-price="{{ variant.price | money }}"
+                    data-price-cents="{{ variant.price }}"
                     class="taboo-pdp-{{ section.id }}__variant-input"
                   >
                   <span class="taboo-pdp-{{ section.id }}__variant-dot"></span>
@@ -121,8 +122,8 @@
               <button type="button" data-qty-up aria-label="Increase quantity">+</button>
             </div>
             <input type="hidden" name="quantity" value="1" data-qty-input>
-            <button type="submit" class="taboo-pdp-{{ section.id }}__add-btn" data-add-btn {% unless product.available %}disabled{% endunless %}>
-              <span data-add-label>{% if product.available %}Add to cart{% else %}Sold out{% endif %}</span>
+            <button type="submit" class="taboo-pdp-{{ section.id }}__add-btn" data-add-btn data-price-cents="{{ product.selected_or_first_available_variant.price }}" {% unless product.available %}disabled{% endunless %}>
+              <span data-add-label>{% if product.available %}Add to cart · {{ product.selected_or_first_available_variant.price | money }}{% else %}Sold out{% endif %}</span>
             </button>
           </div>
         {% endform %}

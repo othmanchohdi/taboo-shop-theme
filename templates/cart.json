@@ -3,7 +3,7 @@
     "taboo_cart": {
       "type": "cart-taboo",
       "settings": {
-        "bag_word": "bag",
+        "bag_word": "cart",
         "free_shipping_threshold": 35,
         "flat_shipping_rate": "$4.95",
         "shop_url": "/collections/all"

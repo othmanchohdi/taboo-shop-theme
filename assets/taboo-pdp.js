@@ -2,6 +2,8 @@
  * Taboo PDP interactivity: thumbnail gallery, variant selection syncing price,
  * quantity stepper, AJAX add-to-cart with a temporary "Added ✓" state,
  * and keeping the sticky mobile buy bar in sync with the form above it.
+ * The add-to-cart button label shows the running total ("Add to cart · $19.99")
+ * and updates live when quantity or variant changes, per the design spec.
  */
 if (!customElements.get('taboo-pdp')) {
   class TabooPDP extends HTMLElement {
@@ -21,6 +23,10 @@ if (!customElements.get('taboo-pdp')) {
       this.galleryImage = this.querySelector('[data-gallery-image]');
 
       this.quantity = 1;
+      // Price in cents from data attribute; updated on variant change.
+      this.currentPriceCents = this.addBtn
+        ? parseInt(this.addBtn.dataset.priceCents || '0', 10)
+        : 0;
 
       this.qtyUpBtns.forEach((btn) => btn.addEventListener('click', () => this.setQuantity(this.quantity + 1)));
       this.qtyDownBtns.forEach((btn) => btn.addEventListener('click', () => this.setQuantity(this.quantity - 1)));
@@ -48,18 +54,38 @@ if (!customElements.get('taboo-pdp')) {
       }
     }
 
+    formatMoney(cents) {
+      return '$' + (cents / 100).toFixed(2);
+    }
+
+    addBtnLabel() {
+      return 'Add to cart · ' + this.formatMoney(this.currentPriceCents * this.quantity);
+    }
+
     setQuantity(value) {
       this.quantity = Math.max(1, value);
       if (this.qtyValue) this.qtyValue.textContent = this.quantity;
       if (this.qtyInput) this.qtyInput.value = this.quantity;
+      if (this.addLabel && !this.addBtn.classList.contains('is-added')) {
+        this.addLabel.textContent = this.addBtnLabel();
+      }
     }
 
     onVariantChange(radio) {
       const price = radio.dataset.price;
+      const priceCents = parseInt(radio.dataset.priceCents || '0', 10);
+
       if (price) {
         if (this.priceEl) this.priceEl.textContent = price;
         if (this.stickyPriceEl) this.stickyPriceEl.textContent = price;
       }
+      if (priceCents) {
+        this.currentPriceCents = priceCents;
+        if (this.addLabel && !this.addBtn.classList.contains('is-added')) {
+          this.addLabel.textContent = this.addBtnLabel();
+        }
+      }
+
       this.variantRadios.forEach((r) => {
         const label = r.closest('label');
         if (label) label.classList.toggle('is-selected', r === radio);
@@ -79,7 +105,7 @@ if (!customElements.get('taboo-pdp')) {
       if (!this.form || !this.addBtn) return;
 
       const formData = new FormData(this.form);
-      const originalLabel = this.addLabel ? this.addLabel.textContent : '';
+      const originalLabel = this.addBtnLabel();
 
       this.addBtn.disabled = true;
 
