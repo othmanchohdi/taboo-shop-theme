@@ -21,7 +21,10 @@ if (!customElements.get('taboo-card-demo')) {
       this.buzzBtns = this.querySelectorAll('[data-buzz]');
       this.nextBtns = this.querySelectorAll('[data-next-card], [data-next-card-mobile]');
       this.openPackBtns = this.querySelectorAll('[data-open-pack]');
+      this.modeToggleBtns = this.querySelectorAll('[data-mode-toggle]');
       this.overlay = this.querySelector('[data-buzz-overlay]');
+
+      this.mode = 'text';
 
       this.timerToggleBtns.forEach((btn) => btn.addEventListener('click', () => this.toggleTimer()));
       this.buzzBtns.forEach((btn) => btn.addEventListener('click', () => this.buzz()));
@@ -30,6 +33,7 @@ if (!customElements.get('taboo-card-demo')) {
         const url = e.currentTarget.dataset.url;
         if (url) window.location.href = url;
       }));
+      this.modeToggleBtns.forEach((btn) => btn.addEventListener('click', () => this.toggleMode()));
 
       this.renderTimer();
     }
@@ -103,6 +107,15 @@ if (!customElements.get('taboo-card-demo')) {
       this.secondsLeft = this.totalSeconds;
       this.pauseTimer();
       this.renderTimer();
+    }
+
+    toggleMode() {
+      this.mode = this.mode === 'text' ? 'photo' : 'text';
+      const isPhoto = this.mode === 'photo';
+      this.classList.toggle('is-photo-mode', isPhoto);
+      this.modeToggleBtns.forEach((btn) => {
+        btn.textContent = isPhoto ? 'Use text' : 'Use photo';
+      });
     }
 
     buzz() {
