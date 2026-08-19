@@ -50,22 +50,35 @@
 </section>
 
 <style>
-  .taboo-about-{{ section.id }} { font-family: 'DM Sans', system-ui, sans-serif; color: #14100F; }
+  .taboo-about-{{ section.id }} {
+    --about-bg: {{ section.settings.bg_color | default: '#FFFFFF' }};
+    --about-text: {{ section.settings.text_color | default: '#14100F' }};
+    --about-muted: {{ section.settings.muted_text | default: '#5A4F49' }};
+    --about-accent: {{ section.settings.accent_color | default: '#AF6EF7' }};
+    --about-stat-bg: {{ section.settings.stat_bg | default: '#FFFFFF' }};
+    --about-cta-bg: {{ section.settings.cta_bg | default: '#AF6EF7' }};
+    --about-cta-text: {{ section.settings.cta_text | default: '#FFFFFF' }};
+    --about-cta-btn-bg: {{ section.settings.cta_btn_bg | default: '#14100F' }};
+    --about-cta-btn-text: {{ section.settings.cta_btn_text | default: '#FFFFFF' }};
+    font-family: 'DM Sans', system-ui, sans-serif;
+    color: var(--about-text);
+    background: var(--about-bg);
+  }
 
-  .taboo-about-{{ section.id }}__eyebrow { margin: 0 0 14px; font: 700 10.5px 'DM Sans', system-ui, sans-serif; letter-spacing: .2em; text-transform: uppercase; color: #E8402A; }
-  .taboo-about-{{ section.id }}__heading { margin: 0 0 16px; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; letter-spacing: -.045em; }
-  .taboo-about-{{ section.id }}__body { margin: 0; line-height: 1.6; color: #5A4F49; }
+  .taboo-about-{{ section.id }}__eyebrow { margin: 0 0 14px; font: 700 10.5px 'DM Sans', system-ui, sans-serif; letter-spacing: .2em; text-transform: uppercase; color: var(--about-accent); }
+  .taboo-about-{{ section.id }}__heading { margin: 0 0 16px; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; letter-spacing: -.045em; color: var(--about-text); }
+  .taboo-about-{{ section.id }}__body { margin: 0; line-height: 1.6; color: var(--about-muted); }
   .taboo-about-{{ section.id }}__image { width: 100%; display: block; object-fit: cover; background: #14100F; }
 
-  .taboo-about-{{ section.id }}__stat { background: #FFFFFF; border-radius: 16px; }
-  .taboo-about-{{ section.id }}__stat-value { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; letter-spacing: -.04em; color: #E8402A; }
-  .taboo-about-{{ section.id }}__stat-label { line-height: 1.4; color: #5A4F49; }
+  .taboo-about-{{ section.id }}__stat { background: var(--about-stat-bg); border-radius: 16px; }
+  .taboo-about-{{ section.id }}__stat-value { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; letter-spacing: -.04em; color: var(--about-accent); }
+  .taboo-about-{{ section.id }}__stat-label { line-height: 1.4; color: var(--about-muted); }
 
-  .taboo-about-{{ section.id }}__cta { background: #E8402A; color: #FFF6E9; }
+  .taboo-about-{{ section.id }}__cta { background: var(--about-cta-bg); color: var(--about-cta-text); }
   .taboo-about-{{ section.id }}__cta-heading { margin: 0 0 10px; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; letter-spacing: -.04em; }
   .taboo-about-{{ section.id }}__cta-sub { margin: 0; line-height: 1.5; opacity: .92; }
   .taboo-about-{{ section.id }}__cta-btn {
-    flex: 0 0 auto; display: inline-block; text-decoration: none; background: #14100F; color: #FFF6E9;
+    flex: 0 0 auto; display: inline-block; text-decoration: none; background: var(--about-cta-btn-bg); color: var(--about-cta-btn-text);
     border-radius: 14px; font: 700 16px 'DM Sans', system-ui, sans-serif; cursor: pointer;
   }
 
@@ -137,7 +150,17 @@
     { "type": "text", "id": "cta_heading", "label": "Closing CTA heading", "default": "Refill the box" },
     { "type": "textarea", "id": "cta_subheading", "label": "Closing CTA subheading", "default": "Pop Culture, 90s, Family — or the Party Pack with all three." },
     { "type": "text", "id": "cta_label", "label": "Closing CTA button label", "default": "Shop the catalog" },
-    { "type": "url", "id": "cta_url", "label": "Closing CTA button link" }
+    { "type": "url", "id": "cta_url", "label": "Closing CTA button link" },
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "bg_color", "label": "Section background", "default": "#FFFFFF" },
+    { "type": "color", "id": "text_color", "label": "Heading & body text", "default": "#14100F" },
+    { "type": "color", "id": "muted_text", "label": "Body copy / muted text", "default": "#5A4F49" },
+    { "type": "color", "id": "accent_color", "label": "Accent color (eyebrow, stat values)", "default": "#AF6EF7" },
+    { "type": "color", "id": "stat_bg", "label": "Stat card background", "default": "#FFFFFF" },
+    { "type": "color", "id": "cta_bg", "label": "CTA band background", "default": "#AF6EF7" },
+    { "type": "color", "id": "cta_text", "label": "CTA band text color", "default": "#FFFFFF" },
+    { "type": "color", "id": "cta_btn_bg", "label": "CTA button background", "default": "#14100F" },
+    { "type": "color", "id": "cta_btn_text", "label": "CTA button text color", "default": "#FFFFFF" }
   ],
   "blocks": [
     {

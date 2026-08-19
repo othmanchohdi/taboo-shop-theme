@@ -57,13 +57,18 @@
 
 <style>
   .taboo-hero-{{ section.id }} {
+    --hero-bg: {{ section.settings.bg_color | default: '#AF6EF7' }};
+    --hero-text: {{ section.settings.text_color | default: '#FFFFFF' }};
+    --hero-btn-bg: {{ section.settings.btn_primary_bg | default: '#FFFFFF' }};
+    --hero-btn-text: {{ section.settings.btn_primary_text | default: '#14100F' }};
+    --hero-cta-card-bg: {{ section.settings.cta_card_bg | default: '#14100F' }};
     position: relative;
     font-family: 'DM Sans', system-ui, sans-serif;
   }
 
   .taboo-hero-{{ section.id }}__media {
     position: relative;
-    background: #E8402A;
+    background: var(--hero-bg);
   }
 
   .taboo-hero-{{ section.id }}__media img,
@@ -75,7 +80,7 @@
 
   .taboo-hero-{{ section.id }}__media-placeholder {
     aspect-ratio: 4 / 3;
-    background: #E8402A;
+    background: var(--hero-bg);
   }
 
   .taboo-hero-{{ section.id }}__desktop-actions {
@@ -95,22 +100,22 @@
   }
 
   .taboo-hero-{{ section.id }}__btn-primary {
-    background: #FFF6E9;
-    color: #14100F;
+    background: var(--hero-btn-bg);
+    color: var(--hero-btn-text);
     border-radius: 15px;
     padding: 16px;
   }
 
   .taboo-hero-{{ section.id }}__btn-secondary {
     background: none;
-    color: #FFF6E9;
+    color: var(--hero-text);
     padding: 16px 18px;
   }
 
   .taboo-hero-{{ section.id }}__btn-secondary-outline {
     background: none;
-    color: #FFF6E9;
-    border: 2px solid rgba(255, 246, 233, .45);
+    color: var(--hero-text);
+    border: 2px solid rgba(255, 255, 255, .45);
     border-radius: 14px;
     padding: 18px 26px;
   }
@@ -118,7 +123,7 @@
   /* Mobile: image, gradient headline overlay, overlapping CTA card */
   @media screen and (max-width: 1023px) {
     .taboo-hero-{{ section.id }}__media {
-      color: #FFF6E9;
+      color: var(--hero-text);
     }
 
     .taboo-hero-{{ section.id }}__media img,
@@ -131,8 +136,8 @@
       position: absolute;
       inset: auto 0 0 0;
       padding: 24px 18px 66px;
-      background: linear-gradient(to top, #E8402A 34%, rgba(232, 64, 42, .86) 68%, rgba(232, 64, 42, 0));
-      color: #FFF6E9;
+      background: linear-gradient(to top, var(--hero-bg) 34%, color-mix(in srgb, var(--hero-bg) 86%, transparent) 68%, transparent);
+      color: var(--hero-text);
     }
 
     .taboo-hero-{{ section.id }}__eyebrow {
@@ -164,7 +169,7 @@
       margin-top: -48px;
       position: relative;
       z-index: 2;
-      background: #14100F;
+      background: var(--hero-cta-card-bg);
       border-radius: 20px;
       padding: 6px;
       margin-inline: 18px;
@@ -181,8 +186,8 @@
      (outer full-bleed background + inner max-width:1200px content column). */
   @media screen and (min-width: 1024px) {
     .taboo-hero-{{ section.id }} {
-      background: #E8402A;
-      color: #FFF6E9;
+      background: var(--hero-bg);
+      color: var(--hero-text);
     }
 
     .taboo-hero-{{ section.id }}__cta-card {
@@ -283,7 +288,13 @@
     { "type": "text", "id": "primary_label", "label": "Primary button label", "default": "Shop Tabooster packs" },
     { "type": "url", "id": "primary_url", "label": "Primary button link" },
     { "type": "text", "id": "secondary_label", "label": "Secondary button label", "default": "Rules" },
-    { "type": "url", "id": "secondary_url", "label": "Secondary button link" }
+    { "type": "url", "id": "secondary_url", "label": "Secondary button link" },
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "bg_color", "label": "Background color", "default": "#AF6EF7" },
+    { "type": "color", "id": "text_color", "label": "Text & heading color", "default": "#FFFFFF" },
+    { "type": "color", "id": "btn_primary_bg", "label": "Primary button background", "default": "#FFFFFF" },
+    { "type": "color", "id": "btn_primary_text", "label": "Primary button text color", "default": "#14100F" },
+    { "type": "color", "id": "cta_card_bg", "label": "Mobile CTA card background", "default": "#14100F" }
   ],
   "presets": [
     { "name": "Taboo hero" }

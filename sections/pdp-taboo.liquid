@@ -208,9 +208,20 @@
 <script src="{{ 'taboo-pdp.js' | asset_url }}" defer="defer"></script>
 
 <style>
-  .taboo-pdp-{{ section.id }} { display: block; font-family: 'DM Sans', system-ui, sans-serif; color: #14100F; }
+  .taboo-pdp-{{ section.id }} {
+    --pdp-bg: {{ section.settings.bg_color | default: '#FFFFFF' }};
+    --pdp-text: {{ section.settings.text_color | default: '#14100F' }};
+    --pdp-muted: {{ section.settings.muted_text | default: '#5A4F49' }};
+    --pdp-accent: {{ section.settings.accent_color | default: '#AF6EF7' }};
+    --pdp-btn-bg: {{ section.settings.btn_bg | default: '#AF6EF7' }};
+    --pdp-btn-text: {{ section.settings.btn_text | default: '#FFFFFF' }};
+    --pdp-variant-selected-bg: {{ section.settings.variant_selected_bg | default: '#F0E4FC' }};
+    --pdp-sample-bg: {{ section.settings.sample_card_bg | default: '#14100F' }};
+    --pdp-sample-text: {{ section.settings.sample_card_text | default: '#FFFFFF' }};
+    display: block; font-family: 'DM Sans', system-ui, sans-serif; color: var(--pdp-text); background: var(--pdp-bg);
+  }
 
-  .taboo-pdp-{{ section.id }}__back { display: inline-block; text-decoration: none; font: 700 13.5px 'DM Sans', system-ui, sans-serif; color: #8A7C73; }
+  .taboo-pdp-{{ section.id }}__back { display: inline-block; text-decoration: none; font: 700 13.5px 'DM Sans', system-ui, sans-serif; color: var(--pdp-muted); }
 
   .taboo-pdp-{{ section.id }}__gallery-main {
     background: {{ section.settings.tint_color | default: '#F2B233' }};
@@ -223,7 +234,7 @@
     flex: 0 0 auto; aspect-ratio: 1; border-radius: 12px; background: {{ section.settings.tint_color | default: '#F2B233' }};
     border: 2px solid transparent; padding: 5px; cursor: pointer; display: flex; align-items: center; justify-content: center; overflow: hidden;
   }
-  .taboo-pdp-{{ section.id }}__thumb.is-active { border-color: #14100F; }
+  .taboo-pdp-{{ section.id }}__thumb.is-active { border-color: var(--pdp-text); }
   .taboo-pdp-{{ section.id }}__thumb img { max-width: 100%; max-height: 100%; object-fit: contain; display: block; }
 
   .taboo-pdp-{{ section.id }}__pills { display: flex; align-items: center; gap: 7px; margin-bottom: 9px; }
@@ -231,18 +242,18 @@
     background: #EFE4D4; border-radius: 999px; font: 700 9.5px 'DM Sans', system-ui, sans-serif;
     letter-spacing: .12em; text-transform: uppercase; color: #8A7C73; padding: 4px 9px;
   }
-  .taboo-pdp-{{ section.id }}__title { margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; letter-spacing: -.04em; }
+  .taboo-pdp-{{ section.id }}__title { margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; letter-spacing: -.04em; color: var(--pdp-text); }
   .taboo-pdp-{{ section.id }}__price-row { display: flex; align-items: baseline; gap: 10px; }
-  .taboo-pdp-{{ section.id }}__price { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; color: #E8402A; }
+  .taboo-pdp-{{ section.id }}__price { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; color: var(--pdp-accent); }
   .taboo-pdp-{{ section.id }}__price-compare { text-decoration: line-through; color: #8A7C73; font: 500 14px 'DM Sans', system-ui, sans-serif; }
-  .taboo-pdp-{{ section.id }}__description { color: #5A4F49; line-height: 1.55; }
+  .taboo-pdp-{{ section.id }}__description { color: var(--pdp-muted); line-height: 1.55; }
   .taboo-pdp-{{ section.id }}__description p { margin: 0 0 12px; }
 
   .taboo-pdp-{{ section.id }}__external-note { border: 2px solid #14100F; border-radius: 16px; padding: 16px; background: #EFE4D4; }
   .taboo-pdp-{{ section.id }}__external-label { margin: 0 0 10px; font: 700 10.5px 'DM Sans', system-ui, sans-serif; letter-spacing: .14em; text-transform: uppercase; }
   .taboo-pdp-{{ section.id }}__external-copy { margin: 0; color: #5A4F49; line-height: 1.5; }
   .taboo-pdp-{{ section.id }}__buy-external {
-    display: block; text-align: center; text-decoration: none; background: #E8402A; color: #FFF6E9; border-radius: 14px;
+    display: block; text-align: center; text-decoration: none; background: var(--pdp-btn-bg); color: var(--pdp-btn-text); border-radius: 14px;
     padding: 16px; font: 700 15px 'DM Sans', system-ui, sans-serif; cursor: pointer;
   }
 
@@ -251,48 +262,48 @@
   .taboo-pdp-{{ section.id }}__variant {
     display: flex; align-items: center; gap: 12px; border: 2px solid #DCCEBB; border-radius: 14px; padding: 13px 14px; cursor: pointer;
   }
-  .taboo-pdp-{{ section.id }}__variant.is-selected { border-color: #E8402A; background: #FDE3DE; }
+  .taboo-pdp-{{ section.id }}__variant.is-selected { border-color: var(--pdp-accent); background: var(--pdp-variant-selected-bg); }
   .taboo-pdp-{{ section.id }}__variant.is-unavailable { opacity: .5; cursor: not-allowed; }
   .taboo-pdp-{{ section.id }}__variant-input { position: absolute; opacity: 0; width: 1px; height: 1px; }
   .taboo-pdp-{{ section.id }}__variant-dot { flex: 0 0 auto; width: 18px; height: 18px; border-radius: 50%; border: 2px solid #DCCEBB; }
-  .taboo-pdp-{{ section.id }}__variant.is-selected .taboo-pdp-{{ section.id }}__variant-dot { border-color: #E8402A; background: #E8402A; }
+  .taboo-pdp-{{ section.id }}__variant.is-selected .taboo-pdp-{{ section.id }}__variant-dot { border-color: var(--pdp-accent); background: var(--pdp-accent); }
   .taboo-pdp-{{ section.id }}__variant-text { flex: 1; }
   .taboo-pdp-{{ section.id }}__variant-name { display: block; font: 700 14px 'DM Sans', system-ui, sans-serif; }
-  .taboo-pdp-{{ section.id }}__variant-note { display: block; font: 400 12.5px 'DM Sans', system-ui, sans-serif; color: #5A4F49; }
-  .taboo-pdp-{{ section.id }}__variant-price { font: 700 14px 'DM Sans', system-ui, sans-serif; color: #E8402A; }
+  .taboo-pdp-{{ section.id }}__variant-note { display: block; font: 400 12.5px 'DM Sans', system-ui, sans-serif; color: var(--pdp-muted); }
+  .taboo-pdp-{{ section.id }}__variant-price { font: 700 14px 'DM Sans', system-ui, sans-serif; color: var(--pdp-accent); }
 
   .taboo-pdp-{{ section.id }}__buy-row { display: flex; gap: 12px; }
   .taboo-pdp-{{ section.id }}__qty {
     display: flex; align-items: center; gap: 18px; border: 1.5px solid #DCCEBB; border-radius: 14px; padding: 0 18px;
   }
-  .taboo-pdp-{{ section.id }}__qty button { background: none; border: 0; font: 700 20px 'DM Sans', system-ui, sans-serif; cursor: pointer; color: #14100F; line-height: 1; }
+  .taboo-pdp-{{ section.id }}__qty button { background: none; border: 0; font: 700 20px 'DM Sans', system-ui, sans-serif; cursor: pointer; color: var(--pdp-text); line-height: 1; }
   .taboo-pdp-{{ section.id }}__qty span { font: 700 15px 'DM Sans', system-ui, sans-serif; min-width: 14px; text-align: center; }
   .taboo-pdp-{{ section.id }}__add-btn {
-    flex: 1; background: #E8402A; color: #FFF6E9; border: 0; border-radius: 14px; padding: 19px;
+    flex: 1; background: var(--pdp-btn-bg); color: var(--pdp-btn-text); border: 0; border-radius: 14px; padding: 19px;
     font: 700 16.5px 'DM Sans', system-ui, sans-serif; cursor: pointer;
   }
   .taboo-pdp-{{ section.id }}__add-btn[disabled] { opacity: .5; cursor: not-allowed; }
   .taboo-pdp-{{ section.id }}__add-btn.is-added { background: #1F7A6B; }
 
   .taboo-pdp-{{ section.id }}__box { border: 1.5px solid #E7DCCC; border-radius: 16px; overflow: hidden; }
-  .taboo-pdp-{{ section.id }}__box-top { background: #FFFFFF; padding: 15px 16px; }
+  .taboo-pdp-{{ section.id }}__box-top { background: var(--pdp-bg); padding: 15px 16px; }
   .taboo-pdp-{{ section.id }}__box-label { margin: 0 0 11px; font: 700 11px 'DM Sans', system-ui, sans-serif; letter-spacing: .14em; text-transform: uppercase; }
-  .taboo-pdp-{{ section.id }}__box-item { display: flex; gap: 10px; align-items: center; font-size: 14px; color: #5A4F49; }
+  .taboo-pdp-{{ section.id }}__box-item { display: flex; gap: 10px; align-items: center; font-size: 14px; color: var(--pdp-muted); }
   .taboo-pdp-{{ section.id }}__box-check {
-    flex: 0 0 auto; width: 16px; height: 16px; border-radius: 50%; background: #1F7A6B; color: #FFF6E9;
+    flex: 0 0 auto; width: 16px; height: 16px; border-radius: 50%; background: #1F7A6B; color: #FFFFFF;
     font: 800 10px 'DM Sans', system-ui, sans-serif; display: flex; align-items: center; justify-content: center;
   }
   .taboo-pdp-{{ section.id }}__box-ships { background: #EFE4D4; padding: 11px 16px; font: 500 12.5px 'DM Sans', system-ui, sans-serif; color: #5A4F49; }
 
-  .taboo-pdp-{{ section.id }}__sample { background: #14100F; color: #FFF6E9; border-radius: 18px; padding: 18px; }
+  .taboo-pdp-{{ section.id }}__sample { background: var(--pdp-sample-bg); color: var(--pdp-sample-text); border-radius: 18px; padding: 18px; }
   .taboo-pdp-{{ section.id }}__sample-label { margin: 0 0 12px; font: 700 10.5px 'DM Sans', system-ui, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #F2B233; }
   .taboo-pdp-{{ section.id }}__sample-word {
     font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 30px; text-transform: uppercase; letter-spacing: -.02em; margin-bottom: 10px;
   }
   .taboo-pdp-{{ section.id }}__sample-tags { display: flex; flex-wrap: wrap; gap: 6px; }
   .taboo-pdp-{{ section.id }}__sample-tag {
-    border: 1px solid rgba(255,246,233,.28); border-radius: 999px; padding: 6px 11px; font: 500 12px 'DM Sans', system-ui, sans-serif;
-    text-transform: uppercase; opacity: .85; text-decoration: line-through; text-decoration-color: #E8402A; text-decoration-thickness: 2px;
+    border: 1px solid rgba(255,255,255,.28); border-radius: 999px; padding: 6px 11px; font: 500 12px 'DM Sans', system-ui, sans-serif;
+    text-transform: uppercase; opacity: .85; text-decoration: line-through; text-decoration-color: var(--pdp-accent); text-decoration-thickness: 2px;
   }
 
   .taboo-pdp-{{ section.id }}__related-title { margin: 0 0 12px; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 24px; letter-spacing: -.035em; }
@@ -300,7 +311,7 @@
   .taboo-pdp-{{ section.id }}__related-media { background: #F2B233; border-radius: 11px; height: 78px; padding: 6px; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
   .taboo-pdp-{{ section.id }}__related-media img { max-width: 100%; max-height: 100%; object-fit: contain; }
   .taboo-pdp-{{ section.id }}__related-name { font: 700 13px 'DM Sans', system-ui, sans-serif; margin-bottom: 4px; }
-  .taboo-pdp-{{ section.id }}__related-price { font: 700 13px 'DM Sans', system-ui, sans-serif; color: #E8402A; }
+  .taboo-pdp-{{ section.id }}__related-price { font: 700 13px 'DM Sans', system-ui, sans-serif; color: #AF6EF7; }
 
   .taboo-pdp-{{ section.id }}__sticky-bar { display: none; }
 
@@ -322,14 +333,14 @@
 
     .taboo-pdp-{{ section.id }}__sticky-bar {
       position: fixed; left: 0; right: 0; bottom: 64px; padding: 10px 14px;
-      background: rgba(255,246,233,.95); backdrop-filter: blur(10px); border-top: 1px solid #E7DCCC;
+      background: rgba(255,255,255,.95); backdrop-filter: blur(10px); border-top: 1px solid #E7DCCC;
       display: flex; gap: 10px; align-items: center; z-index: 900;
     }
     .taboo-pdp-{{ section.id }}__sticky-info { flex: 0 0 auto; }
     .taboo-pdp-{{ section.id }}__sticky-type { display: block; font: 700 11.5px 'DM Sans', system-ui, sans-serif; color: #8A7C73; }
-    .taboo-pdp-{{ section.id }}__sticky-price { font: 700 15px 'DM Sans', system-ui, sans-serif; color: #E8402A; }
+    .taboo-pdp-{{ section.id }}__sticky-price { font: 700 15px 'DM Sans', system-ui, sans-serif; color: var(--pdp-accent); }
     .taboo-pdp-{{ section.id }}__sticky-btn {
-      flex: 1; background: #E8402A; color: #FFF6E9; border: 0; border-radius: 13px; padding: 15px;
+      flex: 1; background: var(--pdp-btn-bg); color: var(--pdp-btn-text); border: 0; border-radius: 13px; padding: 15px;
       font: 700 15px 'DM Sans', system-ui, sans-serif; cursor: pointer;
     }
     .taboo-pdp-{{ section.id }}__sticky-btn[disabled] { opacity: .5; }
@@ -394,6 +405,16 @@
     },
     { "type": "color", "id": "tint_color", "label": "Product image tint background", "default": "#F2B233" },
     { "type": "url", "id": "back_url", "label": "\"Back to catalog\" link" },
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "bg_color", "label": "Page background", "default": "#FFFFFF" },
+    { "type": "color", "id": "text_color", "label": "Heading & body text", "default": "#14100F" },
+    { "type": "color", "id": "muted_text", "label": "Muted / secondary text", "default": "#5A4F49" },
+    { "type": "color", "id": "accent_color", "label": "Accent color (prices, dots)", "default": "#AF6EF7" },
+    { "type": "color", "id": "btn_bg", "label": "Add-to-cart button background", "default": "#AF6EF7" },
+    { "type": "color", "id": "btn_text", "label": "Add-to-cart button text", "default": "#FFFFFF" },
+    { "type": "color", "id": "variant_selected_bg", "label": "Selected variant background", "default": "#F0E4FC" },
+    { "type": "color", "id": "sample_card_bg", "label": "Sample card background", "default": "#14100F" },
+    { "type": "color", "id": "sample_card_text", "label": "Sample card text", "default": "#FFFFFF" },
     {
       "type": "header",
       "content": "Description"

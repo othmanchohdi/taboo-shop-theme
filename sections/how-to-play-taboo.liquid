@@ -61,26 +61,41 @@
 </section>
 
 <style>
-  .taboo-play-{{ section.id }} { font-family: 'DM Sans', system-ui, sans-serif; color: #14100F; }
+  .taboo-play-{{ section.id }} {
+    --play-header-bg: {{ section.settings.header_bg | default: '#AF6EF7' }};
+    --play-header-text: {{ section.settings.header_text | default: '#FFFFFF' }};
+    --play-bg: {{ section.settings.bg_color | default: '#FFFFFF' }};
+    --play-text: {{ section.settings.text_color | default: '#14100F' }};
+    --play-muted: {{ section.settings.muted_text | default: '#5A4F49' }};
+    --play-step-num-bg: {{ section.settings.step_num_bg | default: '#14100F' }};
+    --play-step-num-text: {{ section.settings.step_num_text | default: '#FFFFFF' }};
+    --play-panel-bg: {{ section.settings.panel_bg | default: '#14100F' }};
+    --play-panel-text: {{ section.settings.panel_text | default: '#FFFFFF' }};
+    --play-btn-bg: {{ section.settings.btn_bg | default: '#AF6EF7' }};
+    --play-btn-text: {{ section.settings.btn_text | default: '#FFFFFF' }};
+    font-family: 'DM Sans', system-ui, sans-serif;
+    color: var(--play-text);
+    background: var(--play-bg);
+  }
 
-  .taboo-play-{{ section.id }}__header { background: #1F7A6B; color: #FFF6E9; }
+  .taboo-play-{{ section.id }}__header { background: var(--play-header-bg); color: var(--play-header-text); }
   .taboo-play-{{ section.id }}__eyebrow { margin: 0 0 10px; font: 700 10.5px 'DM Sans', system-ui, sans-serif; letter-spacing: .2em; text-transform: uppercase; opacity: .8; }
   .taboo-play-{{ section.id }}__title { margin: 0 0 12px; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; letter-spacing: -.045em; }
   .taboo-play-{{ section.id }}__sub { margin: 0; font-size: 15px; opacity: .92; }
 
   .taboo-play-{{ section.id }}__step { display: flex; align-items: flex-start; border-bottom: 1.5px solid #E7DCCC; }
   .taboo-play-{{ section.id }}__step-num {
-    flex: 0 0 auto; border-radius: 10px; background: #14100F; color: #FFF6E9; font: 800 14px 'DM Sans', system-ui, sans-serif;
+    flex: 0 0 auto; border-radius: 10px; background: var(--play-step-num-bg); color: var(--play-step-num-text); font: 800 14px 'DM Sans', system-ui, sans-serif;
     display: flex; align-items: center; justify-content: center;
   }
-  .taboo-play-{{ section.id }}__step-heading { font: 700 15.5px 'DM Sans', system-ui, sans-serif; margin-bottom: 4px; }
-  .taboo-play-{{ section.id }}__step-text { line-height: 1.5; color: #5A4F49; }
+  .taboo-play-{{ section.id }}__step-heading { font: 700 15.5px 'DM Sans', system-ui, sans-serif; margin-bottom: 4px; color: var(--play-text); }
+  .taboo-play-{{ section.id }}__step-text { line-height: 1.5; color: var(--play-muted); }
 
-  .taboo-play-{{ section.id }}__panel { background: #14100F; color: #FFF6E9; border-radius: 20px; padding: 18px; }
+  .taboo-play-{{ section.id }}__panel { background: var(--play-panel-bg); color: var(--play-panel-text); border-radius: 20px; padding: 18px; }
   .taboo-play-{{ section.id }}__panel-label { margin: 0 0 10px; font: 700 10.5px 'DM Sans', system-ui, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #F2B233; }
   .taboo-play-{{ section.id }}__panel-copy { margin: 0 0 14px; line-height: 1.5; }
   .taboo-play-{{ section.id }}__panel-btn {
-    display: inline-block; text-decoration: none; background: #E8402A; color: #FFF6E9; border-radius: 12px;
+    display: inline-block; text-decoration: none; background: var(--play-btn-bg); color: var(--play-btn-text); border-radius: 12px;
     padding: 13px 20px; font: 700 14px 'DM Sans', system-ui, sans-serif; cursor: pointer;
   }
   .taboo-play-{{ section.id }}__amazon { border: 2px solid #14100F; border-radius: 18px; padding: 16px; display: flex; gap: 12px; align-items: center; background: #EFE4D4; }
@@ -153,7 +168,19 @@
     { "type": "textarea", "id": "panel_copy", "label": "Info panel copy", "default": "Every Tabooster is cards-only — no buzzer, no timer, no giant box. Shuffle them into the game you already own and play exactly the same way." },
     { "type": "text", "id": "panel_cta", "label": "Info panel button label", "default": "Shop the packs" },
     { "type": "url", "id": "panel_url", "label": "Info panel button link" },
-    { "type": "url", "id": "amazon_url", "label": "Amazon listing URL (leave blank to hide the card)" }
+    { "type": "url", "id": "amazon_url", "label": "Amazon listing URL (leave blank to hide the card)" },
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "header_bg", "label": "Header band background", "default": "#AF6EF7" },
+    { "type": "color", "id": "header_text", "label": "Header band text", "default": "#FFFFFF" },
+    { "type": "color", "id": "bg_color", "label": "Body background", "default": "#FFFFFF" },
+    { "type": "color", "id": "text_color", "label": "Body text color", "default": "#14100F" },
+    { "type": "color", "id": "muted_text", "label": "Muted text color", "default": "#5A4F49" },
+    { "type": "color", "id": "step_num_bg", "label": "Step number background", "default": "#14100F" },
+    { "type": "color", "id": "step_num_text", "label": "Step number text", "default": "#FFFFFF" },
+    { "type": "color", "id": "panel_bg", "label": "Info panel background", "default": "#14100F" },
+    { "type": "color", "id": "panel_text", "label": "Info panel text", "default": "#FFFFFF" },
+    { "type": "color", "id": "btn_bg", "label": "Panel button background", "default": "#AF6EF7" },
+    { "type": "color", "id": "btn_text", "label": "Panel button text", "default": "#FFFFFF" }
   ],
   "blocks": [
     {

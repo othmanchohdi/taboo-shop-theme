@@ -39,8 +39,15 @@
 
 <style>
   .taboo-rules-{{ section.id }} {
+    --rules-bg: {{ section.settings.bg_color | default: '#FFFFFF' }};
+    --rules-heading: {{ section.settings.heading_color | default: '#14100F' }};
+    --rules-text: {{ section.settings.text_color | default: '#5A4F49' }};
+    --rules-accent: {{ section.settings.accent_color | default: '#AF6EF7' }};
+    --rules-btn-bg: {{ section.settings.btn_bg | default: '#14100F' }};
+    --rules-btn-text: {{ section.settings.btn_text | default: '#FFFFFF' }};
     font-family: 'DM Sans', system-ui, sans-serif;
-    color: #14100F;
+    color: var(--rules-heading);
+    background: var(--rules-bg);
   }
 
   .taboo-rules-{{ section.id }}__heading {
@@ -48,22 +55,23 @@
     font-family: 'Bricolage Grotesque', sans-serif;
     font-weight: 800;
     letter-spacing: -.04em;
+    color: var(--rules-heading);
   }
 
-  .taboo-rules-{{ section.id }}__sub { margin: 0 0 16px; color: #5A4F49; }
+  .taboo-rules-{{ section.id }}__sub { margin: 0 0 16px; color: var(--rules-text); }
 
   .taboo-rules-{{ section.id }}__step {
     display: flex; align-items: flex-start; border-top: 1.5px solid #E7DCCC;
   }
   .taboo-rules-{{ section.id }}__num {
     flex: 0 0 auto; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800;
-    line-height: 1; letter-spacing: -.04em; color: #E8402A;
+    line-height: 1; letter-spacing: -.04em; color: var(--rules-accent);
   }
-  .taboo-rules-{{ section.id }}__text { color: #5A4F49; }
+  .taboo-rules-{{ section.id }}__text { color: var(--rules-text); }
 
   .taboo-rules-{{ section.id }}__cta {
     display: inline-block; text-align: center; text-decoration: none; cursor: pointer;
-    background: #14100F; color: #FFF6E9; border: 0; font: 700 15px 'DM Sans', system-ui, sans-serif;
+    background: var(--rules-btn-bg); color: var(--rules-btn-text); border: 0; font: 700 15px 'DM Sans', system-ui, sans-serif;
   }
 
   .taboo-rules-{{ section.id }}__media img {
@@ -116,7 +124,14 @@
     { "type": "text", "id": "subheading", "label": "Subheading", "default": "Three lines and you're ready." },
     { "type": "image_picker", "id": "image", "label": "Card photo (desktop only)" },
     { "type": "text", "id": "cta_label", "label": "Button label", "default": "Read the full rules" },
-    { "type": "url", "id": "cta_url", "label": "Button link" }
+    { "type": "url", "id": "cta_url", "label": "Button link" },
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "bg_color", "label": "Section background", "default": "#FFFFFF" },
+    { "type": "color", "id": "heading_color", "label": "Heading color", "default": "#14100F" },
+    { "type": "color", "id": "text_color", "label": "Body text color", "default": "#5A4F49" },
+    { "type": "color", "id": "accent_color", "label": "Step number accent color", "default": "#AF6EF7" },
+    { "type": "color", "id": "btn_bg", "label": "Button background", "default": "#14100F" },
+    { "type": "color", "id": "btn_text", "label": "Button text color", "default": "#FFFFFF" }
   ],
   "blocks": [
     {

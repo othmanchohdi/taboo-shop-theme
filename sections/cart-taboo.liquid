@@ -107,19 +107,32 @@
 <script src="{{ 'taboo-cart.js' | asset_url }}" defer="defer"></script>
 
 <style>
-  .taboo-cart-{{ section.id }} { display: block; font-family: 'DM Sans', system-ui, sans-serif; color: #14100F; }
+  .taboo-cart-{{ section.id }} {
+    --cart-bg: {{ section.settings.page_bg | default: '#F0E4FC' }};
+    --cart-text: {{ section.settings.text_color | default: '#14100F' }};
+    --cart-muted: {{ section.settings.muted_text | default: '#8A7C73' }};
+    --cart-card-bg: {{ section.settings.card_bg | default: '#FFFFFF' }};
+    --cart-accent: {{ section.settings.accent_color | default: '#AF6EF7' }};
+    --cart-btn-bg: {{ section.settings.btn_bg | default: '#AF6EF7' }};
+    --cart-btn-text: {{ section.settings.btn_text | default: '#FFFFFF' }};
+    --cart-heading-color: {{ section.settings.heading_color | default: '#14100F' }};
+    display: block;
+    font-family: 'DM Sans', system-ui, sans-serif;
+    color: var(--cart-text);
+    background: var(--cart-bg);
+  }
 
-  .taboo-cart-{{ section.id }}__title { margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; letter-spacing: -.045em; }
+  .taboo-cart-{{ section.id }}__title { margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; letter-spacing: -.045em; color: var(--cart-heading-color); }
 
-  .taboo-cart-{{ section.id }}__ship-card { background: #FFFFFF; border-radius: 14px; }
+  .taboo-cart-{{ section.id }}__ship-card { background: var(--cart-card-bg); border-radius: 14px; }
   .taboo-cart-{{ section.id }}__ship-note { margin: 0 0 9px; font: 700 12.5px 'DM Sans', system-ui, sans-serif; }
   .taboo-cart-{{ section.id }}__ship-track { display: block; height: 7px; border-radius: 4px; background: #EFE4D4; overflow: hidden; }
   .taboo-cart-{{ section.id }}__ship-fill { display: block; height: 7px; background: #1F7A6B; transition: width .3s ease; }
 
-  .taboo-cart-{{ section.id }}__empty { background: #FFFFFF; border-radius: 18px; text-align: center; }
-  .taboo-cart-{{ section.id }}__empty p { margin: 0 0 14px; color: #5A4F49; }
+  .taboo-cart-{{ section.id }}__empty { background: var(--cart-card-bg); border-radius: 18px; text-align: center; }
+  .taboo-cart-{{ section.id }}__empty p { margin: 0 0 14px; color: var(--cart-muted); }
   .taboo-cart-{{ section.id }}__empty-btn {
-    display: inline-block; text-decoration: none; background: #E8402A; color: #FFF6E9; border-radius: 12px;
+    display: inline-block; text-decoration: none; background: var(--cart-btn-bg); color: var(--cart-btn-text); border-radius: 12px;
     padding: 13px 22px; font: 700 14px 'DM Sans', system-ui, sans-serif;
   }
 
@@ -129,38 +142,38 @@
   .taboo-cart-{{ section.id }}__line-body { flex: 1; min-width: 0; }
   .taboo-cart-{{ section.id }}__line-top { display: flex; justify-content: space-between; gap: 8px; }
   .taboo-cart-{{ section.id }}__line-name { font: 700 14.5px 'DM Sans', system-ui, sans-serif; }
-  .taboo-cart-{{ section.id }}__line-remove { background: none; border: 0; padding: 0; font: 500 12px 'DM Sans', system-ui, sans-serif; color: #8A7C73; cursor: pointer; }
-  .taboo-cart-{{ section.id }}__line-variant { font: 500 12px 'DM Sans', system-ui, sans-serif; color: #8A7C73; }
+  .taboo-cart-{{ section.id }}__line-remove { background: none; border: 0; padding: 0; font: 500 12px 'DM Sans', system-ui, sans-serif; color: var(--cart-muted); cursor: pointer; }
+  .taboo-cart-{{ section.id }}__line-variant { font: 500 12px 'DM Sans', system-ui, sans-serif; color: var(--cart-muted); }
   .taboo-cart-{{ section.id }}__line-bottom { display: flex; align-items: center; justify-content: space-between; }
   .taboo-cart-{{ section.id }}__line-qty { display: flex; align-items: center; gap: 12px; border: 1.5px solid #E7DCCC; border-radius: 999px; padding: 4px 10px; }
-  .taboo-cart-{{ section.id }}__line-qty button { background: none; border: 0; font: 700 17px 'DM Sans', system-ui, sans-serif; cursor: pointer; color: #14100F; line-height: 1; }
+  .taboo-cart-{{ section.id }}__line-qty button { background: none; border: 0; font: 700 17px 'DM Sans', system-ui, sans-serif; cursor: pointer; color: var(--cart-text); line-height: 1; }
   .taboo-cart-{{ section.id }}__line-qty span { font: 700 13px 'DM Sans', system-ui, sans-serif; min-width: 12px; text-align: center; }
-  .taboo-cart-{{ section.id }}__line-total { font: 700 15px 'DM Sans', system-ui, sans-serif; color: #E8402A; }
+  .taboo-cart-{{ section.id }}__line-total { font: 700 15px 'DM Sans', system-ui, sans-serif; color: var(--cart-accent); }
 
-  .taboo-cart-{{ section.id }}__upsell-label { margin: 0 0 10px; font: 700 10.5px 'DM Sans', system-ui, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #8A7C73; }
-  .taboo-cart-{{ section.id }}__upsell { background: #FFFFFF; border-radius: 16px; display: flex; gap: 14px; align-items: center; }
+  .taboo-cart-{{ section.id }}__upsell-label { margin: 0 0 10px; font: 700 10.5px 'DM Sans', system-ui, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: var(--cart-muted); }
+  .taboo-cart-{{ section.id }}__upsell { background: var(--cart-card-bg); border-radius: 16px; display: flex; gap: 14px; align-items: center; }
   .taboo-cart-{{ section.id }}__upsell-media { flex: 0 0 auto; border-radius: 11px; overflow: hidden; background: #F2B233; display: flex; align-items: center; justify-content: center; }
   .taboo-cart-{{ section.id }}__upsell-media img { max-width: 100%; max-height: 100%; object-fit: contain; }
   .taboo-cart-{{ section.id }}__upsell-body { flex: 1; min-width: 0; }
   .taboo-cart-{{ section.id }}__upsell-name { font: 700 13px 'DM Sans', system-ui, sans-serif; }
   .taboo-cart-{{ section.id }}__upsell-bottom { display: flex; align-items: center; justify-content: space-between; }
-  .taboo-cart-{{ section.id }}__upsell-price { font: 700 13px 'DM Sans', system-ui, sans-serif; color: #E8402A; }
-  .taboo-cart-{{ section.id }}__upsell-add { background: #14100F; color: #FFF6E9; border: 0; border-radius: 9px; padding: 7px 12px; font: 700 12px 'DM Sans', system-ui, sans-serif; cursor: pointer; }
+  .taboo-cart-{{ section.id }}__upsell-price { font: 700 13px 'DM Sans', system-ui, sans-serif; color: var(--cart-accent); }
+  .taboo-cart-{{ section.id }}__upsell-add { background: #14100F; color: #FFFFFF; border: 0; border-radius: 9px; padding: 7px 12px; font: 700 12px 'DM Sans', system-ui, sans-serif; cursor: pointer; }
 
-  .taboo-cart-{{ section.id }}__summary { background: #FFFFFF; }
-  .taboo-cart-{{ section.id }}__summary-title { margin: 0 0 18px; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; letter-spacing: -.035em; }
-  .taboo-cart-{{ section.id }}__summary-row { display: flex; justify-content: space-between; font-size: 14px; color: #5A4F49; margin-bottom: 8px; }
+  .taboo-cart-{{ section.id }}__summary { background: var(--cart-card-bg); }
+  .taboo-cart-{{ section.id }}__summary-title { margin: 0 0 18px; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; letter-spacing: -.035em; color: var(--cart-heading-color); }
+  .taboo-cart-{{ section.id }}__summary-row { display: flex; justify-content: space-between; font-size: 14px; color: var(--cart-muted); margin-bottom: 8px; }
   .taboo-cart-{{ section.id }}__summary-total {
     display: flex; justify-content: space-between; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800;
     padding-top: 10px; border-top: 1.5px dashed #E7DCCC;
   }
   .taboo-cart-{{ section.id }}__checkout-btn {
-    display: block; text-align: center; text-decoration: none; background: #E8402A; color: #FFF6E9; border-radius: 14px;
+    display: block; text-align: center; text-decoration: none; background: var(--cart-btn-bg); color: var(--cart-btn-text); border-radius: 14px;
     padding: 18px; font: 700 16px 'DM Sans', system-ui, sans-serif; cursor: pointer;
   }
   .taboo-cart-{{ section.id }}__continue-link {
     display: block; text-align: center; text-decoration: none; background: none; padding: 12px;
-    font: 700 14px 'DM Sans', system-ui, sans-serif; color: #8A7C73;
+    font: 700 14px 'DM Sans', system-ui, sans-serif; color: var(--cart-muted);
   }
 
   @media screen and (max-width: 1023px) {
@@ -225,7 +238,16 @@
     { "type": "text", "id": "bag_word", "label": "Word for \"cart\" (e.g. bag)", "default": "bag" },
     { "type": "number", "id": "free_shipping_threshold", "label": "Free shipping threshold ($)", "info": "Confirm this with the client — the design references $35 as a proposal, not a confirmed policy.", "default": 35 },
     { "type": "text", "id": "flat_shipping_rate", "label": "Flat shipping rate label (below threshold)", "default": "$4.95" },
-    { "type": "url", "id": "shop_url", "label": "\"Continue shopping\" link" }
+    { "type": "url", "id": "shop_url", "label": "\"Continue shopping\" link" },
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "page_bg", "label": "Page background", "default": "#F0E4FC" },
+    { "type": "color", "id": "card_bg", "label": "Card & summary background", "default": "#FFFFFF" },
+    { "type": "color", "id": "heading_color", "label": "Heading color", "default": "#14100F" },
+    { "type": "color", "id": "text_color", "label": "Body text color", "default": "#14100F" },
+    { "type": "color", "id": "muted_text", "label": "Muted / secondary text color", "default": "#8A7C73" },
+    { "type": "color", "id": "accent_color", "label": "Accent color (prices, totals)", "default": "#AF6EF7" },
+    { "type": "color", "id": "btn_bg", "label": "Checkout button background", "default": "#AF6EF7" },
+    { "type": "color", "id": "btn_text", "label": "Checkout button text", "default": "#FFFFFF" }
   ],
   "blocks": [
     {
