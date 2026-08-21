@@ -134,7 +134,7 @@
         "s1": {
           "type": "step",
           "settings": {
-            "text": "Deal a card and set the 1-minute timer."
+            "text": "Pick a card and set the 1-minute timer."
           }
         },
         "s2": {
