@@ -72,7 +72,7 @@
                 "height": "fit",
                 "custom_height": 100,
                 "background_media": "none",
-                "background_color": "#FFFFFF",
+                "background_color": "#ffffff",
                 "video_position": "cover",
                 "background_image_position": "cover",
                 "toggle_overlay": false,
@@ -295,7 +295,7 @@
                 "input_style": "custom",
                 "border_width": 2,
                 "border_radius": 11,
-                "input_background_color": "#2B2826",
+                "input_background_color": "#2b2826",
                 "input_text_color": "",
                 "input_border_color": "#3a322d",
                 "input_type_preset": "paragraph",
@@ -333,7 +333,7 @@
       "settings": {
         "section_width": "page-width",
         "gap": 40,
-        "background_color": "#14100f",
+        "background_color": "{{ settings.color_palette.color3 }}",
         "padding-block-start": 52,
         "padding-block-end": 36
       }
@@ -368,7 +368,7 @@
       "settings": {
         "section_width": "page-width",
         "gap": 24,
-        "background_color": "#14100f",
+        "background_color": "{{ settings.color_palette.color3 }}",
         "divider_thickness": 1,
         "divider_color": "",
         "padding-block-start": 12,
