@@ -120,9 +120,9 @@
     padding: 18px 26px;
   }
 
-  /* Mobile: full-height hero, gradient headline overlay, overlapping CTA card */
+  /* Mobile: 85 svh hero, contained image, gradient headline overlay, overlapping CTA card */
   @media screen and (max-width: 1023px) {
-    /* Full height layout */
+    /* 85 svh layout — flex column so CTA card sits below the image area */
     .taboo-hero-{{ section.id }} {
       display: flex;
       flex-direction: column;
@@ -130,18 +130,18 @@
 
     .taboo-hero-{{ section.id }}__inner {
       flex: 1;
-      min-height: 100svh;
       display: flex;
       flex-direction: column;
     }
 
     .taboo-hero-{{ section.id }}__media {
-      flex: 1;
-      min-height: 0;
+      height: 85svh;
       position: relative;
       color: var(--hero-text);
+      background: var(--hero-bg);
     }
 
+    /* Contained image — shows full image anchored to top, purple bg fills the rest */
     .taboo-hero-{{ section.id }}__media img,
     .taboo-hero-{{ section.id }}__media-placeholder {
       position: absolute;
@@ -149,6 +149,8 @@
       width: 100%;
       height: 100%;
       aspect-ratio: unset;
+      object-fit: contain;
+      object-position: top center;
       opacity: .95;
     }
 

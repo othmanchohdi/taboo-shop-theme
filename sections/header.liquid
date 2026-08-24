@@ -1187,19 +1187,39 @@
     font-size: var(--menu-localization-font-size);
   }
 
-  /* Mobile home page: transparent header, bigger white logo */
+  /* Mobile home page: transparent header, white logo, pull section under header */
   @media screen and (max-width: 749px) {
-    body.template-index .header__underlay-closed {
-      background: transparent;
+    /* Kill the beige/page-colour underlay — force transparent */
+    body.template-index .header__underlay-closed,
+    body.template-index .header__underlay-open {
+      background: transparent !important;
     }
 
+    /* Override the CSS-variable that drives the gradient, just to be safe */
+    body.template-index #header-component {
+      --color-background-top-row: transparent;
+    }
+
+    /* White logo via CSS filter */
     body.template-index .logo-block__image {
       filter: brightness(0) invert(1);
     }
 
+    /* Bigger logo on mobile */
     body.template-index .logo-block {
       width: 150px;
       max-width: 150px;
+    }
+
+    /* White icons (hamburger, cart, search) on transparent header */
+    body.template-index .header__row--top svg,
+    body.template-index .header__row--top .header__icon--menu {
+      color: #FFFFFF;
+    }
+
+    /* Pull the first section up so it sits behind the transparent header */
+    body.template-index .content-for-layout > .shopify-section:first-child {
+      margin-top: calc(var(--header-group-height, 60px) * -1);
     }
   }
 {% endstylesheet %}

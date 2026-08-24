@@ -29,12 +29,12 @@
 
 <style>
   .taboo-benefits-{{ section.id }} {
-    --ben-bg: {{ section.settings.bg_color | default: '#AF6EF7' }};
+    --ben-bg: {{ section.settings.bg_color | default: '#1E0840' }};
     --ben-text: {{ section.settings.text_color | default: '#FFFFFF' }};
-    --ben-eyebrow: {{ section.settings.eyebrow_color | default: '#F2B233' }};
+    --ben-eyebrow: {{ section.settings.eyebrow_color | default: '#FFFFFF' }};
     --ben-heading: {{ section.settings.heading_color | default: '#FFFFFF' }};
-    --ben-check-bg: {{ section.settings.check_bg | default: '#F2B233' }};
-    --ben-check-text: {{ section.settings.check_text | default: '#14100F' }};
+    --ben-check-bg: {{ section.settings.check_bg | default: '#F0E4FC' }};
+    --ben-check-text: {{ section.settings.check_text | default: '#AF6EF7' }};
     --ben-border: {{ section.settings.border_color | default: 'rgba(255,255,255,0.25)' }};
     background-color: var(--ben-bg);
     {% if section.settings.bg_image %}
@@ -120,13 +120,13 @@
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Why everyone loves it" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "Perfect for parties, families and groups" },
     { "type": "header", "content": "Colors" },
-    { "type": "color", "id": "bg_color", "label": "Background color", "default": "#AF6EF7" },
+    { "type": "color", "id": "bg_color", "label": "Background color", "default": "#1E0840" },
     { "type": "image_picker", "id": "bg_image", "label": "Background image (overlays color)" },
     { "type": "color", "id": "text_color", "label": "Item text color", "default": "#FFFFFF" },
     { "type": "color", "id": "heading_color", "label": "Heading color", "default": "#FFFFFF" },
-    { "type": "color", "id": "eyebrow_color", "label": "Eyebrow color", "default": "#F2B233" },
-    { "type": "color", "id": "check_bg", "label": "Check icon background", "default": "#F2B233" },
-    { "type": "color", "id": "check_text", "label": "Check icon color", "default": "#14100F" },
+    { "type": "color", "id": "eyebrow_color", "label": "Eyebrow color", "default": "#FFFFFF" },
+    { "type": "color", "id": "check_bg", "label": "Check icon background", "default": "#F0E4FC" },
+    { "type": "color", "id": "check_text", "label": "Check icon color", "default": "#AF6EF7" },
     { "type": "color", "id": "border_color", "label": "Item divider color (desktop)", "default": "#ffffff40" }
   ],
   "blocks": [
