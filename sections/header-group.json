@@ -119,7 +119,7 @@
         "actions_text_case": "none",
         "amazon_url": "shopify://pages/contact",
         "amazon_label": "Board game on Amazon ↗",
-        "background_color_top": "#14100f",
+        "background_color_top": "{{ settings.color_palette.color3 }}",
         "text_color_top": "#ffffff",
         "background_color_bottom": "",
         "text_color_bottom": "",
