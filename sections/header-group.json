@@ -120,12 +120,12 @@
         "amazon_url": "shopify://pages/contact",
         "amazon_label": "Board game on Amazon ↗",
         "background_color_top": "#14100f",
-        "text_color_top": "#fff6e9",
+        "text_color_top": "#ffffff",
         "background_color_bottom": "",
         "text_color_bottom": "",
         "bubble_style": "default",
-        "bubble_background_color": "#e8402a",
-        "bubble_text_color": "#fff6e9",
+        "bubble_background_color": "#af6ef7",
+        "bubble_text_color": "#ffffff",
         "enable_transparent_header_home": false,
         "home_inverse_logo": false,
         "text_color_transparent_home": "",
@@ -184,9 +184,9 @@
         "tab_cart"
       ],
       "settings": {
-        "background_color": "#fff6e9",
+        "background_color": "#ffffff",
         "border_color": "#e7dccc",
-        "active_color": "#e8402a",
+        "active_color": "#af6ef7",
         "inactive_color": "#8a7c73"
       }
     }
