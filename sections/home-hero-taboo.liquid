@@ -120,22 +120,42 @@
     padding: 18px 26px;
   }
 
-  /* Mobile: image, gradient headline overlay, overlapping CTA card */
+  /* Mobile: full-height hero, gradient headline overlay, overlapping CTA card */
   @media screen and (max-width: 1023px) {
+    /* Full height layout */
+    .taboo-hero-{{ section.id }} {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .taboo-hero-{{ section.id }}__inner {
+      flex: 1;
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+    }
+
     .taboo-hero-{{ section.id }}__media {
+      flex: 1;
+      min-height: 0;
+      position: relative;
       color: var(--hero-text);
     }
 
     .taboo-hero-{{ section.id }}__media img,
     .taboo-hero-{{ section.id }}__media-placeholder {
-      aspect-ratio: 4 / 3;
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      aspect-ratio: unset;
       opacity: .95;
     }
 
     .taboo-hero-{{ section.id }}__content {
       position: absolute;
       inset: auto 0 0 0;
-      padding: 24px 18px 66px;
+      padding: 28px 18px 80px;
       background: linear-gradient(to top, var(--hero-bg) 34%, color-mix(in srgb, var(--hero-bg) 86%, transparent) 68%, transparent);
       color: var(--hero-text);
     }
@@ -169,7 +189,7 @@
       margin-top: -48px;
       position: relative;
       z-index: 2;
-      background: var(--hero-cta-card-bg);
+      background: var(--hero-bg);
       border-radius: 20px;
       padding: 6px;
       margin-inline: 18px;

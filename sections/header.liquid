@@ -1186,6 +1186,22 @@
     font-family: var(--menu-localization-font);
     font-size: var(--menu-localization-font-size);
   }
+
+  /* Mobile home page: transparent header, bigger white logo */
+  @media screen and (max-width: 749px) {
+    body.template-index .header__underlay-closed {
+      background: transparent;
+    }
+
+    body.template-index .logo-block__image {
+      filter: brightness(0) invert(1);
+    }
+
+    body.template-index .logo-block {
+      width: 150px;
+      max-width: 150px;
+    }
+  }
 {% endstylesheet %}
 
 {% unless request.design_mode %}

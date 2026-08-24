@@ -338,13 +338,20 @@
   /* ---------- Mobile layout ---------- */
   @media screen and (max-width: 1023px) {
     .taboo-demo-{{ section.id }} { display: flex; flex-direction: column; }
-    .taboo-demo-{{ section.id }}__panel { margin: 30px 18px 26px; border-radius: 22px; }
     .taboo-demo-{{ section.id }}__next-btn { display: none !important; }
 
+    /* Tabooster Packs first on mobile */
     .taboo-demo-{{ section.id }}__packs {
-      order: 2;
-      background: #14100F; color: #FFF6E9; padding: 28px 0 32px;
+      order: 1;
+      background: #FFFFFF; color: #14100F; padding: 28px 0 32px;
     }
+    .taboo-demo-{{ section.id }}__packs-title { color: #14100F; }
+    .taboo-demo-{{ section.id }}__packs-sub { color: #5A4F49; }
+    .taboo-demo-{{ section.id }}__packs-empty { color: #5A4F49; }
+
+    /* Try a Card below Tabooster Packs on mobile */
+    .taboo-demo-{{ section.id }}__panel { order: 2; margin: 30px 18px 26px; border-radius: 22px; }
+
     .taboo-demo-{{ section.id }}__packs-head,
     .taboo-demo-{{ section.id }}__packs-sub { padding: 0 18px; }
     .taboo-demo-{{ section.id }}__packs-grid {
