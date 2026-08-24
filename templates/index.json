@@ -25,7 +25,7 @@
         "text_color": "#ffffff",
         "btn_primary_bg": "#ffffff",
         "btn_primary_text": "#14100f",
-        "cta_card_bg": "#14100f"
+        "cta_card_bg": "#402651"
       }
     },
     "taboo_live_demo": {
@@ -119,12 +119,12 @@
         "section_width": "page-width",
         "eyebrow": "Why everyone loves it",
         "heading": "Perfect for parties, families and groups",
-        "bg_color": "#1f7a6b",
+        "bg_color": "#402651",
         "text_color": "#ffffff",
         "heading_color": "#ffffff",
-        "eyebrow_color": "#f2b233",
-        "check_bg": "#f2b233",
-        "check_text": "#14100f",
+        "eyebrow_color": "#ffffff",
+        "check_bg": "#f0e4fc",
+        "check_text": "#af6ef7",
         "border_color": "#ffffff40"
       }
     },
@@ -166,7 +166,7 @@
         "heading_color": "#14100f",
         "text_color": "#5a4f49",
         "accent_color": "#af6ef7",
-        "btn_bg": "#14100f",
+        "btn_bg": "#402651",
         "btn_text": "#ffffff"
       }
     }
