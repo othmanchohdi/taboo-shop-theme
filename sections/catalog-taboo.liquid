@@ -99,7 +99,7 @@
 
 <style>
   .taboo-catalog-{{ section.id }} {
-    --cat-header-bg: {{ section.settings.header_bg | default: '#14100F' }};
+    --cat-header-bg: {{ section.settings.header_bg | default: '#402651' }};
     --cat-header-text: {{ section.settings.header_text | default: '#FFFFFF' }};
     --cat-bg: {{ section.settings.bg_color | default: '#FFFFFF' }};
     --cat-text: {{ section.settings.text_color | default: '#14100F' }};
@@ -125,15 +125,15 @@
   .taboo-catalog-{{ section.id }}__filter.is-active { background: var(--cat-text); color: var(--cat-bg); border-color: var(--cat-text); }
 
   .taboo-catalog-{{ section.id }}__amazon-card {
-    border: 2px solid #14100F; border-radius: 16px; padding: 16px; background: #EFE4D4;
+    border: 2px solid #402651; border-radius: 16px; padding: 16px; background: #EFE4D4;
   }
   .taboo-catalog-{{ section.id }}__amazon-title { font: 700 14.5px 'DM Sans', system-ui, sans-serif; margin-bottom: 6px; }
   .taboo-catalog-{{ section.id }}__amazon-copy { margin: 0 0 12px; font-size: 13.5px; line-height: 1.5; color: #5A4F49; }
   .taboo-catalog-{{ section.id }}__amazon-btn {
-    display: block; text-align: center; text-decoration: none; background: #F2B233; border: 1.5px solid #14100F;
+    display: block; text-align: center; text-decoration: none; background: #F2B233; border: 1.5px solid #402651;
     border-radius: 11px; padding: 12px; font: 700 13.5px 'DM Sans', system-ui, sans-serif; color: #14100F; cursor: pointer;
   }
-  .taboo-catalog-{{ section.id }}__amazon-btn--full { display: flex; align-items: center; justify-content: center; gap: 8px; border-radius: 0; border: 0; border-top: 2px solid #14100F; }
+  .taboo-catalog-{{ section.id }}__amazon-btn--full { display: flex; align-items: center; justify-content: center; gap: 8px; border-radius: 0; border: 0; border-top: 2px solid #402651; }
   .taboo-catalog-{{ section.id }}__amazon-card--mobile { border-radius: 20px; overflow: hidden; padding: 0; }
   .taboo-catalog-{{ section.id }}__amazon-card--mobile .taboo-catalog-{{ section.id }}__amazon-title,
   .taboo-catalog-{{ section.id }}__amazon-card--mobile .taboo-catalog-{{ section.id }}__amazon-copy { padding: 0 16px; }
@@ -249,7 +249,7 @@
     { "type": "url", "id": "amazon_url", "label": "Amazon listing URL" },
     { "type": "header", "content": "Colors" },
     { "type": "color", "id": "bg_color", "label": "Page background", "default": "#FFFFFF" },
-    { "type": "color", "id": "header_bg", "label": "Header band background", "default": "#14100F" },
+    { "type": "color", "id": "header_bg", "label": "Header band background", "default": "#402651" },
     { "type": "color", "id": "header_text", "label": "Header band text", "default": "#FFFFFF" },
     { "type": "color", "id": "card_bg", "label": "Product card background", "default": "#FFFFFF" },
     { "type": "color", "id": "text_color", "label": "Body text color", "default": "#14100F" },

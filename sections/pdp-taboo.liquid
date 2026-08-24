@@ -231,7 +231,7 @@
     --pdp-btn-bg: {{ section.settings.btn_bg | default: '#AF6EF7' }};
     --pdp-btn-text: {{ section.settings.btn_text | default: '#FFFFFF' }};
     --pdp-variant-selected-bg: {{ section.settings.variant_selected_bg | default: '#F0E4FC' }};
-    --pdp-sample-bg: {{ section.settings.sample_card_bg | default: '#14100F' }};
+    --pdp-sample-bg: {{ section.settings.sample_card_bg | default: '#402651' }};
     --pdp-sample-text: {{ section.settings.sample_card_text | default: '#FFFFFF' }};
     display: block; font-family: 'DM Sans', system-ui, sans-serif; color: var(--pdp-text); background: var(--pdp-bg);
   }
@@ -264,7 +264,7 @@
   .taboo-pdp-{{ section.id }}__description { color: var(--pdp-muted); line-height: 1.55; }
   .taboo-pdp-{{ section.id }}__description p { margin: 0 0 12px; }
 
-  .taboo-pdp-{{ section.id }}__external-note { border: 2px solid #14100F; border-radius: 16px; padding: 16px; background: #EFE4D4; }
+  .taboo-pdp-{{ section.id }}__external-note { border: 2px solid #402651; border-radius: 16px; padding: 16px; background: #EFE4D4; }
   .taboo-pdp-{{ section.id }}__external-label { margin: 0 0 10px; font: 700 10.5px 'DM Sans', system-ui, sans-serif; letter-spacing: .14em; text-transform: uppercase; }
   .taboo-pdp-{{ section.id }}__external-copy { margin: 0; color: #5A4F49; line-height: 1.5; }
   .taboo-pdp-{{ section.id }}__buy-external {
@@ -298,14 +298,14 @@
     font: 700 16.5px 'DM Sans', system-ui, sans-serif; cursor: pointer;
   }
   .taboo-pdp-{{ section.id }}__add-btn[disabled] { opacity: .5; cursor: not-allowed; }
-  .taboo-pdp-{{ section.id }}__add-btn.is-added { background: #1F7A6B; }
+  .taboo-pdp-{{ section.id }}__add-btn.is-added { background: #402651; }
 
   .taboo-pdp-{{ section.id }}__box { border: 1.5px solid #E7DCCC; border-radius: 16px; overflow: hidden; }
   .taboo-pdp-{{ section.id }}__box-top { background: var(--pdp-bg); padding: 15px 16px; }
   .taboo-pdp-{{ section.id }}__box-label { margin: 0 0 11px; font: 700 11px 'DM Sans', system-ui, sans-serif; letter-spacing: .14em; text-transform: uppercase; }
   .taboo-pdp-{{ section.id }}__box-item { display: flex; gap: 10px; align-items: center; font-size: 14px; color: var(--pdp-muted); }
   .taboo-pdp-{{ section.id }}__box-check {
-    flex: 0 0 auto; width: 16px; height: 16px; border-radius: 50%; background: #1F7A6B; color: #FFFFFF;
+    flex: 0 0 auto; width: 16px; height: 16px; border-radius: 50%; background: #0F6DA6; color: #FFFFFF;
     font: 800 10px 'DM Sans', system-ui, sans-serif; display: flex; align-items: center; justify-content: center;
   }
   .taboo-pdp-{{ section.id }}__box-ships { background: #EFE4D4; padding: 11px 16px; font: 500 12.5px 'DM Sans', system-ui, sans-serif; color: #5A4F49; }
@@ -428,7 +428,7 @@
     { "type": "color", "id": "btn_bg", "label": "Add-to-cart button background", "default": "#AF6EF7" },
     { "type": "color", "id": "btn_text", "label": "Add-to-cart button text", "default": "#FFFFFF" },
     { "type": "color", "id": "variant_selected_bg", "label": "Selected variant background", "default": "#F0E4FC" },
-    { "type": "color", "id": "sample_card_bg", "label": "Sample card background", "default": "#14100F" },
+    { "type": "color", "id": "sample_card_bg", "label": "Sample card background", "default": "#402651" },
     { "type": "color", "id": "sample_card_text", "label": "Sample card text", "default": "#FFFFFF" },
     {
       "type": "header",

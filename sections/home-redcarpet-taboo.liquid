@@ -76,11 +76,11 @@
 
 <style>
   .taboo-redcarpet-{{ section.id }} {
-    --rc-bg: {{ section.settings.bg_color | default: '#14100F' }};
+    --rc-bg: {{ section.settings.bg_color | default: '#402651' }};
     --rc-text: {{ section.settings.text_color | default: '#FFFFFF' }};
     --rc-eyebrow: {{ section.settings.eyebrow_color | default: '#AF6EF7' }};
     --rc-heading: {{ section.settings.heading_color | default: '#FFFFFF' }};
-    --rc-card-bg: {{ section.settings.card_bg | default: '#1E1A19' }};
+    --rc-card-bg: {{ section.settings.card_bg | default: 'rgba(255,255,255,0.07)' }};
     --rc-card-text: {{ section.settings.card_text | default: '#FFFFFF' }};
     --rc-stars: {{ section.settings.stars_color | default: '#F2B233' }};
     --rc-btn-bg: {{ section.settings.btn_bg | default: '#AF6EF7' }};
@@ -237,11 +237,11 @@
     { "type": "text", "id": "cta_label", "label": "CTA button label", "default": "Shop the packs" },
     { "type": "url", "id": "cta_url", "label": "CTA button link" },
     { "type": "header", "content": "Colors" },
-    { "type": "color", "id": "bg_color", "label": "Section background", "default": "#14100F" },
+    { "type": "color", "id": "bg_color", "label": "Section background", "default": "#402651" },
     { "type": "color", "id": "text_color", "label": "Body text", "default": "#FFFFFF" },
     { "type": "color", "id": "eyebrow_color", "label": "Eyebrow color", "default": "#AF6EF7" },
     { "type": "color", "id": "heading_color", "label": "Heading color", "default": "#FFFFFF" },
-    { "type": "color", "id": "card_bg", "label": "Quote card background", "default": "#1E1A19" },
+    { "type": "color", "id": "card_bg", "label": "Quote card background", "default": "rgba(255,255,255,0.07)" },
     { "type": "color", "id": "card_text", "label": "Quote card text", "default": "#FFFFFF" },
     { "type": "color", "id": "stars_color", "label": "Star rating color", "default": "#F2B233" },
     { "type": "color", "id": "btn_bg", "label": "CTA button background", "default": "#AF6EF7" },

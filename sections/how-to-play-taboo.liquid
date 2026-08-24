@@ -67,9 +67,9 @@
     --play-bg: {{ section.settings.bg_color | default: '#FFFFFF' }};
     --play-text: {{ section.settings.text_color | default: '#14100F' }};
     --play-muted: {{ section.settings.muted_text | default: '#5A4F49' }};
-    --play-step-num-bg: {{ section.settings.step_num_bg | default: '#14100F' }};
+    --play-step-num-bg: {{ section.settings.step_num_bg | default: '#402651' }};
     --play-step-num-text: {{ section.settings.step_num_text | default: '#FFFFFF' }};
-    --play-panel-bg: {{ section.settings.panel_bg | default: '#14100F' }};
+    --play-panel-bg: {{ section.settings.panel_bg | default: '#402651' }};
     --play-panel-text: {{ section.settings.panel_text | default: '#FFFFFF' }};
     --play-btn-bg: {{ section.settings.btn_bg | default: '#AF6EF7' }};
     --play-btn-text: {{ section.settings.btn_text | default: '#FFFFFF' }};
@@ -92,17 +92,17 @@
   .taboo-play-{{ section.id }}__step-text { line-height: 1.5; color: var(--play-muted); }
 
   .taboo-play-{{ section.id }}__panel { background: var(--play-panel-bg); color: var(--play-panel-text); border-radius: 20px; padding: 18px; }
-  .taboo-play-{{ section.id }}__panel-label { margin: 0 0 10px; font: 700 10.5px 'DM Sans', system-ui, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #F2B233; }
+  .taboo-play-{{ section.id }}__panel-label { margin: 0 0 10px; font: 700 10.5px 'DM Sans', system-ui, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #57CADC; }
   .taboo-play-{{ section.id }}__panel-copy { margin: 0 0 14px; line-height: 1.5; }
   .taboo-play-{{ section.id }}__panel-btn {
     display: inline-block; text-decoration: none; background: var(--play-btn-bg); color: var(--play-btn-text); border-radius: 12px;
     padding: 13px 20px; font: 700 14px 'DM Sans', system-ui, sans-serif; cursor: pointer;
   }
-  .taboo-play-{{ section.id }}__amazon { border: 2px solid #14100F; border-radius: 18px; padding: 16px; display: flex; gap: 12px; align-items: center; background: #EFE4D4; }
+  .taboo-play-{{ section.id }}__amazon { border: 2px solid #402651; border-radius: 18px; padding: 16px; display: flex; gap: 12px; align-items: center; background: #EFE4D4; }
   .taboo-play-{{ section.id }}__amazon-title { font: 700 15px 'DM Sans', system-ui, sans-serif; margin-bottom: 3px; }
   .taboo-play-{{ section.id }}__amazon-copy { margin: 0; font-size: 13px; line-height: 1.45; color: #5A4F49; }
   .taboo-play-{{ section.id }}__amazon-btn {
-    flex: 0 0 auto; display: inline-block; text-decoration: none; background: #F2B233; border: 1.5px solid #14100F; border-radius: 11px;
+    flex: 0 0 auto; display: inline-block; text-decoration: none; background: #F2B233; border: 1.5px solid #402651; border-radius: 11px;
     padding: 12px 14px; font: 700 13px 'DM Sans', system-ui, sans-serif; color: #14100F; cursor: pointer;
   }
 
@@ -126,7 +126,7 @@
     .taboo-play-{{ section.id }}__eyebrow { margin-bottom: 14px; font-size: 11.5px; opacity: .82; }
     .taboo-play-{{ section.id }}__title { margin-bottom: 16px; font-size: 68px; line-height: .94; letter-spacing: -.05em; }
     .taboo-play-{{ section.id }}__sub { font-size: 18px; line-height: 1.55; max-width: 460px; }
-    .taboo-play-{{ section.id }}__header-image { width: 100%; display: block; border-radius: 24px; aspect-ratio: 16/10; object-fit: cover; background: #14100F; }
+    .taboo-play-{{ section.id }}__header-image { width: 100%; display: block; border-radius: 24px; aspect-ratio: 16/10; object-fit: cover; background: #402651; }
     .taboo-play-{{ section.id }}__body { padding: 52px 24px 80px; display: grid; grid-template-columns: 1fr 380px; gap: 56px; align-items: start; }
     .taboo-play-{{ section.id }}.page-width .taboo-play-{{ section.id }}__body { max-width: 1200px; margin: 0 auto; }
     .taboo-play-{{ section.id }}.full-width .taboo-play-{{ section.id }}__body { padding-inline: 40px; }
@@ -175,9 +175,9 @@
     { "type": "color", "id": "bg_color", "label": "Body background", "default": "#FFFFFF" },
     { "type": "color", "id": "text_color", "label": "Body text color", "default": "#14100F" },
     { "type": "color", "id": "muted_text", "label": "Muted text color", "default": "#5A4F49" },
-    { "type": "color", "id": "step_num_bg", "label": "Step number background", "default": "#14100F" },
+    { "type": "color", "id": "step_num_bg", "label": "Step number background", "default": "#402651" },
     { "type": "color", "id": "step_num_text", "label": "Step number text", "default": "#FFFFFF" },
-    { "type": "color", "id": "panel_bg", "label": "Info panel background", "default": "#14100F" },
+    { "type": "color", "id": "panel_bg", "label": "Info panel background", "default": "#402651" },
     { "type": "color", "id": "panel_text", "label": "Info panel text", "default": "#FFFFFF" },
     { "type": "color", "id": "btn_bg", "label": "Panel button background", "default": "#AF6EF7" },
     { "type": "color", "id": "btn_text", "label": "Panel button text", "default": "#FFFFFF" }
