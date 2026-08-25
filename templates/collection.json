@@ -1,24 +1,82 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "taboo_catalog": {
       "type": "catalog-taboo",
       "blocks": {
-        "f_all": { "type": "filter", "settings": { "label": "All", "url": "/collections/all" } },
-        "f_packs": { "type": "filter", "settings": { "label": "Tabooster packs", "url": "/collections/tabooster-packs" } },
-        "f_game_night": { "type": "filter", "settings": { "label": "Game Night", "url": "/collections/game-night" } },
-        "f_apparel": { "type": "filter", "settings": { "label": "Apparel", "url": "/collections/apparel" } },
-        "f_under_20": { "type": "filter", "settings": { "label": "Under $20", "url": "/collections/under-20" } }
+        "f_all": {
+          "type": "filter",
+          "settings": {
+            "label": "All",
+            "url": "/collections/all"
+          }
+        },
+        "f_packs": {
+          "type": "filter",
+          "settings": {
+            "label": "Tabooster packs",
+            "url": "/collections/tabooster-packs"
+          }
+        },
+        "f_game_night": {
+          "type": "filter",
+          "settings": {
+            "label": "Game Night",
+            "url": "/collections/game-night"
+          }
+        },
+        "f_apparel": {
+          "type": "filter",
+          "settings": {
+            "label": "Apparel",
+            "url": "/collections/apparel"
+          }
+        },
+        "f_under_20": {
+          "type": "filter",
+          "settings": {
+            "label": "Under $20",
+            "url": "/collections/under-20"
+          }
+        }
       },
-      "block_order": ["f_all", "f_packs", "f_game_night", "f_apparel", "f_under_20"],
+      "block_order": [
+        "f_all",
+        "f_packs",
+        "f_game_night",
+        "f_apparel",
+        "f_under_20"
+      ],
       "settings": {
+        "section_width": "page-width",
         "subtitle": "packs, game night gear and apparel",
         "show_amazon_card": true,
         "amazon_title": "Need the box itself?",
         "amazon_copy": "450 cards, buzzer and timer — $29.99, exclusive on Amazon.",
         "amazon_copy_mobile": "450 game cards, the electronic buzzer and the timer — $29.99, exclusive on Amazon. Taboosters stay in this bag.",
-        "amazon_url": "https://www.amazon.com/"
+        "amazon_url": "https://www.amazon.com/Hasbro-Gaming-Buzzer-Amazon-Exclusive/dp/B06XYL6Y5C/ref=sr_1_3?channelId=500&clpRedir=Y&dib=eyJ2IjoiMSJ9.UIHqDyNqwNLzX01nKjm8OHC_kkPhQ0CUtGtyaiLaUDAyBB9fYr_cn8YzX2H38jE0VPY1d7NqshrkP1gyEqzdTo9ROS7GRTFc4rgIT0CEKVPp5p3fZVN5qxHHcT4whMYNrZcDi_cdvWfuqnR4hA99WcnGduMZJxyvRAg8WDcxAm4u8lgq49nV4B7HMuhOJrBke9AnoJlhsetVJNPP3iCOAm-h8G3KPlyvY8dbow0Ni6THPUy60-z_B1TbK7TP8kC2kaq--Nt1O8CDfez_Q0bNbDBmVJ53WyzTHJC-1ynkQEk.dsqG1l5Kzr2m1WMVT9BW71jLK8al6J29XVF6w95YLuk&dib_tag=se&keywords=taboo+game&plpRedirect=mhFallback&qid=1787629629&sr=8-3",
+        "bg_color": "#ffffff",
+        "header_bg": "#402651",
+        "header_text": "#ffffff",
+        "card_bg": "#ffffff",
+        "text_color": "#14100f",
+        "muted_text": "#8a7c73",
+        "accent_color": "#af6ef7",
+        "card_media_bg": "#f2b233",
+        "badge_bg": "#af6ef7",
+        "badge_text": "#ffffff"
       }
     }
   },
-  "order": ["taboo_catalog"]
+  "order": [
+    "taboo_catalog"
+  ]
 }
