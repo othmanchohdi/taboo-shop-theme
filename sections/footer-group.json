@@ -282,6 +282,14 @@
               },
               "blocks": {}
             },
+            "custom_liquid_T6MFGF": {
+              "type": "custom-liquid",
+              "name": "t:names.custom_liquid",
+              "settings": {
+                "custom_liquid": "<div class=\"klaviyo-form-VgHXKm\"></div>"
+              },
+              "blocks": {}
+            },
             "email_signup": {
               "type": "email-signup",
               "name": "t:names.email_signup",
@@ -319,6 +327,7 @@
           "block_order": [
             "text_heading",
             "text_body",
+            "custom_liquid_T6MFGF",
             "email_signup"
           ]
         }
