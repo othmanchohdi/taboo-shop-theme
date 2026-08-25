@@ -66,7 +66,7 @@
         "section_width": "page-width",
         "collection": "tabooster-packs",
         "shop_all_url": "/collections/all",
-        "pack_media_bg": "#F0E3D4"
+        "pack_media_bg": "#f0e3d4"
       }
     },
     "taboo_amazon_banner": {
@@ -78,7 +78,7 @@
         "title": "Taboo Board Game with Buzzer!",
         "body": "450 game cards including food and drink categories, the electronic buzzer and the 1-minute timer. $29.99, exclusive on Amazon — Taboosters stay in your cart here.",
         "cta_label": "Buy on Amazon",
-        "amazon_url": "https://www.amazon.com/"
+        "amazon_url": "https://www.amazon.com/Hasbro-Gaming-Buzzer-Amazon-Exclusive/dp/B06XYL6Y5C/ref=sr_1_3?channelId=500&clpRedir=Y&dib=eyJ2IjoiMSJ9.UIHqDyNqwNLzX01nKjm8OHC_kkPhQ0CUtGtyaiLaUDAyBB9fYr_cn8YzX2H38jE0VPY1d7NqshrkP1gyEqzdTo9ROS7GRTFc4rgIT0CEKVPp5p3fZVN5qxHHcT4whMYNrZcDi_cdvWfuqnR4hA99WcnGduMZJxyvRAg8WDcxAm4u8lgq49nV4B7HMuhOJrBke9AnoJlhsetVJNPP3iCOAm-h8G3KPlyvY8dbow0Ni6THPUy60-z_B1TbK7TP8kC2kaq--Nt1O8CDfez_Q0bNbDBmVJ53WyzTHJC-1ynkQEk.dsqG1l5Kzr2m1WMVT9BW71jLK8al6J29XVF6w95YLuk&dib_tag=se&keywords=taboo+game&plpRedirect=mhFallback&qid=1787629629&sr=8-3"
       }
     },
     "taboo_benefits": {
@@ -122,7 +122,7 @@
         "bg_color": "#402651",
         "text_color": "#ffffff",
         "heading_color": "#ffffff",
-        "eyebrow_color": "#57CADC",
+        "eyebrow_color": "#57cadc",
         "check_bg": "#f0e4fc",
         "check_text": "#af6ef7",
         "border_color": "#ffffff40"
