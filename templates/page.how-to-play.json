@@ -16,7 +16,7 @@
           "type": "step",
           "settings": {
             "heading": "Split into teams",
-            "text": "Get four or more players and split into two teams."
+            "text": "Get 2 or more players and split into two teams."
           }
         },
         "s2": {
@@ -36,7 +36,7 @@
         "s4": {
           "type": "step",
           "settings": {
-            "heading": "Buzz on a slip-up",
+            "heading": "Shout on a slip-up",
             "text": "If a taboo word is said, anyone can buzz — the other team scores instead."
           }
         },
