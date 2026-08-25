@@ -37,11 +37,12 @@
           "type": "filter",
           "settings": {
             "label": "Apparel",
-            "url": "/collections/apparel"
+            "url": "shopify://collections/frontpage"
           }
         },
         "f_under_20": {
           "type": "filter",
+          "disabled": true,
           "settings": {
             "label": "Under $20",
             "url": "/collections/under-20"
@@ -70,7 +71,7 @@
         "text_color": "#14100f",
         "muted_text": "#8a7c73",
         "accent_color": "#af6ef7",
-        "card_media_bg": "#FABB03",
+        "card_media_bg": "#fabb03",
         "badge_bg": "#af6ef7",
         "badge_text": "#ffffff"
       }
