@@ -48,14 +48,24 @@
         "st4"
       ],
       "settings": {
+        "section_width": "page-width",
         "eyebrow": "The Taboo Shop",
         "heading": "We make the words",
         "body": "For over 35 years the box hasn't needed changing — the cards are another story. Once your table has heard them all, the game gets quiet. So we write Taboosters: cards-only expansion packs, 300 all-new cards at a time, in three flavors so far. No buzzer. No timer. No giant box.",
         "image": "shopify://shop_images/card_3x_family_rev03.webp",
         "cta_heading": "Refill the box",
         "cta_subheading": "Pop Culture, 90s, Family — or the Party Pack with all three.",
-        "cta_label": "Shop the catalog",
-        "cta_url": "/collections/all"
+        "cta_label": "Get Your Pack Now!",
+        "cta_url": "shopify://collections/tabooster-packs",
+        "bg_color": "#ffffff",
+        "text_color": "#14100f",
+        "muted_text": "#5a4f49",
+        "accent_color": "#af6ef7",
+        "stat_bg": "#ffffff",
+        "cta_bg": "#af6ef7",
+        "cta_text": "#ffffff",
+        "cta_btn_bg": "#402651",
+        "cta_btn_text": "#ffffff"
       }
     }
   },
