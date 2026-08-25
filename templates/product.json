@@ -14,24 +14,28 @@
       "blocks": {
         "checklist_item_L6FQgM": {
           "type": "checklist_item",
+          "disabled": true,
           "settings": {
             "text": "300 all new cards"
           }
         },
         "checklist_item_FmUt47": {
           "type": "checklist_item",
+          "disabled": true,
           "settings": {
             "text": "300 all new cards"
           }
         },
         "checklist_item_kdqaAX": {
           "type": "checklist_item",
+          "disabled": true,
           "settings": {
             "text": "300 all new cards"
           }
         },
         "checklist_item_9azmmT": {
           "type": "checklist_item",
+          "disabled": true,
           "settings": {
             "text": "300 all new cards"
           }
@@ -47,9 +51,25 @@
         "section_width": "page-width",
         "tint_color": "#f2b233",
         "back_url": "/collections/all",
+        "bg_color": "#ffffff",
+        "text_color": "#14100f",
+        "muted_text": "#5a4f49",
+        "accent_color": "#af6ef7",
+        "btn_bg": "#af6ef7",
+        "btn_text": "#ffffff",
+        "variant_selected_bg": "#f0e4fc",
+        "sample_card_bg": "#402651",
+        "sample_card_text": "#ffffff",
         "show_description": false,
         "checklist_heading": "What you get",
-        "ships_note": ""
+        "ships_note": "",
+        "sample_label": "A card from this pack",
+        "sample_word_1": "",
+        "sample_taboo_1": "",
+        "sample_taboo_2": "",
+        "sample_taboo_3": "",
+        "sample_taboo_4": "",
+        "sample_taboo_5": ""
       }
     }
   },
