@@ -46,7 +46,7 @@
         "item_4"
       ],
       "settings": {
-        "background_color": "#f2b233",
+        "background_color": "#FABB03",
         "text_color": "#14100f",
         "speed": 26,
         "aria_label": "Store highlights"
@@ -91,7 +91,7 @@
         }
       },
       "custom_css": [
-        ".account-button{display:none;}"
+        ".account-button {display: none;}"
       ],
       "settings": {
         "logo_position": "left",
