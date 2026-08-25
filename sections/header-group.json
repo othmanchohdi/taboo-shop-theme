@@ -90,6 +90,9 @@
           "blocks": {}
         }
       },
+      "custom_css": [
+        ".account-button{display:none;}"
+      ],
       "settings": {
         "logo_position": "left",
         "menu_position": "left",
