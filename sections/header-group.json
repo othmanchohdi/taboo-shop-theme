@@ -31,19 +31,12 @@
           "settings": {
             "text": "Learn it in under 60 seconds"
           }
-        },
-        "item_4": {
-          "type": "item",
-          "settings": {
-            "text": "Free shipping over $35"
-          }
         }
       },
       "block_order": [
         "item_1",
         "item_2",
-        "item_3",
-        "item_4"
+        "item_3"
       ],
       "settings": {
         "background_color": "#fabb03",
