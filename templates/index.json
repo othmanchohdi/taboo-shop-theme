@@ -46,6 +46,7 @@
         },
         "card_2": {
           "type": "card",
+          "disabled": true,
           "settings": {
             "pack_name": "90s",
             "pack_url": "/collections/tabooster-packs/products/90s-pack",
