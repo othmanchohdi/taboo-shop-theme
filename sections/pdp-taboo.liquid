@@ -1,12 +1,3 @@
-{%- doc -%}
-  Taboo PDP. Wired to the real `product` object: variants, price, availability.
-  Amazon-exclusive products (tagged `amazon-exclusive`) swap the variant block +
-  buy button for a "Where it ships from" note and a Buy on Amazon link
-  (product.metafields.custom.amazon_url) instead of add-to-cart.
-  "What you get" checklist, sample card, and ships note come from metafields
-  since they vary per product; safe fallbacks are provided if unset.
-{%- enddoc -%}
-
 {% liquid
   assign is_external = false
   if product.tags contains 'amazon-exclusive'
@@ -21,6 +12,15 @@
   assign sample_taboo = product.metafields.custom.sample_taboo_words.value
   assign related_products = product.metafields.custom.related_products.value
   assign amazon_url = product.metafields.custom.amazon_url.value
+
+  assign desc_word_limit = section.settings.description_word_limit
+  assign desc_plain = product.description | strip_html
+  assign desc_word_count = desc_plain | split: ' ' | size
+  assign desc_is_truncated = false
+  if desc_word_limit > 0 and desc_word_count > desc_word_limit
+    assign desc_is_truncated = true
+    assign desc_truncated = desc_plain | truncatewords: desc_word_limit, '…'
+  endif
 %}
 
 <taboo-pdp class="taboo-pdp-{{ section.id }} {{ section.settings.section_width }}" data-product-url="{{ product.url }}">
@@ -73,7 +73,23 @@
       </div>
 
       {% if section.settings.show_description and product.description != blank %}
-        <div class="taboo-pdp-{{ section.id }}__description">{{ product.description }}</div>
+        {% if desc_is_truncated %}
+          <div class="taboo-pdp-{{ section.id }}__description-wrap" data-description-wrap>
+            <p class="taboo-pdp-{{ section.id }}__description" data-description-truncated>{{ desc_truncated }}</p>
+            <div class="taboo-pdp-{{ section.id }}__description" data-description-full hidden>{{ product.description }}</div>
+            <div class="taboo-pdp-{{ section.id }}__description-fade" data-description-fade aria-hidden="true"></div>
+            <button
+              type="button"
+              class="taboo-pdp-{{ section.id }}__description-toggle"
+              data-description-toggle
+              data-more-label="{{ section.settings.read_more_label }}"
+              data-less-label="{{ section.settings.read_less_label }}"
+              aria-expanded="false"
+            >{{ section.settings.read_more_label }}</button>
+          </div>
+        {% else %}
+          <div class="taboo-pdp-{{ section.id }}__description">{{ product.description }}</div>
+        {% endif %}
       {% endif %}
 
       {% if is_external %}
@@ -222,6 +238,30 @@
 
 <script src="{{ 'taboo-pdp.js' | asset_url }}" defer="defer"></script>
 
+{% if desc_is_truncated %}
+  <script>
+    (function () {
+      var root = document.querySelector('.taboo-pdp-{{ section.id }}');
+      if (!root) return;
+      var toggle = root.querySelector('[data-description-toggle]');
+      var wrap = root.querySelector('[data-description-wrap]');
+      var truncated = root.querySelector('[data-description-truncated]');
+      var full = root.querySelector('[data-description-full]');
+      var fade = root.querySelector('[data-description-fade]');
+      if (!toggle || !wrap || !truncated || !full) return;
+
+      toggle.addEventListener('click', function () {
+        var expanded = wrap.classList.toggle('is-expanded');
+        truncated.hidden = expanded;
+        full.hidden = !expanded;
+        if (fade) fade.hidden = expanded;
+        toggle.textContent = expanded ? toggle.dataset.lessLabel : toggle.dataset.moreLabel;
+        toggle.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+      });
+    })();
+  </script>
+{% endif %}
+
 <style>
   .taboo-pdp-{{ section.id }} {
     --pdp-bg: {{ section.settings.bg_color | default: '#FFFFFF' }};
@@ -233,6 +273,7 @@
     --pdp-variant-selected-bg: {{ section.settings.variant_selected_bg | default: '#F0E4FC' }};
     --pdp-sample-bg: {{ section.settings.sample_card_bg | default: '#402651' }};
     --pdp-sample-text: {{ section.settings.sample_card_text | default: '#FFFFFF' }};
+    --pdp-description-fade: {{ section.settings.description_fade_color | default: '#FFFFFF' }};
     display: block; font-family: 'DM Sans', system-ui, sans-serif; color: var(--pdp-text); background: var(--pdp-bg);
   }
 
@@ -261,8 +302,22 @@
   .taboo-pdp-{{ section.id }}__price-row { display: flex; align-items: baseline; gap: 10px; }
   .taboo-pdp-{{ section.id }}__price { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; color: var(--pdp-accent); }
   .taboo-pdp-{{ section.id }}__price-compare { text-decoration: line-through; color: #8A7C73; font: 500 14px 'DM Sans', system-ui, sans-serif; }
-  .taboo-pdp-{{ section.id }}__description { color: var(--pdp-muted); line-height: 1.55; }
+  .taboo-pdp-{{ section.id }}__description { color: var(--pdp-muted); line-height: 1.55; margin: 0; }
   .taboo-pdp-{{ section.id }}__description p { margin: 0 0 12px; }
+
+  .taboo-pdp-{{ section.id }}__description-wrap { position: relative; }
+  .taboo-pdp-{{ section.id }}__description-wrap [hidden] { display: none; }
+  .taboo-pdp-{{ section.id }}__description-fade {
+    position: absolute; left: 0; right: 0; bottom: 30px; height: 46px;
+    background: linear-gradient(to bottom, rgba(0,0,0,0), var(--pdp-description-fade));
+    pointer-events: none;
+  }
+  .taboo-pdp-{{ section.id }}__description-wrap.is-expanded .taboo-pdp-{{ section.id }}__description-fade { display: none; }
+  .taboo-pdp-{{ section.id }}__description-toggle {
+    display: inline-block; margin-top: 8px; background: none; border: 0; padding: 0; cursor: pointer;
+    font: 700 13.5px 'DM Sans', system-ui, sans-serif; color: var(--pdp-accent);
+    text-decoration: underline; text-underline-offset: 2px;
+  }
 
   .taboo-pdp-{{ section.id }}__external-note { border: 2px solid #402651; border-radius: 16px; padding: 16px; background: #EFE4D4; }
   .taboo-pdp-{{ section.id }}__external-label { margin: 0 0 10px; font: 700 10.5px 'DM Sans', system-ui, sans-serif; letter-spacing: .14em; text-transform: uppercase; }
@@ -366,7 +421,7 @@
     .taboo-pdp-{{ section.id }}.page-width { max-width: 1200px; margin: 0 auto; }
     .taboo-pdp-{{ section.id }}.full-width { padding-inline: 40px; }
     .taboo-pdp-{{ section.id }}__back { margin-bottom: 20px; }
-    .taboo-pdp-{{ section.id }}__layout { display: grid; grid-template-columns: 1fr 460px; gap: 56px; align-items: start; }
+    .taboo-pdp-{{ section.id }}__layout { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
     .taboo-pdp-{{ section.id }}__gallery { position: sticky; top: 110px; }
     .taboo-pdp-{{ section.id }}__gallery-main { padding: 12px; border-radius: 26px; }
     .taboo-pdp-{{ section.id }}__thumbs { margin-top: 14px; }
@@ -441,6 +496,25 @@
       "info": "Turn off to hide the product's body copy and rely on the checklist blocks below instead.",
       "default": true
     },
+    {
+      "type": "range",
+      "id": "description_word_limit",
+      "label": "Truncate description after this many words",
+      "min": 0,
+      "max": 300,
+      "step": 10,
+      "default": 60,
+      "info": "Set to 0 to always show the full description with no truncation or Read more button."
+    },
+    {
+      "type": "color",
+      "id": "description_fade_color",
+      "label": "Description fade color",
+      "info": "The gradient fades from transparent into this color — match it to the page background for a seamless effect.",
+      "default": "#FFFFFF"
+    },
+    { "type": "text", "id": "read_more_label", "label": "\"Read more\" button text", "default": "Read more" },
+    { "type": "text", "id": "read_less_label", "label": "\"Read less\" button text", "default": "Read less" },
     {
       "type": "header",
       "content": "What you get checklist"
