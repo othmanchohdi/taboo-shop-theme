@@ -312,6 +312,9 @@
         "menu_help",
         "group_newsletter"
       ],
+      "custom_css": [
+        ".go2162852857.go2162852857.go2162852857 {background: #FCF022; color: #000000; font-size: 14px;}"
+      ],
       "name": "t:names.footer",
       "settings": {
         "section_width": "page-width",
