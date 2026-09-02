@@ -1,11 +1,3 @@
-{%- doc -%}
-  "Try a card" live demo (timer, buzzer, card cycling) + Tabooster Packs product grid.
-  Mobile: demo stacked above a horizontal-scroll pack carousel (dark band).
-  Desktop: packs in a 2x2 grid on the left, demo panel sticky on the right.
-  Card data comes from repeatable blocks (not real products - it's illustrative gameplay content).
-  Pack products come from a real Shopify collection.
-{%- enddoc -%}
-
 {% liquid
   assign collection = section.settings.collection
   assign cards = section.blocks | where: 'type', 'card'
@@ -13,13 +5,13 @@
 
 <section class="taboo-demo-{{ section.id }} {{ section.settings.section_width }}">
 
-  <taboo-card-demo class="taboo-demo-{{ section.id }}__panel" data-timer-seconds="60">
+  <taboo-card-demo class="taboo-demo-{{ section.id }}__panel" data-timer-seconds="{{ section.settings.timer_seconds }}">
     <div class="taboo-demo-{{ section.id }}__panel-inner">
       <div class="taboo-demo-{{ section.id }}__panel-head">
-        <h3 class="taboo-demo-{{ section.id }}__panel-title">Try a card</h3>
-        <span class="taboo-demo-{{ section.id }}__panel-tag">Live from the packs</span>
+        <h3 class="taboo-demo-{{ section.id }}__panel-title">{{ section.settings.panel_title }}</h3>
+        <span class="taboo-demo-{{ section.id }}__panel-tag">{{ section.settings.panel_tag }}</span>
       </div>
-      <p class="taboo-demo-{{ section.id }}__panel-copy">Get someone to say the top word. Use any of the five below it and the buzzer wins.</p>
+      <p class="taboo-demo-{{ section.id }}__panel-copy">{{ section.settings.panel_copy }}</p>
 
       <div class="taboo-demo-{{ section.id }}__card">
         <div class="taboo-demo-{{ section.id }}__card-inner" data-card-inner>
@@ -37,10 +29,10 @@
               <div class="taboo-demo-{{ section.id }}__card-source">
                 <button type="button" class="taboo-demo-{{ section.id }}__card-open-pack" data-open-pack data-url="{{ block.settings.pack_url }}">
                   <span>{{ block.settings.pack_name }}</span>
-                  <span class="taboo-demo-{{ section.id }}__card-source-link">Shop it →</span>
+                  <span class="taboo-demo-{{ section.id }}__card-source-link">{{ section.settings.shop_it_label }}</span>
                 </button>
                 {% unless has_static_image %}
-                  <button type="button" class="taboo-demo-{{ section.id }}__mode-toggle" data-mode-toggle>Use photo</button>
+                  <button type="button" class="taboo-demo-{{ section.id }}__mode-toggle" data-mode-toggle>{{ section.settings.mode_toggle_label }}</button>
                 {% endunless %}
               </div>
 
@@ -70,7 +62,7 @@
                 </div>
                 <div class="taboo-demo-{{ section.id }}__photo-placeholder" data-photo-placeholder aria-hidden="true">
                   <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-                  <span class="taboo-demo-{{ section.id }}__photo-placeholder-label">Tap to upload a card photo</span>
+                  <span class="taboo-demo-{{ section.id }}__photo-placeholder-label">{{ section.settings.photo_placeholder_label }}</span>
                 </div>
               {% endif %}
             </div>
@@ -81,30 +73,35 @@
 
     <div class="taboo-demo-{{ section.id }}__footer-bar">
       <div class="taboo-demo-{{ section.id }}__timer">
-        <div class="taboo-demo-{{ section.id }}__timer-num" data-timer-display>0:60</div>
-        <div class="taboo-demo-{{ section.id }}__timer-label">left</div>
+        <div class="taboo-demo-{{ section.id }}__timer-num" data-timer-display>0:{{ section.settings.timer_seconds }}</div>
+        <div class="taboo-demo-{{ section.id }}__timer-label">{{ section.settings.timer_label }}</div>
       </div>
-      <button type="button" class="taboo-demo-{{ section.id }}__timer-btn" data-timer-toggle>Start</button>
-      <button type="button" class="taboo-demo-{{ section.id }}__next-btn" data-next-card>Next</button>
-      <button type="button" class="taboo-demo-{{ section.id }}__buzz-btn" data-buzz>BUZZ</button>
+      <button type="button" class="taboo-demo-{{ section.id }}__timer-btn" data-timer-toggle>{{ section.settings.timer_start_label }}</button>
+      <button type="button" class="taboo-demo-{{ section.id }}__next-btn" data-next-card>{{ section.settings.next_label }}</button>
+      <button
+        type="button"
+        class="taboo-demo-{{ section.id }}__buzz-btn"
+        data-buzz
+        {% unless section.settings.enable_buzz %}disabled aria-disabled="true"{% endunless %}
+      >{{ section.settings.buzz_label }}</button>
     </div>
 
-    <button type="button" class="taboo-demo-{{ section.id }}__deal-btn" data-next-card-mobile>Deal another card</button>
+    <button type="button" class="taboo-demo-{{ section.id }}__deal-btn" data-next-card-mobile>{{ section.settings.deal_label }}</button>
 
-    <div class="taboo-demo-{{ section.id }}__buzz-overlay" data-buzz-overlay aria-hidden="true">BZZT!</div>
+    <div class="taboo-demo-{{ section.id }}__buzz-overlay" data-buzz-overlay aria-hidden="true">{{ section.settings.buzz_overlay_text }}</div>
   </taboo-card-demo>
 
   <div class="taboo-demo-{{ section.id }}__packs">
     <div class="taboo-demo-{{ section.id }}__packs-head">
-      <h2 class="taboo-demo-{{ section.id }}__packs-title">Tabooster Packs</h2>
+      <h2 class="taboo-demo-{{ section.id }}__packs-title">{{ section.settings.packs_title }}</h2>
       {% if section.settings.shop_all_url %}
         <a href="{{ section.settings.shop_all_url }}" class="taboo-demo-{{ section.id }}__packs-see-all">
-          <span class="taboo-demo-{{ section.id }}__packs-see-all--mobile">Shop all</span>
-          <span class="taboo-demo-{{ section.id }}__packs-see-all--desktop">See the whole catalog →</span>
+          <span class="taboo-demo-{{ section.id }}__packs-see-all--mobile">{{ section.settings.shop_all_mobile_label }}</span>
+          <span class="taboo-demo-{{ section.id }}__packs-see-all--desktop">{{ section.settings.shop_all_desktop_label }}</span>
         </a>
       {% endif %}
     </div>
-    <p class="taboo-demo-{{ section.id }}__packs-sub">300+ all-new cards each. Compact, travel-friendly box. Shuffle them into the game you already own.</p>
+    <p class="taboo-demo-{{ section.id }}__packs-sub">{{ section.settings.packs_sub }}</p>
 
     <div class="taboo-demo-{{ section.id }}__packs-grid">
       {% if collection %}
@@ -125,16 +122,16 @@
             </div>
             <div class="taboo-demo-{{ section.id }}__pack-body">
               <div class="taboo-demo-{{ section.id }}__pack-name">{{ product.title }}</div>
-              <div class="taboo-demo-{{ section.id }}__pack-meta">{{ product.metafields.custom.card_line | default: '300 cards' }}</div>
+              <div class="taboo-demo-{{ section.id }}__pack-meta">{{ product.metafields.custom.card_line | default: section.settings.pack_meta_default }}</div>
               <div class="taboo-demo-{{ section.id }}__pack-bottom">
                 <span class="taboo-demo-{{ section.id }}__pack-price">{{ product.price | money }}</span>
-                <span class="taboo-demo-{{ section.id }}__pack-view">View pack</span>
+                <span class="taboo-demo-{{ section.id }}__pack-view">{{ section.settings.pack_view_label }}</span>
               </div>
             </div>
           </a>
         {% endfor %}
       {% else %}
-        <p class="taboo-demo-{{ section.id }}__packs-empty">Select a collection in section settings to show packs here.</p>
+        <p class="taboo-demo-{{ section.id }}__packs-empty">{{ section.settings.packs_empty_label }}</p>
       {% endif %}
     </div>
   </div>
@@ -267,6 +264,9 @@
   .taboo-demo-{{ section.id }}__buzz-btn {
     flex: 0 0 auto; width: 66px; height: 46px; background: #AF6EF7; color: #FFFFFF; border: 0;
     border-radius: 12px; font: 800 12px 'DM Sans', system-ui, sans-serif; letter-spacing: .1em; cursor: pointer;
+  }
+  .taboo-demo-{{ section.id }}__buzz-btn:disabled {
+    background: #C9BEDD; color: #FFFFFF; cursor: not-allowed; opacity: .55;
   }
   .taboo-demo-{{ section.id }}__deal-btn {
     display: block; margin: 12px 18px 16px; background: none; border: 1.5px solid #DCCEBB; border-radius: 12px;
@@ -434,6 +434,36 @@
     },
     { "type": "collection", "id": "collection", "label": "Tabooster Packs collection" },
     { "type": "url", "id": "shop_all_url", "label": "\"Shop all / See catalog\" link" },
+
+    { "type": "header", "content": "Try a card panel" },
+    { "type": "text", "id": "panel_title", "label": "Panel title", "default": "Try a card" },
+    { "type": "text", "id": "panel_tag", "label": "Panel tag", "default": "Live from the packs" },
+    { "type": "textarea", "id": "panel_copy", "label": "Panel description", "default": "Get someone to say the top word. Use any of the five below it and the buzzer wins." },
+    { "type": "text", "id": "shop_it_label", "label": "\"Shop it\" link text", "default": "Shop it →" },
+    { "type": "text", "id": "mode_toggle_label", "label": "\"Use photo\" toggle text", "default": "Use photo" },
+    { "type": "text", "id": "photo_placeholder_label", "label": "Photo upload placeholder text", "default": "Tap to upload a card photo" },
+
+    { "type": "header", "content": "Timer & buttons" },
+    { "type": "range", "id": "timer_seconds", "label": "Timer duration (seconds)", "min": 10, "max": 120, "step": 5, "default": 60 },
+    { "type": "text", "id": "timer_label", "label": "Timer unit label", "default": "left" },
+    { "type": "text", "id": "timer_start_label", "label": "Timer button text", "default": "Start" },
+    { "type": "text", "id": "next_label", "label": "\"Next\" button text (desktop)", "default": "Next" },
+    { "type": "text", "id": "deal_label", "label": "\"Deal another card\" button text (mobile)", "default": "Deal another card" },
+
+    { "type": "header", "content": "Buzz button" },
+    { "type": "checkbox", "id": "enable_buzz", "label": "Enable Buzz button", "info": "Turn off to pause the buzzer — the button is shown but disabled.", "default": true },
+    { "type": "text", "id": "buzz_label", "label": "Buzz button text", "default": "BUZZ" },
+    { "type": "text", "id": "buzz_overlay_text", "label": "Buzz overlay text", "default": "BZZT!" },
+
+    { "type": "header", "content": "Tabooster Packs" },
+    { "type": "text", "id": "packs_title", "label": "Packs section title", "default": "Tabooster Packs" },
+    { "type": "textarea", "id": "packs_sub", "label": "Packs section description", "default": "300+ all-new cards each. Compact, travel-friendly box. Shuffle them into the game you already own." },
+    { "type": "text", "id": "shop_all_mobile_label", "label": "\"See catalog\" link text (mobile)", "default": "Shop all" },
+    { "type": "text", "id": "shop_all_desktop_label", "label": "\"See catalog\" link text (desktop)", "default": "See the whole catalog →" },
+    { "type": "text", "id": "pack_meta_default", "label": "Default pack card count text", "info": "Shown when a product has no custom.card_line metafield", "default": "300 cards" },
+    { "type": "text", "id": "pack_view_label", "label": "\"View pack\" button text", "default": "View pack" },
+    { "type": "text", "id": "packs_empty_label", "label": "Empty state text (no collection selected)", "default": "Select a collection in section settings to show packs here." },
+
     { "type": "header", "content": "Colors" },
     { "type": "color", "id": "pack_media_bg", "label": "Pack card image background", "default": "#F2B233" }
   ],
