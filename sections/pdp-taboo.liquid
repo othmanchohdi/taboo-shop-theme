@@ -421,7 +421,9 @@
     .taboo-pdp-{{ section.id }}.page-width { max-width: 1200px; margin: 0 auto; }
     .taboo-pdp-{{ section.id }}.full-width { padding-inline: 40px; }
     .taboo-pdp-{{ section.id }}__back { margin-bottom: 20px; }
-    .taboo-pdp-{{ section.id }}__layout { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
+    .taboo-pdp-{{ section.id }}__layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 56px; align-items: start; }
+    .taboo-pdp-{{ section.id }}__gallery,
+    .taboo-pdp-{{ section.id }}__buybox { min-width: 0; }
     .taboo-pdp-{{ section.id }}__gallery { position: sticky; top: 110px; }
     .taboo-pdp-{{ section.id }}__gallery-main { padding: 12px; border-radius: 26px; }
     .taboo-pdp-{{ section.id }}__thumbs { margin-top: 14px; }
