@@ -71,7 +71,7 @@
         "text_color": "#14100f",
         "muted_text": "#8a7c73",
         "accent_color": "#af6ef7",
-        "card_media_bg": "#AF6EF7",
+        "card_media_bg": "#F0F0F0",
         "badge_bg": "#af6ef7",
         "badge_text": "#ffffff"
       }
