@@ -49,7 +49,7 @@
       ],
       "settings": {
         "section_width": "page-width",
-        "tint_color": "#FCF022",
+        "tint_color": "#F0F0F0",
         "back_url": "/collections/all",
         "bg_color": "#ffffff",
         "text_color": "#14100f",
