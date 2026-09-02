@@ -158,7 +158,7 @@ if (!customElements.get('taboo-pdp')) {
      * different section, add its id to SECTION_IDS below.
      */
     async refreshCartDrawer() {
-      const SECTION_IDS = 'cart-drawer-section';
+      const SECTION_IDS = 'cart-drawer-section,sections--27418588283184__header_section';
 
       try {
         const res = await fetch(window.location.pathname + '?sections=' + SECTION_IDS);
