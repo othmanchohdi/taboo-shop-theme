@@ -4,6 +4,12 @@
  * and keeping the sticky mobile buy bar in sync with the form above it.
  * The add-to-cart button label shows the running total ("Add to cart · $19.99")
  * and updates live when quantity or variant changes, per the design spec.
+ *
+ * After a successful add, refreshCartDrawer() re-fetches the cart-drawer
+ * section via Shopify's Section Rendering API and opens it via
+ * <theme-drawer>'s public open() method. This form bypasses the theme's
+ * native product-form-component, so nothing else in the theme is told the
+ * cart changed unless we do it ourselves here.
  */
 if (!customElements.get('taboo-pdp')) {
   class TabooPDP extends HTMLElement {
@@ -128,6 +134,11 @@ if (!customElements.get('taboo-pdp')) {
 
         document.dispatchEvent(new CustomEvent('taboo:cart-updated'));
 
+        // This custom form bypasses the theme's native product-form-component,
+        // so nothing else (cart drawer, header count) knows the cart changed
+        // unless we tell it ourselves.
+        this.refreshCartDrawer();
+
         window.setTimeout(() => {
           if (this.addLabel) this.addLabel.textContent = originalLabel;
           this.addBtn.classList.remove('is-added');
@@ -137,6 +148,38 @@ if (!customElements.get('taboo-pdp')) {
         this.addBtn.disabled = false;
         // Fall back to a full page submit if the AJAX call fails for any reason
         this.form.submit();
+      }
+    }
+
+    /**
+     * Re-fetches the cart-drawer section via the Section Rendering API and
+     * swaps it into the page, then opens the drawer via <theme-drawer>'s
+     * public open() method. If your header cart count/badge lives in a
+     * different section, add its id to SECTION_IDS below.
+     */
+    async refreshCartDrawer() {
+      const SECTION_IDS = 'cart-drawer-section';
+
+      try {
+        const res = await fetch(window.location.pathname + '?sections=' + SECTION_IDS);
+        if (!res.ok) throw new Error('Section refresh failed');
+        const sections = await res.json();
+
+        Object.keys(sections).forEach((id) => {
+          const target = document.getElementById('shopify-section-' + id);
+          if (!target) return;
+          const parsed = new DOMParser().parseFromString(sections[id], 'text/html');
+          const replacement = parsed.getElementById('shopify-section-' + id);
+          if (replacement) target.replaceWith(replacement);
+        });
+
+        const drawer = document.getElementById('cart-drawer');
+        if (drawer && typeof drawer.open === 'function') {
+          drawer.open();
+        }
+      } catch (err) {
+        // Non-fatal: the item was already added successfully even if this fails.
+        console.warn('[taboo-pdp] Could not refresh/open cart drawer:', err);
       }
     }
   }
