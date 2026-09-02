@@ -47,9 +47,14 @@
         "checklist_item_kdqaAX",
         "checklist_item_9azmmT"
       ],
+      "custom_css": [
+        "h2 {font-size: 20px;}",
+        "h3 {font-size: 18px;}",
+        "p {}"
+      ],
       "settings": {
         "section_width": "page-width",
-        "tint_color": "#F0F0F0",
+        "tint_color": "#f0f0f0",
         "back_url": "/collections/all",
         "bg_color": "#ffffff",
         "text_color": "#14100f",
@@ -60,7 +65,7 @@
         "variant_selected_bg": "#f0e4fc",
         "sample_card_bg": "#402651",
         "sample_card_text": "#ffffff",
-        "show_description": false,
+        "show_description": true,
         "checklist_heading": "What you get",
         "ships_note": "",
         "sample_label": "A card from this pack",
