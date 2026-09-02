@@ -1,8 +1,3 @@
-{%- doc -%}
-  Amazon pass-through banner for the base board game (sold via Amazon, not direct).
-  Mobile: stacked card. Desktop: 3-col grid inside a bordered frame.
-{%- enddoc -%}
-
 {% liquid
   assign image = section.settings.image
   assign eyebrow = section.settings.eyebrow | default: "Don't own the game?"
@@ -58,7 +53,7 @@
   }
   .taboo-amazon-{{ section.id }}__copy { margin: 0; color: #5A4F49; line-height: 1.5; }
   .taboo-amazon-{{ section.id }}__cta {
-    background: #F2B233; text-decoration: none; color: #14100F; cursor: pointer;
+    background: #FCF022; text-decoration: none; color: #14100F; cursor: pointer;
     display: flex; align-items: center; justify-content: center; gap: 8px;
     font: 700 14.5px 'DM Sans', system-ui, sans-serif;
   }
