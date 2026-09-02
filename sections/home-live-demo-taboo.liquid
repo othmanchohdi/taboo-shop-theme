@@ -78,12 +78,9 @@
       </div>
       <button type="button" class="taboo-demo-{{ section.id }}__timer-btn" data-timer-toggle>{{ section.settings.timer_start_label }}</button>
       <button type="button" class="taboo-demo-{{ section.id }}__next-btn" data-next-card>{{ section.settings.next_label }}</button>
-      <button
-        type="button"
-        class="taboo-demo-{{ section.id }}__buzz-btn"
-        data-buzz
-        {% unless section.settings.enable_buzz %}disabled aria-disabled="true"{% endunless %}
-      >{{ section.settings.buzz_label }}</button>
+      {% if section.settings.enable_buzz %}
+        <button type="button" class="taboo-demo-{{ section.id }}__buzz-btn" data-buzz>{{ section.settings.buzz_label }}</button>
+      {% endif %}
     </div>
 
     <button type="button" class="taboo-demo-{{ section.id }}__deal-btn" data-next-card-mobile>{{ section.settings.deal_label }}</button>
@@ -264,9 +261,6 @@
   .taboo-demo-{{ section.id }}__buzz-btn {
     flex: 0 0 auto; width: 66px; height: 46px; background: #AF6EF7; color: #FFFFFF; border: 0;
     border-radius: 12px; font: 800 12px 'DM Sans', system-ui, sans-serif; letter-spacing: .1em; cursor: pointer;
-  }
-  .taboo-demo-{{ section.id }}__buzz-btn:disabled {
-    background: #C9BEDD; color: #FFFFFF; cursor: not-allowed; opacity: .55;
   }
   .taboo-demo-{{ section.id }}__deal-btn {
     display: block; margin: 12px 18px 16px; background: none; border: 1.5px solid #DCCEBB; border-radius: 12px;
@@ -451,7 +445,7 @@
     { "type": "text", "id": "deal_label", "label": "\"Deal another card\" button text (mobile)", "default": "Deal another card" },
 
     { "type": "header", "content": "Buzz button" },
-    { "type": "checkbox", "id": "enable_buzz", "label": "Enable Buzz button", "info": "Turn off to pause the buzzer — the button is shown but disabled.", "default": true },
+    { "type": "checkbox", "id": "enable_buzz", "label": "Enable Buzz button", "info": "Turn off to pause the buzzer — the button is hidden from the demo.", "default": true },
     { "type": "text", "id": "buzz_label", "label": "Buzz button text", "default": "BUZZ" },
     { "type": "text", "id": "buzz_overlay_text", "label": "Buzz overlay text", "default": "BZZT!" },
 
