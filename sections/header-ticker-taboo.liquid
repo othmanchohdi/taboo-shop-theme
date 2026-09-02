@@ -1,13 +1,5 @@
-{%- doc -%}
-  Continuous horizontal scrolling ticker for The Taboo Shop.
-  Placed inside the header group, above header_section, in header-group.json.
-  Horizon's stock `marquee` section cannot be used in header/footer (disabled_on),
-  so this is a small dedicated section replicating the same continuous-scroll effect
-  from the design handoff (@keyframes marq2 / marqD).
-{%- enddoc -%}
-
 {% liquid
-  assign bg = section.settings.background_color | default: '#F2B233'
+  assign bg = section.settings.background_color | default: '#FCF022'
   assign ink = section.settings.text_color | default: '#14100F'
   assign speed = section.settings.speed | default: 26
 %}
