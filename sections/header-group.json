@@ -14,6 +14,12 @@
     "taboo_ticker": {
       "type": "header-ticker-taboo",
       "blocks": {
+        "item_Qwz4BX": {
+          "type": "item",
+          "settings": {
+            "text": "300 cards per pack"
+          }
+        },
         "item_1": {
           "type": "item",
           "settings": {
@@ -29,17 +35,18 @@
         "item_3": {
           "type": "item",
           "settings": {
-            "text": "Learn it in under 60 seconds"
+            "text": "20% Off Sitewide Sale"
           }
         }
       },
       "block_order": [
+        "item_Qwz4BX",
         "item_1",
         "item_2",
         "item_3"
       ],
       "settings": {
-        "background_color": "#FCF022",
+        "background_color": "#fcf022",
         "text_color": "#14100f",
         "speed": 26,
         "aria_label": "Store highlights"
